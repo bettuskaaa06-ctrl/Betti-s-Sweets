@@ -1,128 +1,564 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Betti's Sweets — Custom Cakes Manchester</title>
-  <meta name="description" content="Elegant handmade cakes for weddings, birthdays & celebrations in Manchester. Customise your cake, request a quote, and follow us on Instagram @betti_sweets.">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Betti’s Sweets — Custom Cakes in Manchester</title>
+  <meta name="description" content="Elegant, handmade custom cakes for weddings, birthdays and celebrations. Design your cake, request a quote, and book online. Reduced sugar, outstanding quality, unique flavours — based in Manchester, UK." />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --blush: #F6DDE3; --rose: #B76E79; --rose-gold: #CFA38A; --gold-soft: #D0B48F;
-      --ink: #4A3F3C; --muted: #7A6A66; --shadow: 0 8px 24px rgba(0,0,0,0.08);
-      --maxw: 1100px;
+    :root{
+      /* Brand palette */
+      --blush:#F6DDE3; --peach:#FAD9CF; --ivory:#FFF7F2;
+      --champagne:#E7D7C9; --rose-gold:#CFA38A; --rose-gold-deep:#B77E66;
+      --gold-soft:#D0B48F; --ink:#4A3F3C; --muted:#7A6A66; --white:#ffffff;
+
+      /* Typography */
+      --font-heading:"Playfair Display", serif;
+      --font-body:"Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --font-accent:"Great Vibes", cursive;
+
+      /* Layout */
+      --radius:22px; --pill:999px;
+      --shadow:0 10px 30px rgba(79,60,54,.12);
+      --shadow-soft:0 6px 20px rgba(79,60,54,.08);
+      --section-pad: clamp(48px, 6vw, 96px);
+      --maxw: 1150px;
     }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family:'Poppins',sans-serif; color:var(--ink); background:#fff; }
-    h1,h2,h3 { font-family:'Great Vibes',cursive; color:var(--rose); }
-    a { color:var(--rose); text-decoration:none; }
-    a:hover { text-decoration:underline; }
-    .container { max-width:var(--maxw); margin:auto; padding: 0 20px; }
-    .btn { padding:12px 24px; border-radius:999px; border:0; cursor:pointer; font-weight:600;
-           background:linear-gradient(135deg,var(--rose-gold),var(--gold-soft)); color:#3a2b27;
-           box-shadow:var(--shadow); }
-    .btn:hover { filter:brightness(1.05); }
-    section { padding:70px 20px; }
 
-    header.hero { background:linear-gradient(135deg,var(--blush),#fff); text-align:center; padding:60px 20px 90px; }
-    .brand { display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:18px; }
-    .brand img { height:64px; }
-    .brand .brand-text { display:none; font-size:48px; color:var(--rose); }
-    header.hero p { font-size:1.05rem; margin:10px auto 18px; color:#5a4b48; }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;color:var(--ink);background:linear-gradient(180deg,var(--ivory),#fff);}
+    body{font-family:var(--font-body);line-height:1.65}
+    img{max-width:100%;display:block}
+    a{color:var(--rose-gold-deep);text-decoration:none}
+    a:hover{text-decoration:underline}
 
-    .gallery { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:16px; }
-    .gallery img { width:100%; border-radius:12px; box-shadow:var(--shadow); cursor:zoom-in; }
+    .container{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(16px,4vw,28px)}
+    .grid{display:grid;gap:24px}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:980px){.grid-3{grid-template-columns:1fr 1fr}}
+    @media (max-width:680px){.grid-3{grid-template-columns:1fr}}
 
-    .overlay { position:fixed; inset:0; background:rgba(255,240,243,.92); display:none; align-items:center; justify-content:center; z-index:100; }
-    .overlay.show { display:flex; }
-    .ty-box { background:#fff; padding:40px; border-radius:16px; box-shadow:var(--shadow); max-width:520px; text-align:center; }
-    .confetti { position:fixed; inset:0; pointer-events:none; z-index:1; }
-    .confetti span { position:absolute; width:8px; height:14px; background:var(--rose); opacity:.85; border-radius:2px; animation:fall 3s linear infinite; }
-    @keyframes fall { 0% { transform:translateY(-100%) rotate(0deg); } 100% { transform:translateY(110vh) rotate(360deg); } }
+    /* Header */
+    header{position:sticky;top:0;background:rgba(255,255,255,.8);backdrop-filter:saturate(140%) blur(8px);z-index:10;border-bottom:1px solid #f3e8e2}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo img{
+      width:42px;height:42px;border-radius:50%;object-fit:cover;
+      box-shadow:inset 0 0 0 2px rgba(255,255,255,.6), var(--shadow-soft);
+    }
+    .brand h1{font:700 22px/1 var(--font-heading);margin:0;letter-spacing:.2px}
+    nav a{margin-left:22px;font-weight:500}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;border-radius:var(--pill);font-weight:600;border:0;cursor:pointer;box-shadow:var(--shadow-soft)}
+    .btn-primary{background:linear-gradient(135deg,var(--rose-gold),var(--gold-soft));color:#3e2e2a}
+    .btn-primary:hover{filter:saturate(105%) brightness(1.02)}
+    .btn-ghost{background:var(--white);color:var(--ink);border:1px solid #efdfd7}
 
-    #lightbox { position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; z-index:150; flex-direction:column; }
-    #lightbox.show { display:flex; }
-    #lightbox img { max-width:90%; max-height:70%; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.5); }
-    #lightbox .close { position:absolute; top:18px; right:22px; width:42px; height:42px; border-radius:50%; background:rgba(255,255,255,0.9);
-                       display:grid; place-items:center; font-size:22px; font-weight:700; cursor:pointer; z-index:151; box-shadow:0 6px 16px rgba(0,0,0,0.25); }
-    #lightbox .arrow { pointer-events:auto; width:46px; height:46px; border-radius:50%;
-                       background:rgba(255,255,255,0.85); display:grid; place-items:center;
-                       font-size:22px; color:#333; margin:0 16px; cursor:pointer; user-select:none;
-                       transition:opacity .25s, transform .2s; box-shadow:0 6px 16px rgba(0,0,0,0.25); opacity:0; }
-    #lightbox.show:hover .arrow { opacity:1; }
-    #lightbox .arrow:hover { transform:scale(1.06); }
-    #lightbox .counter { margin-top:8px; color:#fff; font-size:14px; }
-    #lightbox .caption { margin-top:8px; color:#fff; font-size:15px; text-align:center; max-width:90%; }
-    #lightbox .caption a { color:#ffd1e1; font-weight:600; }
+    /* Hero */
+    .hero{background:linear-gradient(180deg,var(--ivory),#fff 60%);}
+    .hero-inner{display:grid;grid-template-columns:1.25fr 1fr;gap:36px;align-items:center;min-height:72vh}
+    @media (max-width:980px){.hero-inner{grid-template-columns:1fr}}
+    .eyebrow{font:600 13px var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--rose-gold-deep)}
+    .hero h2{font:700 clamp(34px,5vw,56px)/1.05 var(--font-heading);margin:.4em 0}
+    .script{font-family:var(--font-accent);font-size:clamp(20px,3vw,28px);color:var(--muted)}
+    .hero-card{background:var(--white);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .hero-pills{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+    .pill{background:#fff;border:1px solid #efdfd7;border-radius:var(--pill);padding:8px 14px;font-size:14px;box-shadow:var(--shadow-soft)}
 
-    footer { background:linear-gradient(180deg,#fff,var(--ivory)); border-top:1px solid #eee; text-align:center; padding:40px 20px; }
-    .socials { display:flex; gap:16px; justify-content:center; margin-top:10px; }
-    .icon { width:22px; height:22px; fill:#fff; }
+    /* Sections */
+    section{padding-block:var(--section-pad)}
+    .section-soft{background:linear-gradient(180deg,#fff,var(--ivory))}
+    .section-peach{background:linear-gradient(180deg,var(--ivory),var(--peach))}
+    .section-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:clamp(20px,3vw,34px)}
+    h3{font:700 clamp(22px,3.6vw,36px)/1.15 var(--font-heading);margin:0 0 10px}
+    .sub{color:var(--muted);max-width:62ch;margin:0 auto 24px}
 
-    .insta-float { position:fixed; bottom:20px; right:20px; width:56px; height:56px; border-radius:50%;
-                    background:linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
-                    display:flex; align-items:center; justify-content:center; z-index:160; box-shadow:var(--shadow); }
-    .insta-float .icon { width:28px; height:28px; }
-  }
-</style>
+    /* Feature cards */
+    .feature{border-radius:var(--radius);padding:22px;background:#fff;border:1px solid #efdfd7;box-shadow:var(--shadow-soft)}
+    .feature h4{font:600 18px var(--font-heading);margin:.2em 0 .3em}
+    .feature p{margin:0;color:var(--muted)}
+
+    /* Gallery */
+    .gallery{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+    .gallery a{grid-column:span 4;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-soft);position:relative}
+    @media (max-width:980px){.gallery a{grid-column:span 6}}
+    @media (max-width:640px){.gallery a{grid-column:span 12}}
+    .gallery img{aspect-ratio:4/5;object-fit:cover;transition:transform .35s}
+    .gallery a:hover img{transform:scale(1.04)}
+
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;background:rgba(20,14,12,.72);display:none;align-items:center;justify-content:center;padding:20px;z-index:100;flex-direction:column}
+    .lightbox img{max-height:80vh;border-radius:16px;box-shadow:var(--shadow)}
+    .lightbox.active{display:flex}
+    .lb-caption{color:#fff;margin-top:10px;text-align:center}
+    .lb-caption a{color:#ffd1e1;font-weight:600}
+
+    /* Customiser / Estimator */
+    .config{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+    @media (max-width:980px){.config{grid-template-columns:1fr}}
+    .field{display:grid;gap:8px;margin-bottom:14px}
+    .field label{font-weight:600}
+    select,input[type="date"],input[type="number"],input[type="text"]{
+      padding:12px;border-radius:12px;border:1px solid #ead9d2;background:#fff
+    }
+    .est{border-radius:16px;background:linear-gradient(135deg,var(--blush),var(--champagne));padding:20px;box-shadow:var(--shadow)}
+    .est h4{margin:.2em 0 .4em}
+    .price{font:700 30px var(--font-heading)}
+    .small{font-size:.92rem;color:#675852}
+    .summary-note{font-size:.9rem;color:#5f514d;margin-top:8px}
+
+    /* Instagram section */
+    .insta{padding-block:var(--section-pad);background:linear-gradient(180deg,#fff,var(--ivory))}
+    .insta h3{text-align:center}
+    .insta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+    .insta-grid a{border-radius:16px;overflow:hidden;box-shadow:var(--shadow-soft)}
+    .insta-grid img{width:100%;aspect-ratio:1/1;object-fit:cover;transition:.3s}
+    .insta-grid a:hover img{transform:scale(1.05)}
+    .insta-btn{text-align:center;margin-top:20px}
+
+    /* Footer */
+    footer{background:linear-gradient(180deg,var(--ivory),#fff);border-top:1px solid #f0e3dc}
+    .foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px}
+    @media (max-width:980px){.foot{grid-template-columns:1fr 1fr}}
+    @media (max-width:680px){.foot{grid-template-columns:1fr}}
+    .social{margin-top:12px;display:flex;gap:12px}
+    .social a{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--rose-gold);color:#fff;box-shadow:var(--shadow-soft)}
+    .social svg{width:18px;height:18px;fill:#fff}
+  </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="container">
-    <h1>Betti's Sweets</h1>
-    <p>Elegant handmade cakes for weddings, birthdays & celebrations.</p>
-    <a href="#estimator" class="btn">Design your cake</a>
+<!-- Header -->
+<header>
+  <div class="container nav">
+    <div class="brand">
+      <!-- Swap src for your real logo when ready -->
+      <div class="logo"><img src="https://i.imgur.com/qS8XGqR.png" alt="Betti’s Sweets logo"></div>
+      <h1>Betti’s Sweets</h1>
+    </div>
+    <nav>
+      <a href="#gallery">Gallery</a>
+      <a href="#customise">Design Your Cake</a>
+      <a href="#flavours">Flavours</a>
+      <a href="#contact" class="btn btn-primary">Get a Quote</a>
+    </nav>
   </div>
 </header>
 
-<section>
-  <div class="container">
-    <h2>Our Creations</h2>
-    <div class="gallery">
-      <img src="https://images.unsplash.com/photo-1562777717-dc6984f65a63?q=80&w=1000" alt="Elegant wedding cake" loading="lazy"
-           data-caption='Elegant wedding cake — <a href="https://www.instagram.com/p/DIIt7lHudE4/" target="_blank" rel="noopener">View on Instagram</a>'>
-      <img src="https://images.unsplash.com/photo-1519861531473-9200262188bf?q=80&w=1000" alt="Customised Bento cake" loading="lazy"
-           data-caption='Customised Bento cake — <a href="https://www.instagram.com/p/DI2Aflrojy5/" target="_blank" rel="noopener">View on Instagram</a>'>
-      <img src="https://images.unsplash.com/photo-1541976076758-347942db1970?q=80&w=1000" alt="Elegant Pearl Wedding Cake" loading="lazy"
-           data-caption='Elegant Pearl Wedding Cake — <a href="https://www.instagram.com/p/DLXmm1FogoQ/" target="_blank" rel="noopener">View on Instagram</a>'>
-      <img src="https://images.unsplash.com/photo-1514517220030-69eaa39b0a09?q=80&w=1000" alt="Vintage Heart Cake" loading="lazy"
-           data-caption='Vintage Heart Cake — <a href="https://www.instagram.com/p/POST4/" target="_blank" rel="noopener">View on Instagram</a>'>
-      <!-- Replace POST4 with actual link if available -->
+<!-- Hero -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <div class="eyebrow">Custom Cakes • Manchester, UK</div>
+      <h2>Elegant, handmade cakes for weddings, birthdays & celebrations.</h2>
+      <div class="script">soft, romantic & artistic</div>
+      <div class="hero-pills">
+        <span class="pill">Reduced sugar</span>
+        <span class="pill">Unique flavours</span>
+        <span class="pill">Personalised toppers</span>
+        <span class="pill">Freshly made to order</span>
+      </div>
+      <a class="btn btn-primary" href="#customise">Design your cake</a>
+    </div>
+    <div class="hero-card">
+      <img src="https://images.unsplash.com/photo-1527515545081-5db817172677?q=80&w=1200&auto=format&fit=crop" alt="Pastel celebration cake" style="border-radius:16px">
     </div>
   </div>
 </section>
 
-<!-- (Remaining sections such as Estimator, Form, Overlay, Footer, Lightbox remain unchanged from previous version) -->
+<!-- What we do -->
+<section class="section-soft">
+  <div class="container">
+    <h3 style="text-align:center">What we do</h3>
+    <p class="sub" style="text-align:center">Based in Manchester, we specialise in creating elegant, custom-made cakes. Design online, request a quote, and book your date with a secure deposit. We focus on reduced sugar, outstanding quality and truly unique flavours.</p>
+
+    <div class="grid grid-3" style="margin-top:24px">
+      <div class="feature">
+        <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476b?q=80&w=800&auto=format&fit=crop" alt="" style="border-radius:12px;margin-bottom:10px;aspect-ratio:4/3;object-fit:cover">
+        <h4>Weddings</h4>
+        <p>Soft palettes, delicate textures and refined finishes for the perfect day.</p>
+      </div>
+      <div class="feature">
+        <img src="https://images.unsplash.com/photo-1599785209796-dcbcf576c28b?q=80&w=800&auto=format&fit=crop" alt="" style="border-radius:12px;margin-bottom:10px;aspect-ratio:4/3;object-fit:cover">
+        <h4>Birthdays</h4>
+        <p>From chic minimal to playful themes — always freshly baked and personalised.</p>
+      </div>
+      <div class="feature">
+        <img src="https://images.unsplash.com/photo-1623694050703-09c23aa68bb1?q=80&w=800&auto=format&fit=crop" alt="" style="border-radius:12px;margin-bottom:10px;aspect-ratio:4/3;object-fit:cover">
+        <h4>Celebrations</h4>
+        <p>Anniversaries, baby showers and corporate treats with signature flavours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery" class="container">
+  <h3 style="text-align:center">Gallery</h3>
+  <p class="sub" style="text-align:center">A few pastel-inspired favourites. Tap to enlarge.</p>
+  <div class="gallery" id="galleryGrid">
+    <!-- Each anchor points to LARGE image; data-ig holds your Instagram post link (replace when ready) -->
+    <a href="https://images.unsplash.com/photo-1562777717-dc6984f65a63?q=80&w=1600&auto=format&fit=crop"
+       data-ig="https://www.instagram.com/betti_sweets/">
+      <img src="https://images.unsplash.com/photo-1562777717-dc6984f65a63?q=80&w=800&auto=format&fit=crop" alt="Wedding cake">
+    </a>
+
+    <a href="https://images.unsplash.com/photo-1519861531473-9200262188bf?q=80&w=1600&auto=format&fit=crop"
+       data-ig="https://www.instagram.com/betti_sweets/">
+      <img src="https://images.unsplash.com/photo-1519861531473-9200262188bf?q=80&w=800&auto=format&fit=crop" alt="Pastel balloons & cake">
+    </a>
+
+    <a href="https://images.unsplash.com/photo-1541976076758-347942db1970?q=80&w=1600&auto=format&fit=crop"
+       data-ig="https://www.instagram.com/betti_sweets/">
+      <img src="https://images.unsplash.com/photo-1541976076758-347942db1970?q=80&w=800&auto=format&fit=crop" alt="Floral cake">
+    </a>
+
+    <a href="https://images.unsplash.com/photo-1591289008371-2d5b50f1b9f5?q=80&w=1600&auto=format&fit=crop"
+       data-ig="https://www.instagram.com/betti_sweets/">
+      <img src="https://images.unsplash.com/photo-1591289008371-2d5b50f1b9f5?q=80&w=800&auto=format&fit=crop" alt="Macarons">
+    </a>
+
+    <a href="https://images.unsplash.com/photo-1514517220030-69eaa39b0a09?q=80&w=1600&auto=format&fit=crop"
+       data-ig="https://www.instagram.com/betti_sweets/">
+      <img src="https://images.unsplash.com/photo-1514517220030-69eaa39b0a09?q=80&w=800&auto=format&fit=crop" alt="Cupcakes">
+    </a>
+
+    <a href="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop"
+       data-ig="https://www.instagram.com/betti_sweets/">
+      <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop" alt="Detail texture">
+    </a>
+  </div>
+</section>
+
+<!-- Customiser / Estimator -->
+<section id="customise" class="section-peach">
+  <div class="container">
+    <h3 style="text-align:center">Design your cake</h3>
+    <p class="sub" style="text-align:center">Choose size, tiers, finish and extras. Get an instant estimate and reserve your date with a 30% deposit.</p>
+
+    <div class="config">
+      <!-- Form (inputs) -->
+      <form class="section-card" id="cfgForm">
+        <div class="field">
+          <label for="occasion">Occasion</label>
+          <select id="occasion" required>
+            <option>Wedding</option><option>Birthday</option><option>Baby Shower</option><option>Anniversary</option><option>Other</option>
+          </select>
+        </div>
+
+        <div class="field"><label for="tiers">Tiers</label>
+          <select id="tiers"><option value="1">Single</option><option value="2">Two tiers</option><option value="3">Three tiers</option></select>
+        </div>
+
+        <div class="field"><label for="size">Size</label>
+          <select id="size">
+            <option value="6">6" (8–10 servings)</option>
+            <option value="8">8" (16–20 servings)</option>
+            <option value="10">10" (28–36 servings)</option>
+            <option value="12">12" (44–56 servings)</option>
+          </select>
+        </div>
+
+        <div class="field"><label for="finish">Finish</label>
+          <select id="finish">
+            <option value="buttercream">Buttercream (smooth/textured)</option>
+            <option value="ganache">Ganache finish</option>
+            <option value="fondant">Fondant</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Extras</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label><input type="checkbox" id="freshFlorals"> Fresh florals</label>
+            <label><input type="checkbox" id="sugarFlorals"> Sugar flowers</label>
+            <label><input type="checkbox" id="topper"> Custom topper</label>
+            <label><input type="checkbox" id="reducedSugar"> Reduced sugar</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="date">Preferred collection/delivery date</label>
+          <input type="date" id="date" required>
+          <span class="small">We recommend booking at least 7 days in advance.</span>
+        </div>
+
+        <div class="field">
+          <label for="postcode">Postcode (for delivery estimate)</label>
+          <input type="text" id="postcode" placeholder="e.g., M1 1AA">
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
+          <button class="btn btn-primary" type="button" id="updateBtn">Update estimate</button>
+          <a class="btn btn-ghost" href="#contact">Request a detailed quote</a>
+        </div>
+        <div class="summary-note" id="est-note" aria-live="polite"></div>
+      </form>
+
+      <!-- Estimate (output) -->
+      <aside class="est">
+        <h4>Your estimate</h4>
+        <div class="price" id="price">£—</div>
+        <div class="small" id="deposit">Deposit (30%): £—</div>
+        <p class="small">Final price depends on design complexity and availability. You’ll receive a confirmed quote after we review your brief and inspiration photos.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+          <a class="btn btn-primary" href="#contact">Book with deposit</a>
+          <a class="btn btn-ghost" href="#contact">Send design brief</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- Flavours & Sizes -->
+<section id="flavours" class="container">
+  <h3 style="text-align:center">Flavours & sizes</h3>
+  <p class="sub" style="text-align:center">Balanced sweetness, real ingredients and signature combinations. Reduced-sugar available on request.</p>
+
+  <div class="grid grid-3">
+    <div class="feature">
+      <h4>Classic sponges</h4>
+      <p>Vanilla • Chocolate • Lemon • Red Velvet • Pistachio</p>
+      <h4 style="margin-top:14px">Fillings</h4>
+      <p>Vanilla / Chocolate buttercream • Swiss meringue • Raspberry compote • Lemon curd • Salted caramel • Ganache</p>
+    </div>
+    <div class="feature">
+      <h4>Popular combos</h4>
+      <p><b>Strawberries & Cream</b> — Vanilla sponge, strawberry compote, vanilla buttercream</p>
+      <p><b>Salted Caramel</b> — Chocolate sponge, caramel filling, ganache</p>
+      <p><b>Lemon Dream</b> — Lemon sponge, lemon curd, Swiss meringue</p>
+    </div>
+    <div class="feature">
+      <h4>Guide prices (single tier)</h4>
+      <p>6" from £55 • 8" from £85 • 10" from £120 • 12" from £165</p>
+      <p class="small">Multi-tier and intricate decoration priced on design.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Instagram emphasis -->
+<section class="insta">
+  <div class="container">
+    <h3>Follow us on Instagram</h3>
+    <p class="sub" style="text-align:center">Daily inspiration, behind the scenes & new designs.</p>
+    <div class="insta-grid">
+      <a href="https://www.instagram.com/betti_sweets/" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1591289008371-2d5b50f1b9f5?q=80&w=600&auto=format&fit=crop" alt=""></a>
+      <a href="https://www.instagram.com/betti_sweets/" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1514517220030-69eaa39b0a09?q=80&w=600&auto=format&fit=crop" alt=""></a>
+      <a href="https://www.instagram.com/betti_sweets/" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=600&auto=format&fit=crop" alt=""></a>
+    </div>
+    <div class="insta-btn">
+      <a class="btn btn-primary" href="https://www.instagram.com/betti_sweets/" target="_blank" rel="noopener">See more on Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section-soft">
+  <div class="container">
+    <h3 style="text-align:center">Request a quote / book a date</h3>
+    <p class="sub" style="text-align:center">Tell us about your event — we’ll confirm availability and send payment details for the 30% deposit.</p>
+
+    <form class="section-card" name="quote" method="post" data-netlify="true" id="quoteForm">
+      <input type="hidden" name="form-name" value="quote" />
+      <!-- NEW: hidden field that receives the estimator summary -->
+      <input type="hidden" name="estimator_summary" id="estimator_summary" />
+
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:18px">
+        <div class="field"><label>Name<input required name="name" placeholder="Your name"></label></div>
+        <div class="field"><label>Email<input required type="email" name="email" placeholder="you@email.com"></label></div>
+        <div class="field"><label>Phone<input name="phone" placeholder="+44…"></label></div>
+        <div class="field"><label>Event date<input required type="date" name="event_date" id="event_date"></label></div>
+        <div class="field" style="grid-column:1/-1"><label>Brief (sizes, colours, flavours, allergens)
+          <textarea name="brief" id="brief" rows="5" placeholder="Tell us what you’d like…" style="width:100%;padding:12px;border-radius:12px;border:1px solid #ead9d2;background:#fff"></textarea></label>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button class="btn btn-primary" type="submit">Send request</button>
+        <a class="btn btn-ghost" href="#customise">Use the estimator</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container" style="padding-block:38px">
+    <div class="foot">
+      <div>
+        <h4 style="margin:0 0 8px;font-family:var(--font-heading)">Betti’s Sweets</h4>
+        <p class="muted">Custom cake studio in Manchester creating elegant, handmade cakes with a soft, romantic aesthetic.</p>
+        <div class="social" aria-label="Social media">
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/betti_sweets/" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm5.25-.75a.75.75 0 1 1-.75.75.75.75 0 0 1 .75-.75Z"/>
+            </svg>
+          </a>
+          <!-- Facebook -->
+          <a href="https://www.facebook.com/share/1GXciQpokT/" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.2-1.5 1.6-1.5H17V5.1c-.3 0-1.4-.1-2.6-.1-2.6 0-4.4 1.6-4.4 4.6V11H7v3h3v8h3.5z"/>
+            </svg>
+          </a>
+          <!-- TikTok -->
+          <a href="https://www.tiktok.com/@bettis.sweets" target="_blank" rel="noopener" title="TikTok" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <path d="M14 2h2.7c.2 1.5.9 2.7 2.2 3.6 1 .7 2.1 1 3.3 1v3.1a7.8 7.8 0 0 1-3.3-.9 6.9 6.9 0 0 1-1.6-1.2v6.6a7 7 0 1 1-7-7h.7v3.2h-.7a3.8 3.8 0 1 0 3.8 3.8V2z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <b>Contact</b>
+        <p class="muted">Manchester, UK<br>hello@bettissweets.co.uk</p>
+      </div>
+      <div>
+        <b>Hours</b>
+        <p class="muted">Tue–Sat 9:00–17:30<br>Collections by appointment</p>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:18px">© <span id="year"></span> Betti’s Sweets • All rights reserved</p>
+  </div>
+</footer>
+
+<!-- Lightbox (image + IG caption) -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <img alt="" id="lb-img">
+  <div class="lb-caption" id="lb-cap"></div>
+</div>
 
 <script>
-  // Lightbox with captions
-  const galleryImgs = Array.from(document.querySelectorAll('.gallery img'));
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const lbPrev = document.getElementById('lb-prev');
-  const lbNext = document.getElementById('lb-next');
-  const lbCount = document.getElementById('lb-count');
-  const lbCaption = document.getElementById('lb-caption');
-  let lbIndex = 0;
+  /* --- Lightbox with IG caption --- */
+  const grid = document.getElementById('galleryGrid');
+  const lb   = document.getElementById('lightbox');
+  const lbImg= document.getElementById('lb-img');
+  const lbCap= document.getElementById('lb-cap');
 
-  function showImage(i){
-    lbIndex = (i + galleryImgs.length) % galleryImgs.length;
-    const imgEl = galleryImgs[lbIndex];
-    lightboxImg.src = imgEl.src + '&w=1600'; // high res
-    lbCount.textContent = `${lbIndex+1} / ${galleryImgs.length}`;
-    lbCaption.innerHTML = imgEl.dataset.caption || '';
-    lightbox.classList.add('show');
+  grid.addEventListener('click', e=>{
+    const a = e.target.closest('a'); if(!a) return;
+    e.preventDefault();
+    lbImg.src = a.getAttribute('href');
+    const ig = a.getAttribute('data-ig') || 'https://www.instagram.com/betti_sweets/';
+    lbCap.innerHTML = `View this design on <a href="${ig}" target="_blank" rel="noopener">Instagram</a>`;
+    lb.classList.add('active');
+  });
+  lb.addEventListener('click', ()=> lb.classList.remove('active'));
+
+  /* --- Date defaults (7-day lead time) --- */
+  function minDate(days){
+    const d=new Date(); d.setDate(d.getDate()+days);
+    return d.toISOString().split('T')[0];
   }
-  function hideLightbox(){ lightbox.classList.remove('show'); }
+  const dateInput=document.getElementById('date');
+  const formDate=document.getElementById('event_date');
+  [dateInput,formDate].forEach(el=>{ if(el){ el.min=minDate(7); }});
 
-  galleryImgs.forEach((img, i) => img.addEventListener('click', e => { e.stopPropagation(); showImage(i); }));
-  lbNext.addEventListener('click', () => showImage(lbIndex+1));
-  lbPrev.addEventListener('click', () => showImage(lbIndex-1));
+  /* --- Estimator logic + SUMMARY PIPE TO QUOTE FORM --- */
+  const $ = id => document.getElementById(id);
+  const pricing = {
+    base:{6:55,8:85,10:120,12:165},
+    tierMult:{1:1,2:2.1,3:3.3},
+    finish:{buttercream:1, ganache:1.12, fondant:1.22},
+    extras:{freshFlorals:18, sugarFlorals:45, topper:20, reducedSugar:8},
+    deliveryFlat:12 // simple placeholder when postcode filled
+  };
+
+  function buildSummary(total, deposit){
+    const extras = [
+      $('freshFlorals').checked ? 'Fresh florals' : null,
+      $('sugarFlorals').checked ? 'Sugar flowers' : null,
+      $('topper').checked       ? 'Custom topper' : null,
+      $('reducedSugar').checked ? 'Reduced sugar' : null
+    ].filter(Boolean).join(', ') || 'None';
+
+    const summary = [
+      `Occasion: ${$('occasion').value}`,
+      `Size: ${$('size').value}"`,
+      `Tiers: ${$('tiers').value}`,
+      `Finish: ${$('finish').value}`,
+      `Extras: ${extras}`,
+      `Preferred date: ${$('date').value || '—'}`,
+      `Postcode: ${( $('postcode').value || '—' ).toUpperCase()}`,
+      `Estimate: £${total} (Deposit 30%: £${deposit})`
+    ].join(' | ');
+    return summary;
+  }
+
+  function estimate(){
+    const size   = +$('size').value;
+    const tiers  = +$('tiers').value;
+    const finish = $('finish').value;
+
+    let subtotal = pricing.base[size]*pricing.tierMult[tiers]*pricing.finish[finish];
+    if($('freshFlorals').checked) subtotal += pricing.extras.freshFlorals;
+    if($('sugarFlorals').checked) subtotal += pricing.extras.sugarFlorals;
+    if($('topper').checked)       subtotal += pricing.extras.topper;
+    if($('reducedSugar').checked) subtotal += pricing.extras.reducedSugar;
+
+    let delivery = 0;
+    if(($('postcode').value||'').trim()) delivery = pricing.deliveryFlat;
+
+    const total   = Math.round(subtotal + delivery);
+    const deposit = Math.round(total * 0.30);
+
+    $('price').textContent   = `£${total}`;
+    $('deposit').textContent = `Deposit (30%): £${deposit}`;
+
+    // ---- NEW: push summary to UI note + hidden input + append to Brief (non-destructive)
+    const summary = buildSummary(total, deposit);
+    const note = $('est-note');
+    note.textContent = `Summary ready: ${summary}`;
+    $('estimator_summary').value = summary;
+
+    // Append once per update (idempotent by clearing previous appended block)
+    const brief = $('brief');
+    if (brief) {
+      const tagStart = '\n\n--- Estimator summary ---\n';
+      const tagEnd   = '\n--- End summary ---';
+      // remove previous appended block if exists
+      brief.value = brief.value.replace(/\n\n--- Estimator summary ---[\s\S]*?--- End summary ---/g, '');
+      brief.value = brief.value + tagStart + summary + tagEnd;
+    }
+  }
+  $('updateBtn').addEventListener('click', estimate);
+  estimate();
+
+  // Also ensure the latest summary is set RIGHT BEFORE the quote form submits
+  document.getElementById('quoteForm').addEventListener('submit', function(){
+    // Recompute safely (covers cases where user didn’t click Update after changing inputs)
+    const priceText = $('price').textContent.replace(/[^\d]/g,'') || '0';
+    const depText   = $('deposit').textContent.replace(/[^\d]/g,'') || '0';
+    const total = parseInt(priceText,10) || 0;
+    const deposit = parseInt(depText,10) || 0;
+    const finalSummary = buildSummary(total, deposit);
+    $('estimator_summary').value = finalSummary;
+
+    // ensure brief contains the latest block
+    const brief = $('brief');
+    if (brief) {
+      brief.value = brief.value.replace(/\n\n--- Estimator summary ---[\s\S]*?--- End summary ---/g, '');
+      brief.value = brief.value + '\n\n--- Estimator summary ---\n' + finalSummary + '\n--- End summary ---';
+    }
+  });
+
+  /* --- Footer year --- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<!-- Schema (edit contact details when ready) -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Bakery",
+  "name":"Betti’s Sweets",
+  "address":{"@type":"PostalAddress","addressLocality":"Manchester","addressCountry":"GB"},
+  "email":"hello@bettissweets.co.uk",
+  "areaServed":"Manchester",
+  "url":"https://example.com"
+}
 </script>
 </body>
 </html>
