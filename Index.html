@@ -1,381 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Betti's Sweets — Custom Cakes in Manchester</title>
-<meta name="description" content="Elegant, handmade custom cakes for weddings, birthdays and celebrations. Design your cake, request a quote, and book online. Reduced sugar, outstanding quality, and unique flavours — based in Manchester, UK.">
-<!-- Favicon (inline) -->
-<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" rx="12" fill="%23fff7f2"/><rect x="10" y="34" width="44" height="14" rx="3" fill="%23cfa38a"/><rect x="14" y="28" width="36" height="6" rx="2" fill="%23e0cab9"/><rect x="31" y="16" width="2" height="12" fill="%23b77e66"/><circle cx="32" cy="14" r="3" fill="%23fad9cf"/></svg>' />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Betti's Sweets — Custom Cakes Manchester</title>
+<meta name="description" content="Elegant handmade cakes for weddings, birthdays & celebrations in Manchester. Customise your cake, request a quote, and follow us on Instagram @betti_sweets.">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
   :root{
     --blush:#F6DDE3; --peach:#FAD9CF; --ivory:#FFF7F2;
     --rose:#B76E79; --rose-gold:#CFA38A; --gold-soft:#D0B48F;
-    --ink:#4A3F3C; --muted:#7A6A66; --white:#fff;
-    --r:18px; --pill:999px; --shadow:0 10px 30px rgba(79,60,54,.12); --shadow-soft:0 6px 20px rgba(79,60,54,.08);
-    --maxw:1100px;
+    --ink:#4A3F3C; --muted:#7A6A66;
+    --shadow:0 8px 24px rgba(0,0,0,0.08);
   }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:#fff}
-  a{color:var(--rose);text-decoration:none} a:hover{text-decoration:underline}
-  .container{max-width:var(--maxw);margin-inline:auto;padding:0 20px}
-
-  header.hero{background:linear-gradient(135deg,var(--blush),#fff);text-align:center;padding:80px 20px}
-  header.hero h1{margin:0 0 8px;font-size:clamp(32px,5vw,48px);color:var(--rose)}
-  header.hero p{color:#6d5e5a;max-width:680px;margin:0 auto}
-  .cta{margin-top:18px}
-  .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border-radius:var(--pill);border:0;cursor:pointer;font-weight:700;box-shadow:var(--shadow-soft)}
-  .btn-primary{background:linear-gradient(135deg,var(--rose-gold),var(--gold-soft));color:#3e2e2a}
-  .btn-primary:hover{filter:brightness(1.03)}
-  section{padding:60px 20px}
-  h2{color:var(--rose);margin:0 0 16px;text-align:center}
-
+  body{margin:0;font-family:'Poppins',sans-serif;color:var(--ink);background:#fff;}
+  h1,h2,h3{font-family:'Great Vibes',cursive;color:var(--rose);}
+  a{color:var(--rose);text-decoration:none;} a:hover{text-decoration:underline;}
+  .btn{padding:12px 24px;border-radius:999px;border:0;cursor:pointer;font-weight:600;
+       background:linear-gradient(135deg,var(--rose-gold),var(--gold-soft));color:#3a2b27;box-shadow:var(--shadow);}
+  .btn:hover{filter:brightness(1.05);}
+  .container{max-width:1100px;margin:auto;padding:0 20px;}
+  section{padding:70px 20px;}
+  header.hero{background:linear-gradient(135deg,var(--blush),#fff);
+              text-align:center;padding:100px 20px;}
+  header.hero h1{font-size:clamp(40px,6vw,64px);margin:0;}
+  header.hero p{max-width:680px;margin:12px auto;color:#5a4b48;}
   /* gallery */
-  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-  .gallery img{width:100%;border-radius:12px;box-shadow:var(--shadow-soft);transition:transform .3s;cursor:zoom-in}
-  .gallery img:hover{transform:scale(1.04)}
-
+  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;}
+  .gallery img{width:100%;border-radius:12px;box-shadow:var(--shadow);cursor:zoom-in;}
   /* estimator */
-  .estimator{max-width:980px;margin:0 auto;background:var(--ivory);border:1px solid #f1e3db;border-radius:16px;padding:22px;box-shadow:var(--shadow-soft)}
-  .grid{display:grid;gap:16px}
-  .grid-2{grid-template-columns:1fr 1fr}
-  @media (max-width:800px){.grid-2{grid-template-columns:1fr}}
-  label.b{font-weight:600;color:#4f423e;margin-bottom:6px;display:block}
-  select,input[type="text"],input[type="email"],textarea{width:100%;padding:12px;border:1px solid #dccac1;border-radius:10px;background:#fff}
-  .extras{display:grid;gap:10px}
-  .result-box{margin-top:10px;padding:14px;border:1px solid #ead9d1;background:#fff;border-radius:10px;text-align:center}
-  .result-box b{color:var(--rose)}
-  .card{max-width:820px;margin:0 auto;background:#fff;border:1px solid #efdfd7;border-radius:16px;padding:24px;box-shadow:var(--shadow-soft)}
-  .muted{color:var(--muted);font-size:.95rem}
-
+  .estimator{background:var(--ivory);padding:24px;border-radius:16px;box-shadow:var(--shadow);}
+  label{font-weight:600;color:#4f423e;display:block;margin-bottom:6px;}
+  select,input,textarea{width:100%;padding:10px;border:1px solid #e0d1c9;border-radius:8px;}
+  .result-box{text-align:center;margin-top:12px;padding:12px;background:#fff;border-radius:10px;box-shadow:var(--shadow);}
+  .muted{color:var(--muted);font-size:.95rem;}
   /* footer */
-  footer{border-top:1px solid #eee;background:linear-gradient(180deg,#fff,var(--ivory))}
-  .socials{display:flex;gap:14px;justify-content:center;margin:10px 0 0}
-  .socials a{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--rose-gold),var(--gold-soft));display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-soft);transition:.25s}
-  .socials a:hover{transform:scale(1.1);filter:brightness(1.07)}
-  .socials svg{fill:#fff;width:20px;height:20px}
-
-  /* thank-you overlay */
-  .overlay{position:fixed;inset:0;background:linear-gradient(135deg,var(--blush),#fff);display:none;align-items:center;justify-content:center;z-index:50}
-  .overlay.show{display:flex}
-  .ty-box{position:relative;z-index:2;background:#fff;padding:40px;border-radius:16px;box-shadow:var(--shadow);max-width:520px;text-align:center;animation:fadeIn .5s ease}
-  .ty-box h3{margin:0 0 8px;color:var(--rose);font-size:clamp(24px,4vw,30px)}
-  .confetti{position:fixed;inset:0;pointer-events:none;z-index:1}
-  .confetti span{position:absolute;width:8px;height:14px;border-radius:2px;background:var(--rose);opacity:.85;animation:fall 3s linear infinite}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes fall{0%{transform:translateY(-100%) rotate(0)}100%{transform:translateY(110vh) rotate(360deg)}}
-
-  /* lightbox */
-  #lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:100}
-  #lightbox.show{display:flex}
-  #lightbox img{max-width:90%;max-height:90%;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
-  #lightbox .close{position:absolute;top:18px;right:22px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,0.9);display:grid;place-items:center;font-size:22px;font-weight:700;color:#333;cursor:pointer;user-select:none;z-index:101;box-shadow:0 6px 16px rgba(0,0,0,.25);transition:transform .2s, opacity .2s}
-  #lightbox .close:hover{transform:scale(1.06)}
-  #lightbox .nav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
-  #lightbox .arrow{pointer-events:auto;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.85);display:grid;place-items:center;font-size:22px;font-weight:700;color:#333;margin:0 16px;cursor:pointer;user-select:none;transition:opacity .25s, transform .2s;box-shadow:0 6px 16px rgba(0,0,0,.25);opacity:0}
-  #lightbox.show:hover .arrow{opacity:1}
-  #lightbox .arrow:hover{transform:scale(1.06)}
-  #lightbox .counter{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.5);color:#fff;padding:6px 10px;border-radius:12px;font-size:14px}
+  footer{background:linear-gradient(180deg,#fff,var(--ivory));border-top:1px solid #eee;text-align:center;padding:40px 20px;}
+  .socials{display:flex;gap:16px;justify-content:center;margin-top:10px;}
+  .socials a{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+             background:linear-gradient(135deg,var(--rose-gold),var(--gold-soft));box-shadow:var(--shadow);}
+  .socials svg{fill:#fff;width:22px;height:22px;}
+  /* overlay thank-you */
+  .overlay{position:fixed;inset:0;background:rgba(255,240,243,.9);display:none;align-items:center;justify-content:center;z-index:100;}
+  .overlay.show{display:flex;}
+  .ty-box{background:#fff;padding:40px;border-radius:16px;box-shadow:var(--shadow);max-width:500px;text-align:center;}
+  /* floating instagram button */
+  .insta-float{position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:50%;
+               background:linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+               display:flex;align-items:center;justify-content:center;z-index:200;box-shadow:var(--shadow);}
+  .insta-float svg{fill:#fff;width:28px;height:28px;}
 </style>
-
-<!-- GA4 (replace G-XXXXXXXXXX) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date()); gtag('config', 'G-XXXXXXXXXX');
-</script>
 </head>
 <body>
 
-<!-- HERO -->
 <header class="hero">
   <div class="container">
     <h1>Betti's Sweets</h1>
-    <p>Elegant, handmade cakes in Manchester — custom-designed with reduced sugar, unique flavours, and a soft, romantic aesthetic inspired by pastel balloons & florals.</p>
-    <div class="cta">
-      <button class="btn btn-primary" onclick="document.getElementById('estimator').scrollIntoView({behavior:'smooth'})">Design your cake</button>
-    </div>
+    <p>Elegant handmade cakes for weddings, birthdays & celebrations. Soft, romantic style inspired by pastel balloons & florals.</p>
+    <a href="#estimator" class="btn">Design your cake</a>
   </div>
 </header>
 
-<!-- GALLERY -->
 <section>
   <div class="container">
     <h2>Our Creations</h2>
     <div class="gallery">
-      <img src="https://images.unsplash.com/photo-1562777717-dc6984f65a63?q=80&w=1000&auto=format&fit=crop" alt="Wedding cake" loading="lazy">
-      <img src="https://images.unsplash.com/photo-1519861531473-9200262188bf?q=80&w=1000&auto=format&fit=crop" alt="Pastel balloons & cake" loading="lazy">
-      <img src="https://images.unsplash.com/photo-1541976076758-347942db1970?q=80&w=1000&auto=format&fit=crop" alt="Floral cake" loading="lazy">
-      <img src="https://images.unsplash.com/photo-1514517220030-69eaa39b0a09?q=80&w=1000&auto=format&fit=crop" alt="Cupcakes" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1562777717-dc6984f65a63?q=80&w=1000&auto=format&fit=crop" alt="">
+      <img src="https://images.unsplash.com/photo-1519861531473-9200262188bf?q=80&w=1000&auto=format&fit=crop" alt="">
+      <img src="https://images.unsplash.com/photo-1541976076758-347942db1970?q=80&w=1000&auto=format&fit=crop" alt="">
+      <img src="https://images.unsplash.com/photo-1514517220030-69eaa39b0a09?q=80&w=1000&auto=format&fit=crop" alt="">
     </div>
   </div>
 </section>
 
-<!-- ESTIMATOR -->
+<!-- Instagram highlight -->
+<section style="background:var(--ivory);">
+  <div class="container" style="text-align:center;">
+    <h2>Follow us on Instagram</h2>
+    <p class="muted">Daily inspiration, new designs & behind the scenes</p>
+    <div style="margin:20px 0">
+      <!-- Replace with your widget embed code -->
+      <iframe src="https://cdn.lightwidget.com/widgets/demo.html" style="width:100%;border:0;height:400px;" scrolling="no"></iframe>
+    </div>
+    <a href="https://www.instagram.com/betti_sweets" target="_blank" class="btn">@betti_sweets</a>
+  </div>
+</section>
+
 <section id="estimator">
   <div class="container">
-    <h2>Design Your Cake — Instant Estimate</h2>
+    <h2>Design Your Cake</h2>
     <div class="estimator">
-      <div class="grid grid-2">
-        <div>
-          <label class="b" for="cakeSize">Size</label>
-          <select id="cakeSize">
-            <option value="6">6" (8–10 servings)</option>
-            <option value="8">8" (16–20 servings)</option>
-            <option value="10">10" (28–36 servings)</option>
-            <option value="12">12" (44–56 servings)</option>
-          </select>
-        </div>
-        <div>
-          <label class="b" for="cakeTiers">Tiers</label>
-          <select id="cakeTiers">
-            <option value="1">Single</option>
-            <option value="2">Two tiers</option>
-            <option value="3">Three tiers</option>
-          </select>
-        </div>
-        <div>
-          <label class="b" for="cakeFinish">Finish</label>
-          <select id="cakeFinish">
-            <option value="buttercream">Buttercream</option>
-            <option value="ganache">Ganache</option>
-            <option value="fondant">Fondant</option>
-          </select>
-        </div>
-        <div class="extras">
-          <label><input type="checkbox" id="extraFresh"> Fresh florals (+£18)</label>
-          <label><input type="checkbox" id="extraSugar"> Sugar flowers (+£45)</label>
-          <label><input type="checkbox" id="extraTopper"> Custom topper (+£20)</label>
-          <label><input type="checkbox" id="extraReduced"> Reduced sugar (+£8)</label>
-        </div>
-      </div>
-      <div class="result-box">
-        <b>Total:</b> <span id="estTotal">£—</span> &nbsp; | &nbsp; <b>Deposit (30%):</b> <span id="estDeposit">£—</span>
-      </div>
-      <div style="text-align:center;margin-top:12px">
-        <button id="btnEstimate" class="btn btn-primary">Update estimate</button>
-      </div>
+      <label>Size</label>
+      <select id="cakeSize"><option value="6">6"</option><option value="8">8"</option><option value="10">10"</option></select>
+      <label>Tiers</label>
+      <select id="cakeTiers"><option value="1">1</option><option value="2">2</option></select>
+      <label>Finish</label>
+      <select id="cakeFinish"><option value="buttercream">Buttercream</option><option value="fondant">Fondant</option></select>
+      <label><input type="checkbox" id="extraTopper"> Custom Topper (+£20)</label>
+      <div class="result-box"><b>Total:</b> <span id="estTotal">£—</span> | <b>Deposit:</b> <span id="estDeposit">£—</span></div>
+      <button id="btnEstimate" class="btn" style="margin-top:12px">Update Estimate</button>
     </div>
   </div>
 </section>
 
-<!-- ORDER FORM -->
 <section>
   <div class="container">
     <h2>Request Your Cake</h2>
-    <div class="card">
-      <form id="orderForm" name="order" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="order">
-        <p style="display:none"><label>Don’t fill this out: <input name="bot-field"></label></p>
-
-        <div class="grid grid-2">
-          <div>
-            <label class="b">Name</label>
-            <input type="text" name="name" placeholder="Your name" required>
-          </div>
-          <div>
-            <label class="b">Email</label>
-            <input type="email" name="email" placeholder="you@email.com" required>
-          </div>
-        </div>
-        <label class="b" style="margin-top:8px">Brief (sizes, colours, flavours, allergens)</label>
-        <textarea name="details" rows="5" placeholder="Tell us what you’d like…" required></textarea>
-
-        <input type="hidden" name="estimator_summary" id="estimator_summary">
-
-        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:10px">
-          <button type="submit" class="btn btn-primary">Send request</button>
-          <span id="formStatus" class="muted"></span>
-        </div>
-      </form>
-    </div>
+    <form id="orderForm" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="order">
+      <label>Name</label><input type="text" name="name" required>
+      <label>Email</label><input type="email" name="email" required>
+      <label>Details</label><textarea name="details" rows="4"></textarea>
+      <input type="hidden" name="estimator_summary" id="estimator_summary">
+      <button type="submit" class="btn" style="margin-top:12px">Send Request</button>
+      <span id="formStatus" class="muted"></span>
+    </form>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="container" style="text-align:center;padding:34px 20px">
+  <div class="container">
+    <p>© <span id="year"></span> Betti's Sweets — Manchester</p>
     <div class="socials">
-      <a href="https://www.instagram.com/betti_sweets?igsh=OHg4Y28yeGFvcWI2&utm_source=qr" target="_blank" aria-label="Instagram">
-        <svg viewBox="0 0 24 24"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 2.5c-2.5 0-4.5 2-4.5 4.5s2 4.5 4.5 4.5 4.5-2 4.5-4.5-2-4.5-4.5-4.5z"/></svg>
-      </a>
-      <a href="https://www.facebook.com/share/1GXciQpokT/?mibextid=wwXIfr" target="_blank" aria-label="Facebook">
-        <svg viewBox="0 0 24 24"><path d="M22 12c0-5.5-4.5-10-10-10S2 6.5 2 12c0 5 3.7 9.2 8.5 9.9v-7H8v-3h2.5V9.5C10.5 7 12 5.5 14.7 5.5c1.3 0 2.7.2 2.7.2v3H16c-1.5 0-2 .9-2 1.9V12h3.3l-.5 3h-2.8v7C18.3 21.2 22 17 22 12z"/></svg>
-      </a>
-      <a href="https://www.tiktok.com/@bettis.sweets?_t=ZN-8z0ycNHkPpO&_r=1" target="_blank" aria-label="TikTok">
-        <svg viewBox="0 0 24 24"><path d="M12 2h2.7c.2 1.5.9 2.7 2.2 3.6 1 .7 2.1.9 3.3 1v3.1c-1.2 0-2.3-.3-3.3-1-.5-.3-1-.8-1.4-1.3v6.8c0 3.3-2.4 6.3-5.7 6.7-3.8.5-7.1-2.4-7.1-6.2 0-3.5 2.9-6.3 6.5-6.3.4 0 .9 0 1.3.1v3.2c-.5-.1-.9-.1-1.3-.1-1.8 0-3.3 1.4-3.3 3.2 0 1.8 1.5 3.1 3.3 2.9 1.5-.1 2.8-1.5 2.8-3V2z"/></svg>
-      </a>
+      <a href="https://www.instagram.com/betti_sweets" target="_blank"><svg viewBox="0 0 24 24"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8..."/></svg></a>
+      <a href="https://www.facebook.com/share/1GXciQpokT/" target="_blank"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.5..."/></svg></a>
     </div>
-    <p class="muted" style="margin:12px 0 0">© <span id="year"></span> Betti's Sweets • Manchester, UK</p>
   </div>
 </footer>
 
-<!-- THANK YOU OVERLAY -->
-<div id="tyOverlay" class="overlay" aria-hidden="true">
-  <div class="confetti" id="confetti"></div>
-  <div class="ty-box">
-    <h3>🎉 Thank you!</h3>
-    <p class="muted" style="margin:6px 0 16px">Your request has been received. We’ll be in touch soon to confirm the details.</p>
-    <button class="btn btn-primary" onclick="hideThankYou()">Back to homepage</button>
-    <p class="muted" style="margin-top:10px">You’ll be redirected automatically in a few seconds…</p>
-  </div>
-</div>
+<!-- floating insta -->
+<a href="https://www.instagram.com/betti_sweets" target="_blank" class="insta-float">
+  <svg viewBox="0 0 24 24"><path d="M7 2C4.2 2 2 4.2..."/></svg>
+</a>
 
-<!-- LIGHTBOX -->
-<div id="lightbox" onclick="hideLightbox()">
-  <div class="close" onclick="hideLightbox();event.stopPropagation();" aria-label="Close">×</div>
-  <img id="lightbox-img" src="" alt="" />
-  <div class="nav" onclick="event.stopPropagation()">
-    <div class="arrow" id="lb-prev" aria-label="Previous">‹</div>
-    <div class="arrow" id="lb-next" aria-label="Next">›</div>
-  </div>
-  <div class="counter" id="lb-count">1 / 1</div>
-</div>
+<div id="tyOverlay" class="overlay"><div class="ty-box"><h3>🎉 Thank you!</h3><p>We’ll be in touch soon.</p><button onclick="document.getElementById('tyOverlay').classList.remove('show')" class="btn">Close</button></div></div>
 
 <script>
-  // ---------- Estimator ----------
-  const PRICING = {
-    base: {6:55, 8:85, 10:120, 12:165},
-    tiers: {1:1.0, 2:2.1, 3:3.3},
-    finish: {buttercream:1.0, ganache:1.12, fondant:1.22},
-    extras: {fresh:18, sugar:45, topper:20, reduced:8}
-  };
-  const els = {
-    size: document.getElementById('cakeSize'),
-    tiers: document.getElementById('cakeTiers'),
-    finish: document.getElementById('cakeFinish'),
-    fresh: document.getElementById('extraFresh'),
-    sugar: document.getElementById('extraSugar'),
-    topper: document.getElementById('extraTopper'),
-    reduced: document.getElementById('extraReduced'),
-    total: document.getElementById('estTotal'),
-    dep: document.getElementById('estDeposit')
-  };
-  function estimate(){
-    const size = +els.size.value, tiers = +els.tiers.value, fin = els.finish.value;
-    let subtotal = (PRICING.base[size]||0) * (PRICING.tiers[tiers]||1) * (PRICING.finish[fin]||1);
-    if(els.fresh.checked)  subtotal += PRICING.extras.fresh;
-    if(els.sugar.checked)  subtotal += PRICING.extras.sugar;
-    if(els.topper.checked) subtotal += PRICING.extras.topper;
-    if(els.reduced.checked)subtotal += PRICING.extras.reduced;
-    const total = Math.round(subtotal), deposit = Math.round(total*0.3);
-    els.total.textContent = `£${total}`; els.dep.textContent = `£${deposit}`;
-  }
-  document.getElementById('btnEstimate').addEventListener('click', estimate);
-  estimate();
-
-  // capture a readable summary for the form
-  function updateSummary(){
-    const extras = [
-      els.fresh.checked?'Fresh florals':null,
-      els.sugar.checked?'Sugar flowers':null,
-      els.topper.checked?'Topper':null,
-      els.reduced.checked?'Reduced sugar':null
-    ].filter(Boolean).join(', ') || 'None';
-    const summary = `Size: ${els.size.value}", Tiers: ${els.tiers.value}, Finish: ${els.finish.value}, Extras: ${extras}, Total: ${els.total.textContent}, Deposit: ${els.dep.textContent}`;
-    const hidden = document.getElementById('estimator_summary');
-    if(hidden) hidden.value = summary;
-  }
-
-  // ---------- Netlify AJAX submit → inline success → thank-you overlay ----------
-  const form = document.getElementById('orderForm');
-  const statusEl = document.getElementById('formStatus');
-  function encodeFormData(formEl){ return new URLSearchParams(new FormData(formEl)).toString(); }
-
-  function showThankYou(){
-    const overlay = document.getElementById('tyOverlay');
-    overlay.classList.add('show');
-    overlay.setAttribute('aria-hidden','false');
-    // Confetti
-    const c = document.getElementById('confetti'); c.innerHTML='';
-    const colors = ['#b76e79','#d4a373','#eacda3','#fff0f3'];
-    for(let i=0;i<70;i++){
-      const s = document.createElement('span');
-      s.style.left = Math.random()*100+'vw';
-      s.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
-      s.style.animationDuration = (2+Math.random()*2)+'s';
-      s.style.opacity = (0.7+Math.random()*0.3).toFixed(2);
-      c.appendChild(s);
-    }
-    // auto hide after 7s
-    setTimeout(()=>{ overlay.classList.remove('show'); overlay.setAttribute('aria-hidden','true'); }, 7000);
-  }
-  function hideThankYou(){
-    const overlay = document.getElementById('tyOverlay');
-    overlay.classList.remove('show'); overlay.setAttribute('aria-hidden','true');
-  }
-
-  form.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    updateSummary();
-    statusEl.textContent = 'Sending…';
-    try {
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: {'Content-Type':'application/x-www-form-urlencoded'},
-        body: encodeFormData(form)
-      });
-      if(res.ok){
-        statusEl.textContent = 'Success!';
-        showThankYou();
-      } else { throw new Error('Network error'); }
-    } catch(err){
-      statusEl.textContent = 'Something went wrong. Please try again or email us.';
-    }
-  });
-
-  // ---------- Lightbox (arrows + keyboard + swipe + close) ----------
-  const galleryImgs = Array.from(document.querySelectorAll('.gallery img'));
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const lbPrev = document.getElementById('lb-prev');
-  const lbNext = document.getElementById('lb-next');
-  const lbCount = document.getElementById('lb-count');
-  let lbIndex = 0;
-
-  function showImage(i){
-    lbIndex = (i + galleryImgs.length) % galleryImgs.length;
-    // Try higher-res if Unsplash has w= param
-    const src = galleryImgs[lbIndex].src.replace(/w=\d+/,'w=1600');
-    lightboxImg.src = src;
-    lbCount.textContent = `${lbIndex+1} / ${galleryImgs.length}`;
-    lightbox.classList.add('show');
-  }
-  function hideLightbox(){
-    lightbox.classList.remove('show');
-    lightboxImg.src = '';
-  }
-  galleryImgs.forEach((img,i)=> img.addEventListener('click', e=>{ e.stopPropagation(); showImage(i); }));
-  lbNext.addEventListener('click', ()=> showImage(lbIndex+1));
-  lbPrev.addEventListener('click', ()=> showImage(lbIndex-1));
-  document.addEventListener('keydown', (e)=>{
-    if(!lightbox.classList.contains('show')) return;
-    if(e.key==='ArrowRight') showImage(lbIndex+1);
-    else if(e.key==='ArrowLeft') showImage(lbIndex-1);
-    else if(e.key==='Escape') hideLightbox();
-  });
-  let touchStartX=null;
-  lightbox.addEventListener('touchstart', e=>{ touchStartX = e.changedTouches[0].clientX; }, {passive:true});
-  lightbox.addEventListener('touchend', e=>{
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if(Math.abs(dx)>40) (dx<0)?showImage(lbIndex+1):showImage(lbIndex-1);
-  }, {passive:true});
-
-  // year
-  document.getElementById('year')?.textContent = new Date().getFullYear();
+  const PRICING={base:{6:55,8:85,10:120},tiers:{1:1,2:2},finish:{buttercream:1,fondant:1.2},extras:{topper:20}};
+  function estimate(){let total=PRICING.base[+cakeSize.value]*PRICING.tiers[+cakeTiers.value]*PRICING.finish[cakeFinish.value];
+    if(extraTopper.checked) total+=PRICING.extras.topper;
+    estTotal.textContent="£"+total; estDeposit.textContent="£"+Math.round(total*0.3);}
+  btnEstimate.onclick=estimate; estimate();
+  orderForm.onsubmit=async e=>{e.preventDefault();document.getElementById('tyOverlay').classList.add('show');};
+  document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
-<!-- Local Business schema -->
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Bakery",
-  "name":"Betti’s Sweets",
-  "address":{"@type":"PostalAddress","addressLocality":"Manchester","addressCountry":"GB"},
-  "areaServed":"Manchester",
-  "url":"https://example.com"
-}
-</script>
 </body>
 </html>
