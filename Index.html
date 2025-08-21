@@ -64,13 +64,19 @@
     header{position:sticky;top:0;background:rgba(255,255,255,.8);backdrop-filter:saturate(140%) blur(8px);z-index:20;border-bottom:1px solid #f3e8e2}
     .nav{display:flex;align-items:center;justify-content:space-between;height:84px} /* more vertical space */
     .brand{display:flex;align-items:center;gap:18px}
-    .logo img{
-      height: 64px;           /* larger, crisp logo */
-      width: auto;
-      display:block;
-      border-radius:12px;      /* remove if the logo is not square */
-      box-shadow:inset 0 0 0 2px rgba(255,255,255,.6), var(--shadow-soft);
-    }
+    .logo img {
+  height: 90px;      /* bigger default */
+  max-height: 90px;  /* ensures it won’t overflow */
+  width: auto;
+  display: block;
+  box-shadow: none;  /* optional: remove border effect for a clean logo */
+  border-radius: 0;  /* logos aren’t usually rounded */
+}
+@media (max-width: 900px) {
+  .logo img {
+    height: 60px;    /* scale down nicely on smaller screens */
+  }
+}
     /* keep name for screen readers only */
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     nav a{margin-left:22px;font-weight:500}
