@@ -64,7 +64,7 @@
 
     /* Header */
     header{position:sticky;top:0;background:rgba(255,255,255,.85);backdrop-filter:saturate(140%) blur(8px);z-index:30;border-bottom:1px solid #f3e8e2}
-    .nav{display:flex;align-items:center;justify-content:space-between;height:88px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding-block:14px} /* padding instead of fixed height */
     .brand{display:flex;align-items:center;gap:16px}
     .logo img{height:110px;width:auto;display:block}
     nav.site-nav{display:flex}
@@ -108,15 +108,15 @@
       nav.site-nav{display:none}
       .menu-toggle{display:inline-flex}
       .icon-btn{display:inline-flex}
-      .nav{height:78px}
       .mobile-panel{display:block}
+      .nav{padding-block:10px}
     }
 
     .hero{background:linear-gradient(180deg,var(--ivory),#fff 60%);}
     .hero-inner{display:grid;grid-template-columns:1.25fr 1fr;gap:36px;align-items:center;min-height:72vh}
     @media (max-width:980px){.hero-inner{grid-template-columns:1fr}}
     .eyebrow{font:600 13px var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--rose-gold-deep)}
-    .hero h2{font:700 clamp(34px,5vw,56px)/1.05 var(--font-heading);margin:.4em 0}
+    .hero h1{font:700 clamp(34px,5vw,56px)/1.05 var(--font-heading);margin:.4em 0}
     .script{font-family:var(--font-accent);font-size:clamp(20px,3vw,28px);color:var(--muted)}
     .hero-card{background:var(--white);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
     .hero-card img{width:100%;height:auto;border-radius:16px;object-fit:cover}
@@ -195,7 +195,7 @@
       <span class="sr-only">Betti’s Sweets</span>
       <div class="logo">
         <!-- Use your uploaded SVG -->
-        <img src="/logo.svg" alt="" role="presentation">
+        <img src="/Betti-s-Sweets/logo.svg" alt="" role="presentation">
       </div>
     </a>
 
@@ -248,7 +248,7 @@
   <div class="container hero-inner">
     <div>
       <p class="eyebrow">Custom Cakes • Manchester, UK</p>
-      <h2>Elegant, handmade cakes for weddings, birthdays & celebrations.</h2>
+      <h1>Elegant, handmade cakes for weddings, birthdays & celebrations.</h1>
       <p class="script">fresh & tasty — artistic</p>
       <div class="hero-pills" role="list" aria-label="Key features" style="display:flex;gap:10px;flex-wrap:wrap;margin:18px 0">
         <span class="pill" role="listitem">Reduced sugar</span>
@@ -515,6 +515,8 @@
     toggle.setAttribute('aria-expanded', expanded);
     panel.setAttribute('aria-hidden', (!expanded).toString());
   }
+  // ensure initial ARIA state
+  setAria(false);
 
   toggle.addEventListener('click', () => {
     const isOpen = toggle.classList.toggle('active');
@@ -554,21 +556,47 @@
 
   const $=id=>document.getElementById(id);
   const pricing={base:{6:55,8:85,10:120,12:165},tierMult:{1:1,2:2.1,3:3.3},finish:{buttercream:1,ganache:1.12,fondant:1.22},extras:{freshFlorals:18,sugarFlorals:45,topper:20,reducedSugar:8}};
+
   function buildSummary(total,deposit){
-    const extras=[$('freshFlorals')?.checked?'Fresh florals':null,$('sugarFlorals')?.checked?'Sugar flowers':null,$('topper')?.checked?'Custom topper':null,$('reducedSugar')?.checked?'Reduced sugar':null].filter(Boolean).join(', ')||'None';
-    return [`Occasion: ${$('occasion').value}`,`Size: ${$('size').value}"`,`Tiers: ${$('tiers').value}`,`Finish: ${$('finish').value}`,`Extras: ${extras}`,`Preferred collection date: ${$('date').value||'—'}`,`Estimate: £${total} (Deposit 50%: £${deposit})`,`Collection only`].join(' | ');
+    // safer guards (no optional chaining)
+    const freshEl=$('freshFlorals'), sugarEl=$('sugarFlorals'), topEl=$('topper'), redEl=$('reducedSugar');
+    const extras=[
+      freshEl && freshEl.checked ? 'Fresh florals' : null,
+      sugarEl && sugarEl.checked ? 'Sugar flowers' : null,
+      topEl && topEl.checked ? 'Custom topper' : null,
+      redEl && redEl.checked ? 'Reduced sugar' : null
+    ].filter(Boolean).join(', ') || 'None';
+
+    return [
+      'Occasion: ' + ($('occasion') ? $('occasion').value : '—'),
+      'Size: ' + ($('size') ? $('size').value + '"' : '—'),
+      'Tiers: ' + ($('tiers') ? $('tiers').value : '—'),
+      'Finish: ' + ($('finish') ? $('finish').value : '—'),
+      'Extras: ' + extras,
+      'Preferred collection date: ' + ($('date') && $('date').value ? $('date').value : '—'),
+      'Estimate: £' + total + ' (Deposit 50%: £' + deposit + ')',
+      'Collection only'
+    ].join(' | ');
   }
+
   function estimate(){
-    const size=+$('size').value, tiers=+$('tiers').value, finish=$('finish').value;
-    let subtotal=pricing.base[size]*pricing.tierMult[tiers]*pricing.finish[finish];
-    if($('freshFlorals').checked) subtotal+=pricing.extras.freshFlorals;
-    if($('sugarFlorals').checked) subtotal+=pricing.extras.sugarFlorals;
-    if($('topper').checked) subtotal+=pricing.extras.topper;
-    if($('reducedSugar').checked) subtotal+=pricing.extras.reducedSugar;
+    const sizeEl=$('size'), tiersEl=$('tiers'), finishEl=$('finish');
+    const size = sizeEl ? +sizeEl.value : 8;
+    const tiers = tiersEl ? +tiersEl.value : 1;
+    const finish = finishEl ? finishEl.value : 'buttercream';
+
+    let subtotal = (pricing.base[size]||0) * (pricing.tierMult[tiers]||1) * (pricing.finish[finish]||1);
+    if($('freshFlorals') && $('freshFlorals').checked) subtotal += pricing.extras.freshFlorals;
+    if($('sugarFlorals') && $('sugarFlorals').checked) subtotal += pricing.extras.sugarFlorals;
+    if($('topper') && $('topper').checked) subtotal += pricing.extras.topper;
+    if($('reducedSugar') && $('reducedSugar').checked) subtotal += pricing.extras.reducedSugar;
+
     const total=Math.round(subtotal), deposit=Math.round(total*0.50);
-    $('price').textContent=`£${total}`; $('deposit').textContent=`Deposit (50%): £${deposit}`;
+    if($('price')) $('price').textContent='£'+total;
+    if($('deposit')) $('deposit').textContent='Deposit (50%): £'+deposit;
+
     const summary=buildSummary(total,deposit);
-    const note=$('est-note'); if(note) note.textContent=`Summary ready: ${summary}`;
+    const note=$('est-note'); if(note) note.textContent='Summary ready: ' + summary;
   }
   const updateBtn=$('updateBtn'); if(updateBtn){ updateBtn.addEventListener('click',estimate); }
   estimate();
@@ -577,7 +605,21 @@
 </script>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Bakery","name":"Betti’s Sweets","address":{"@type":"PostalAddress","addressLocality":"Manchester","addressCountry":"GB"},"email":"hello@bettissweets.co.uk","telephone":"+447761297615","areaServed":"Manchester","url":"https://bettissweets.co.uk"}
+{
+  "@context":"https://schema.org",
+  "@type":"Bakery",
+  "name":"Betti’s Sweets",
+  "address":{"@type":"PostalAddress","addressLocality":"Manchester","addressCountry":"GB"},
+  "email":"hello@bettissweets.co.uk",
+  "telephone":"+447761297615",
+  "areaServed":"Manchester",
+  "url":"https://bettissweets.co.uk",
+  "sameAs":[
+    "https://www.instagram.com/betti_sweets/",
+    "https://www.facebook.com/share/1GXciQpokT/",
+    "https://www.tiktok.com/@bettis.sweets"
+  ]
+}
 </script>
 </body>
 </html>
