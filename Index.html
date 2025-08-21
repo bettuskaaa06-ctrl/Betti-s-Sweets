@@ -155,11 +155,13 @@
     .social a{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--rose-gold);color:#fff;box-shadow:var(--shadow-soft)}
     .social svg{width:18px;height:18px;fill:#fff}
 
-    .wa-float{position:fixed;right:18px;bottom:18px;z-index:120;width:50px;height:50px;border-radius:50%;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#25D366,#128C7E)}
+    /* WhatsApp floating button: show ONLY on mobile */
+    .wa-float{position:fixed;right:18px;bottom:18px;z-index:120;width:50px;height:50px;border-radius:50%;box-shadow:var(--shadow);display:none;align-items:center;justify-content:center;background:linear-gradient(135deg,#25D366,#128C7E)}
     .wa-float svg{width:26px;height:26px;fill:#fff}
     .wa-float:hover{filter:brightness(1.05)}
     @media (prefers-reduced-motion:no-preference){.wa-float{transition:transform .15s ease, filter .15s ease}.wa-float:hover{transform:translateY(-2px)}}
-    @media (max-width:820px){.wa-float{display:none}}
+    /* Visible only under 820px (mobile/tablet) */
+    @media (max-width:820px){.wa-float{display:flex}}
   </style>
 </head>
 <body>
@@ -167,7 +169,10 @@
 <header>
   <div class="container nav">
     <div class="brand">
-      <div class="logo"><img src="https://i.imgur.com/qS8XGqR.png" alt="Betti’s Sweets logo"></div>
+      <!-- Updated logo path -->
+      <div class="logo">
+        <img src="/Betti-s-Sweets/logo.svg" alt="Betti’s Sweets logo" width="42" height="42">
+      </div>
       <h1>Betti’s Sweets</h1>
     </div>
     <nav aria-label="Primary">
@@ -450,6 +455,7 @@
   </div>
 </footer>
 
+<!-- WhatsApp floating button: mobile only -->
 <a class="wa-float" aria-label="Chat on WhatsApp"
    href="https://wa.me/447761297615?text=Hi%20Betti%E2%80%99s%20Sweets%2C%20I%27d%20like%20to%20enquire%20about%20a%20custom%20cake."
    target="_blank" rel="noopener">
