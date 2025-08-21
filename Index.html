@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Betti’s Sweets — Custom Cakes in Manchester</title>
-  <meta name="description" content="Elegant, handmade custom cakes for weddings, birthdays and celebrations. Design your cake, request a quote, and book online. Reduced sugar, outstanding quality, unique flavours — based in Manchester, UK. Collection only." />
+  <meta name="description" content="Elegant, handmade custom cakes for weddings, birthdays and celebrations. Design your cake, request a quote, and book online. Fresh, tasty flavours with vegan & gluten-free options — based in Manchester, UK. Collection only." />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#F6DDE3" />
   <link rel="canonical" href="https://bettissweets.co.uk/" />
@@ -18,14 +18,16 @@
 
   <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><text y="52" font-size="52">🎂</text></svg>'>
 
+  <!-- Social previews -->
   <meta property="og:title" content="Betti’s Sweets — Custom Cakes in Manchester">
-  <meta property="og:description" content="Elegant, handmade cakes. Design online, request a quote, and book your date with a deposit. Collection only.">
+  <meta property="og:description" content="Fresh & tasty handmade cakes. Design online, request a quote, and book your date with a 50% deposit. Collection only. Vegan & gluten-free available.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://images.unsplash.com/photo-1527515545081-5db817172677?q=80&w=1200&auto=format&fit=crop">
   <meta property="og:image:alt" content="Soft pastel celebration cake">
   <meta name="twitter:card" content="summary_large_image">
 
-  <script defer data-domain="bettissweets.co.uk" src="https://plausible.io/js/script.js"></script>
+  <!-- (Optional) Analytics -->
+  <!-- <script defer data-domain="bettissweets.co.uk" src="https://plausible.io/js/script.js"></script> -->
 
   <style>
     :root{
@@ -72,7 +74,7 @@
     .btn-primary:hover{filter:saturate(105%) brightness(1.02)}
     .btn-ghost{background:var(--white);color:var(--ink);border:1px solid #efdfd7}
 
-    /* Subtle top quick actions */
+    /* Subtle top quick actions (mobile) */
     .mobile-actions{position:sticky;top:74px;z-index:19;border-bottom:1px solid #f3e8e2;display:none;background:rgba(255,255,255,.75);backdrop-filter:blur(6px)}
     .mobile-actions .wrap{display:flex;gap:10px;justify-content:flex-end;align-items:center;padding:6px 16px}
     .quick-btn{display:inline-flex;gap:6px;align-items:center;justify-content:center;padding:8px 10px;border-radius:12px;font-weight:600;font-size:14px;background:transparent;border:1px solid #ead9d2;color:#4A3F3C; box-shadow:none}
@@ -178,7 +180,7 @@
   </div>
 </header>
 
-<!-- Subtle top quick actions (icon + text, ghost style) -->
+<!-- Subtle top quick actions -->
 <div class="mobile-actions" role="region" aria-label="Quick actions">
   <div class="wrap container" style="padding-inline:clamp(16px,4vw,28px)">
     <a class="quick-btn" href="tel:+447761297615" aria-label="Call Betti’s Sweets">
@@ -197,7 +199,7 @@
     <div>
       <p class="eyebrow">Custom Cakes • Manchester, UK</p>
       <h2>Elegant, handmade cakes for weddings, birthdays & celebrations.</h2>
-      <p class="script">soft, romantic & artistic</p>
+      <p class="script">fresh & tasty — artistic</p>
       <div class="hero-pills" role="list" aria-label="Key features" style="display:flex;gap:10px;flex-wrap:wrap;margin:18px 0">
         <span class="pill" role="listitem">Reduced sugar</span>
         <span class="pill" role="listitem">Unique flavours</span>
@@ -217,8 +219,9 @@
   <div class="container grid grid-2 section-card" id="about">
     <div>
       <h3 id="about-title">About Betti</h3>
-      <p>After a decade of baking for friends and family, Betti turned her passion into a studio focused on elegant, handcrafted cakes. Every design starts with flavour — then we layer colour, texture and details to match your day.</p>
-      <p class="sub">We’re a small Manchester home bakery, so each cake is made to order with care. <b>Collection only</b>.</p>
+      <p>Betti has more than a decade of experience in creating custom cakes, desserts and pastries.</p>
+      <p>She turned her passion into a studio focused on elegant, handcrafted cakes. Every design starts with flavour — then we layer colour, texture and details to match your day.</p>
+      <p class="sub"><b>Collection only</b> from our Manchester home bakery.</p>
       <a class="btn btn-primary" href="#gallery">See our work</a>
     </div>
     <div>
@@ -231,7 +234,7 @@
 <section aria-labelledby="what-title">
   <div class="container">
     <h3 id="what-title" style="text-align:center">What we do</h3>
-    <p class="sub">Design online, request a quote, and book your date with a secure deposit. We focus on reduced sugar, outstanding quality and truly unique flavours.</p>
+    <p class="sub">Design online, request a quote, and book your date with a secure <b>50% deposit</b>. We focus on fresh, tasty flavours and truly unique designs.</p>
 
     <div class="grid grid-3" style="margin-top:24px">
       <div class="feature">
@@ -281,7 +284,7 @@
 <section id="customise" class="section-peach" aria-labelledby="design-title">
   <div class="container">
     <h3 id="design-title" style="text-align:center">Design your cake</h3>
-    <p class="sub">Choose size, tiers, finish and extras. Get an instant estimate and reserve your date with a 30% deposit.</p>
+    <p class="sub">Choose size, tiers, finish and extras. Get an instant estimate and reserve your date with a <b>50% deposit</b>. <b>Collection only.</b></p>
 
     <div class="config">
       <form class="section-card" id="cfgForm" aria-label="Cake customiser">
@@ -327,7 +330,7 @@
         <div class="field">
           <label for="date">Preferred collection date</label>
           <input type="date" id="date" required aria-required="true">
-          <span class="small">We recommend booking at least 7 days in advance. <b>Collection only.</b></span>
+          <span class="small">Please book at least 7 days in advance.</span>
         </div>
 
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
@@ -340,8 +343,8 @@
       <aside class="est" aria-live="polite">
         <h4>Your estimate</h4>
         <div class="price" id="price">£—</div>
-        <div class="small" id="deposit">Deposit (30%): £—</div>
-        <p class="small">Final price depends on design complexity and availability. You’ll receive a confirmed quote after we review your brief and inspiration photos. <b>Collection only.</b></p>
+        <div class="small" id="deposit">Deposit (50%): £—</div>
+        <p class="small">Final price depends on design complexity and availability. You’ll receive a confirmed quote after we review your brief and inspiration photos.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
           <a class="btn btn-primary" href="#contact">Book with deposit</a>
           <a class="btn btn-ghost" href="#contact">Send design brief</a>
@@ -372,18 +375,15 @@
 <section class="container grid grid-2" aria-labelledby="allergen-title">
   <div class="section-card">
     <h3 id="allergen-title">Allergens & dietary</h3>
-    <p>Our cakes are made in a home kitchen that handles gluten, eggs, dairy and nuts. While we take great care, we cannot guarantee the absence of traces.</p>
-    <ul>
-      <li>Reduced sugar available on request</li>
-      <li>Vegetarian friendly</li>
-      <li>We currently do not offer vegan or gluten-free celebration cakes</li>
-    </ul>
+    <p>We currently offer <b>vegan</b> and <b>gluten-free</b> celebration cakes.</p>
+    <p>Your health matters to us. If you have <b>any allergies or dietary requirements</b>, please contact us before ordering and we’ll happily discuss safe, delicious options tailored to you.</p>
+    <p><a class="btn btn-ghost" href="mailto:hello@bettissweets.co.uk">Email us about allergens</a></p>
   </div>
   <div class="section-card">
     <h3>Collections</h3>
     <p><b>Collection only</b> from Manchester by appointment. We’ll confirm your pickup time when we approve your quote and deposit.</p>
     <ul>
-      <li>Please book at least 7 days in advance</li>
+      <li>Book at least 7 days in advance</li>
       <li>Bring a flat surface in your car for safe transport</li>
       <li>Tiered wedding cakes are boxed and stabilised for collection</li>
     </ul>
@@ -410,7 +410,7 @@
     <h3 id="faq-title" style="text-align:center">FAQ</h3>
     <div class="faq">
       <details><summary>How far in advance should I book?</summary><p>For most cakes we recommend at least 7 days. For weddings or complex designs, 4–8 weeks is ideal.</p></details>
-      <details><summary>Do you take a deposit?</summary><p>Yes — a 30% non-refundable deposit secures your date. The balance is due on collection.</p></details>
+      <details><summary>Do you take a deposit?</summary><p>Yes — a <b>50% non-refundable deposit</b> secures your date. The balance is due on collection.</p></details>
       <details><summary>Can you match colours or an inspo photo?</summary><p>Absolutely. Share your palette or photos and we’ll adapt them to a cohesive, food-safe design.</p></details>
       <details><summary>Do you offer tastings?</summary><p>For wedding cakes we can arrange a tasting box subject to availability — ask when you enquire.</p></details>
     </div>
@@ -423,7 +423,7 @@
     <div class="foot">
       <div>
         <h3 style="margin:0 0 8px;font-family:var(--font-heading)">Contact</h3>
-        <p class="muted">Custom cake studio in Manchester creating elegant, handmade cakes with a soft, romantic aesthetic. <b>Collection only.</b></p>
+        <p class="muted">Custom cake studio in Manchester creating elegant, handmade cakes with a fresh and tasty aesthetic. <b>Collection only.</b></p>
         <ul class="contact-list" aria-label="Contact methods">
           <li><a href="mailto:hello@bettissweets.co.uk">hello@bettissweets.co.uk</a></li>
           <li><a href="tel:+447761297615">+44 7761 297615</a></li>
@@ -443,7 +443,7 @@
       </div>
       <div>
         <b>Hours</b>
-        <p class="muted">Tue–Sat 9:00–17:30<br>Collections by appointment</p>
+        <p class="muted">Mon–Sat 7:00–19:00<br>Sun 8:00–12:00<br>Collections by appointment</p>
       </div>
     </div>
     <p class="muted" style="margin-top:18px">© <span id="year"></span> Betti’s Sweets • All rights reserved</p>
@@ -485,7 +485,7 @@
   const pricing={base:{6:55,8:85,10:120,12:165},tierMult:{1:1,2:2.1,3:3.3},finish:{buttercream:1,ganache:1.12,fondant:1.22},extras:{freshFlorals:18,sugarFlorals:45,topper:20,reducedSugar:8}};
   function buildSummary(total,deposit){
     const extras=[$('freshFlorals')?.checked?'Fresh florals':null,$('sugarFlorals')?.checked?'Sugar flowers':null,$('topper')?.checked?'Custom topper':null,$('reducedSugar')?.checked?'Reduced sugar':null].filter(Boolean).join(', ')||'None';
-    return [`Occasion: ${$('occasion').value}`,`Size: ${$('size').value}"`,`Tiers: ${$('tiers').value}`,`Finish: ${$('finish').value}`,`Extras: ${extras}`,`Preferred collection date: ${$('date').value||'—'}`,`Estimate: £${total} (Deposit 30%: £${deposit})`,`Collection only`].join(' | ');
+    return [`Occasion: ${$('occasion').value}`,`Size: ${$('size').value}"`,`Tiers: ${$('tiers').value}`,`Finish: ${$('finish').value}`,`Extras: ${extras}`,`Preferred collection date: ${$('date').value||'—'}`,`Estimate: £${total} (Deposit 50%: £${deposit})`,`Collection only`].join(' | ');
   }
   function estimate(){
     const size=+$('size').value, tiers=+$('tiers').value, finish=$('finish').value;
@@ -494,12 +494,10 @@
     if($('sugarFlorals').checked) subtotal+=pricing.extras.sugarFlorals;
     if($('topper').checked) subtotal+=pricing.extras.topper;
     if($('reducedSugar').checked) subtotal+=pricing.extras.reducedSugar;
-    const total=Math.round(subtotal), deposit=Math.round(total*0.30);
-    $('price').textContent=`£${total}`; $('deposit').textContent=`Deposit (30%): £${deposit}`;
+    const total=Math.round(subtotal), deposit=Math.round(total*0.50);
+    $('price').textContent=`£${total}`; $('deposit').textContent=`Deposit (50%): £${deposit}`;
     const summary=buildSummary(total,deposit);
     const note=$('est-note'); if(note) note.textContent=`Summary ready: ${summary}`;
-    $('estimator_summary').value=summary;
-    const brief=$('brief'); if(brief){const s='\n\n--- Estimator summary ---\n', e='\n--- End summary ---'; brief.value=brief.value.replace(/\n\n--- Estimator summary ---[\s\S]*?--- End summary ---/g,''); brief.value=brief.value+s+summary+e;}
   }
   const updateBtn=$('updateBtn'); if(updateBtn){ updateBtn.addEventListener('click',estimate); }
   estimate();
