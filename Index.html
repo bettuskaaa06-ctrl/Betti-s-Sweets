@@ -60,14 +60,14 @@
     @media (max-width:980px){.grid-2{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr 1fr}}
     @media (max-width:680px){.grid-3{grid-template-columns:1fr}}
 
-    /* Header */
+    /* Header + nav */
     header{position:sticky;top:0;background:rgba(255,255,255,.8);backdrop-filter:saturate(140%) blur(8px);z-index:20;border-bottom:1px solid #f3e8e2}
-    .nav{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;height:84px}
+    .nav{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-block:8px}
     .brand{display:flex;align-items:center;gap:18px}
     .logo img{
-      height: 90px;          /* larger desktop logo */
-      max-height: 90px;
-      width: auto;
+      height:110px;            /* bigger desktop logo */
+      max-height:110px;
+      width:auto;
       display:block;
       border-radius:0;
       box-shadow:none;
@@ -77,15 +77,51 @@
     nav[aria-label="Primary"]{display:flex;gap:22px;align-items:center}
     nav[aria-label="Primary"] a{font-weight:500}
 
-    /* Mobile: nav below logo, centered */
+    /* Hamburger button (hidden by default) */
+    .menu-toggle{
+      display:none;
+      background:none;border:0;cursor:pointer;
+      font-size:28px;line-height:1;padding:8px;border-radius:10px;
+      color:var(--ink);
+    }
+    .menu-toggle:focus-visible{outline:3px solid var(--focus)}
+
+    /* Mobile: nav below logo, centered, animated slide-down */
     @media (max-width:768px){
-      .nav{height:auto;row-gap:8px;padding-block:10px;justify-content:center}
+      .logo img{height:70px;max-height:70px}
+      .nav{justify-content:center}
       .brand{justify-content:center;width:100%}
-      .logo img{height:60px;max-height:60px;margin-bottom:6px}
-      nav[aria-label="Primary"]{order:2;width:100%;justify-content:center;flex-wrap:wrap;gap:14px}
+      .menu-toggle{display:block}
+      nav[aria-label="Primary"]{
+        order:2;
+        width:100%;
+        justify-content:center;
+        flex-wrap:wrap;
+        gap:14px;
+
+        /* animation container */
+        overflow:hidden;
+        max-height:0;       /* collapsed */
+        transition:max-height .35s ease;
+        padding-top:0;      /* will add when opened via inline style */
+      }
+      nav[aria-label="Primary"].open{
+        /* when open we set max-height inline to the scrollHeight for smooth animation */
+      }
+      /* Stack links vertically for mobile */
+      nav[aria-label="Primary"] a{
+        display:block;
+        padding:8px 2px;
+      }
     }
 
-    /* Mobile quick actions */
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;border-radius:var(--pill);font-weight:600;border:0;cursor:pointer;box-shadow:var(--shadow-soft)}
+    .btn-primary{background:linear-gradient(135deg,var(--rose-gold),var(--gold-soft));color:#3e2e2a}
+    .btn-primary:hover{filter:saturate(105%) brightness(1.02)}
+    .btn-ghost{background:var(--white);color:var(--ink);border:1px solid #efdfd7}
+
+    /* Mobile quick actions (kept) */
     .mobile-actions{position:sticky;top:84px;z-index:19;border-bottom:1px solid #f3e8e2;display:none;background:rgba(255,255,255,.75);backdrop-filter:blur(6px)}
     .mobile-actions .wrap{display:flex;gap:10px;justify-content:flex-end;align-items:center;padding:6px 16px}
     .quick-btn{display:inline-flex;gap:6px;align-items:center;justify-content:center;padding:8px 10px;border-radius:12px;font-weight:600;font-size:14px;background:transparent;border:1px solid #ead9d2;color:#4A3F3C; box-shadow:none}
@@ -174,11 +210,15 @@
     <a class="brand" href="/" aria-label="Betti’s Sweets — Home">
       <span class="sr-only">Betti’s Sweets</span>
       <div class="logo">
-        <!-- your uploaded SVG -->
         <img src="/logo.svg" alt="" role="presentation">
       </div>
     </a>
-    <nav aria-label="Primary">
+
+    <!-- Hamburger button (mobile) -->
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
+
+    <!-- Primary navigation -->
+    <nav id="primary-nav" aria-label="Primary">
       <a href="#gallery">Gallery</a>
       <a href="#customise">Design Your Cake</a>
       <a href="#sizes">Sizes</a>
@@ -465,6 +505,47 @@
 </div>
 
 <script>
+  /* ============ Mobile hamburger with smooth slide ============ */
+  (function(){
+    const btn = document.querySelector('.menu-toggle');
+    const nav = document.getElementById('primary-nav');
+
+    function closeNav(){
+      nav.classList.remove('open');
+      nav.style.maxHeight = 0;
+      nav.style.paddingTop = 0;
+      btn.setAttribute('aria-expanded','false');
+    }
+    function openNav(){
+      nav.classList.add('open');
+      nav.style.maxHeight = nav.scrollHeight + 'px';
+      nav.style.paddingTop = '8px';
+      btn.setAttribute('aria-expanded','true');
+    }
+
+    btn.addEventListener('click', () => {
+      const isOpen = nav.classList.contains('open');
+      if(isOpen){ closeNav(); } else { openNav(); }
+    });
+
+    /* Reset inline styles on desktop to avoid hidden nav */
+    const mql = window.matchMedia('(min-width: 769px)');
+    function handleResize(e){
+      if(e.matches){
+        nav.classList.remove('open');
+        nav.style.maxHeight = '';
+        nav.style.paddingTop = '';
+        btn.setAttribute('aria-expanded','false');
+      }else{
+        /* collapse by default on entering mobile */
+        closeNav();
+      }
+    }
+    mql.addEventListener('change', handleResize);
+    handleResize(mql);
+  })();
+
+  /* ============ Gallery Lightbox ============ */
   const grid=document.getElementById('galleryGrid');
   const lb=document.getElementById('lightbox');
   const lbImg=document.getElementById('lb-img');
@@ -481,6 +562,7 @@
   }
   lb.addEventListener('click',()=> lb.classList.remove('active'));
 
+  /* ============ Estimator ============ */
   function minDate(days){const d=new Date(); d.setDate(d.getDate()+days); return d.toISOString().split('T')[0];}
   ['date','event_date'].forEach(id=>{const el=document.getElementById(id); if(el){ el.min=minDate(7); }});
 
