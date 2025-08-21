@@ -11,14 +11,26 @@
 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preload" as="image"
+        href="https://images.unsplash.com/photo-1527515545081-5db817172677?q=80&w=1200&auto=format&fit=crop">
+
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><text y="52" font-size="52">🎂</text></svg>'>
+
+  <!-- Social previews -->
+  <meta property="og:title" content="Betti’s Sweets — Custom Cakes in Manchester">
+  <meta property="og:description" content="Fresh & tasty handmade cakes. Design online, request a quote, and book your date with a 50% deposit. Collection only. Vegan & gluten-free available.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1527515545081-5db817172677?q=80&w=1200&auto=format&fit=crop">
+  <meta property="og:image:alt" content="Soft pastel celebration cake">
+  <meta name="twitter:card" content="summary_large_image">
 
   <style>
     :root{
       --blush:#F6DDE3; --peach:#FAD9CF; --ivory:#FFF7F2;
       --champagne:#E7D7C9; --rose-gold:#CFA38A; --rose-gold-deep:#B77E66;
       --gold-soft:#D0B48F; --ink:#4A3F3C; --muted:#7A6A66; --white:#ffffff;
-      --focus:#1446A0;
 
       --font-heading:"Playfair Display", serif;
       --font-body:"Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -28,7 +40,7 @@
       --shadow:0 10px 30px rgba(79,60,54,.12);
       --shadow-soft:0 6px 20px rgba(79,60,54,.08);
       --section-pad: clamp(48px, 6vw, 96px);
-      --maxw: 1150px; --gallery-h: 320px;
+      --maxw: 1150px; --focus:#1446A0; --gallery-h: 320px;
     }
     @media (min-width:1200px){ :root{ --gallery-h: 340px; } }
 
@@ -40,7 +52,6 @@
     a{color:var(--rose-gold-deep);text-decoration:none}
     a:hover{text-decoration:underline}
     :focus-visible{outline:3px solid var(--focus); outline-offset:2px; border-radius:6px}
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
     .container{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(16px,4vw,28px)}
     .grid{display:grid;gap:24px}
@@ -49,31 +60,44 @@
     @media (max-width:980px){.grid-2{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr 1fr}}
     @media (max-width:680px){.grid-3{grid-template-columns:1fr}}
 
-    /* Header — desktop style on all screens */
-    header{position:sticky;top:0;background:rgba(255,255,255,.85);backdrop-filter:saturate(140%) blur(8px);z-index:30;border-bottom:1px solid #f3e8e2}
-    .nav{display:flex;align-items:center;justify-content:space-between;height:84px}
-    .brand{display:flex;align-items:center;gap:14px}
-    .brand img{height:56px;width:auto;display:block}        /* PNG logo */
-    .brand h1{font:700 22px/1 var(--font-heading);margin:0}
-    nav a{margin-left:18px;font-weight:500;white-space:nowrap}
+    /* Header */
+    header{position:sticky;top:0;background:rgba(255,255,255,.8);backdrop-filter:saturate(140%) blur(8px);z-index:20;border-bottom:1px solid #f3e8e2}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:84px} /* more vertical space */
+    .brand{display:flex;align-items:center;gap:18px}
+    .logo img{
+      height: 64px;           /* larger, crisp logo */
+      width: auto;
+      display:block;
+      border-radius:12px;      /* remove if the logo is not square */
+      box-shadow:inset 0 0 0 2px rgba(255,255,255,.6), var(--shadow-soft);
+    }
+    /* keep name for screen readers only */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    nav a{margin-left:22px;font-weight:500}
     .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;border-radius:var(--pill);font-weight:600;border:0;cursor:pointer;box-shadow:var(--shadow-soft)}
     .btn-primary{background:linear-gradient(135deg,var(--rose-gold),var(--gold-soft));color:#3e2e2a}
-    .btn-ghost{background:#fff;color:var(--ink);border:1px solid #efdfd7}
+    .btn-primary:hover{filter:saturate(105%) brightness(1.02)}
+    .btn-ghost{background:var(--white);color:var(--ink);border:1px solid #efdfd7}
+    @media (max-width:900px){
+      .nav{height:74px}
+      .logo img{height:52px}   /* scale down on small screens */
+    }
 
-    /* Hero */
+    /* Mobile quick actions */
+    .mobile-actions{position:sticky;top:84px;z-index:19;border-bottom:1px solid #f3e8e2;display:none;background:rgba(255,255,255,.75);backdrop-filter:blur(6px)}
+    .mobile-actions .wrap{display:flex;gap:10px;justify-content:flex-end;align-items:center;padding:6px 16px}
+    .quick-btn{display:inline-flex;gap:6px;align-items:center;justify-content:center;padding:8px 10px;border-radius:12px;font-weight:600;font-size:14px;background:transparent;border:1px solid #ead9d2;color:#4A3F3C; box-shadow:none}
+    .quick-btn svg{width:16px;height:16px;fill:#4A3F3C}
+    @media (max-width:900px){.mobile-actions{display:block; top:74px}}
+
     .hero{background:linear-gradient(180deg,var(--ivory),#fff 60%);}
-    .hero-inner{display:grid;grid-template-columns:1.25fr 1fr;gap:36px;align-items:center;min-height:64vh}
+    .hero-inner{display:grid;grid-template-columns:1.25fr 1fr;gap:36px;align-items:center;min-height:72vh}
     @media (max-width:980px){.hero-inner{grid-template-columns:1fr}}
     .eyebrow{font:600 13px var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--rose-gold-deep)}
     .hero h2{font:700 clamp(34px,5vw,56px)/1.05 var(--font-heading);margin:.4em 0}
     .script{font-family:var(--font-accent);font-size:clamp(20px,3vw,28px);color:var(--muted)}
-    .hero-card{background:#fff;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
-    .hero-card img{width:100%;border-radius:16px;object-fit:cover}
-
-    /* Equal contact buttons under hero intro */
-    .contact-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
-    .contact-cta a{flex:1 1 180px;text-align:center}
-    .contact-cta .btn{width:100%}
+    .hero-card{background:var(--white);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .hero-card img{width:100%;height:auto;border-radius:16px;object-fit:cover}
 
     section{padding-block:var(--section-pad)}
     .section-soft{background:linear-gradient(180deg,#fff,var(--ivory))}
@@ -86,7 +110,7 @@
     .feature{border-radius:var(--radius);padding:22px;background:#fff;border:1px solid #efdfd7;box-shadow:var(--shadow-soft)}
     .feature h4{font:600 18px var(--font-heading);margin:.2em 0 .3em}
     .feature p{margin:0;color:var(--muted)}
-    .feature img{width:100%;border-radius:12px;margin-bottom:10px;object-fit:cover}
+    .feature img{width:100%;height:auto;border-radius:12px;margin-bottom:10px;object-fit:cover}
 
     .gallery{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
     .gallery a{grid-column:span 4;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-soft);position:relative}
@@ -125,7 +149,7 @@
     .insta h3{text-align:center}
     .insta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
     .insta-grid a{border-radius:16px;overflow:hidden;box-shadow:var(--shadow-soft)}
-    .insta-grid img{width:100%;object-fit:cover;transition:.3s}
+    .insta-grid img{width:100%;height:auto;object-fit:cover;transition:.3s}
     .insta-grid a:hover img{transform:scale(1.05)}
     @media (prefers-reduced-motion:reduce){.insta-grid a:hover img{transform:none}}
     .insta-btn{text-align:center;margin-top:20px}
@@ -139,6 +163,13 @@
     .social{margin-top:12px;display:flex;gap:12px}
     .social a{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--rose-gold);color:#fff;box-shadow:var(--shadow-soft)}
     .social svg{width:18px;height:18px;fill:#fff}
+
+    /* WhatsApp floating button: show ONLY on mobile */
+    .wa-float{position:fixed;right:18px;bottom:18px;z-index:120;width:50px;height:50px;border-radius:50%;box-shadow:var(--shadow);display:none;align-items:center;justify-content:center;background:linear-gradient(135deg,#25D366,#128C7E)}
+    .wa-float svg{width:26px;height:26px;fill:#fff}
+    .wa-float:hover{filter:brightness(1.05)}
+    @media (prefers-reduced-motion:no-preference){.wa-float{transition:transform .15s ease, filter .15s ease}.wa-float:hover{transform:translateY(-2px)}}
+    @media (max-width:820px){.wa-float{display:flex}}
   </style>
 </head>
 <body>
@@ -146,19 +177,35 @@
 <header>
   <div class="container nav">
     <a class="brand" href="/" aria-label="Betti’s Sweets — Home">
-      <img src="/logo.png" alt="Betti’s Sweets logo">
-      <h1>Betti’s Sweets</h1>
+      <!-- Logo replaces text -->
+      <span class="sr-only">Betti’s Sweets</span>
+      <div class="logo">
+        <img src="Betti-s-Sweets/logo.svg" alt="" role="presentation">
+      </div>
     </a>
     <nav aria-label="Primary">
       <a href="#gallery">Gallery</a>
       <a href="#customise">Design Your Cake</a>
       <a href="#sizes">Sizes</a>
       <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
-      <a href="#contact" class="btn btn-primary" style="margin-left:18px;">Get a Quote</a>
+      <a href="#contact" class="btn btn-primary">Get a Quote</a>
     </nav>
   </div>
 </header>
+
+<!-- Subtle top quick actions -->
+<div class="mobile-actions" role="region" aria-label="Quick actions">
+  <div class="wrap container" style="padding-inline:clamp(16px,4vw,28px)">
+    <a class="quick-btn" href="tel:+447761297615" aria-label="Call Betti’s Sweets">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.8-.4 1.2-.3 1 .3 2 .5 3 .5.7 0 1.2.5 1.2 1.2V20c0 .7-.5 1.2-1.2 1.2C9.8 21.2 2.8 14.2 2.8 5.2 2.8 4.5 3.3 4 4 4h3.4c.7 0 1.2.5 1.2 1.2 0 1 .2 2 .5 3 .1.4 0 .9-.3 1.2l-2.2 2.4z"/></svg>
+      Call
+    </a>
+    <a class="quick-btn" href="https://wa.me/447761297615?text=Hi%20Betti%E2%80%99s%20Sweets%2C%20I%27d%20like%20to%20enquire%20about%20a%20custom%20cake." target="_blank" rel="noopener" aria-label="WhatsApp Betti’s Sweets">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C9.9 3 5 7.9 5 14c0 2.2.6 4.2 1.7 6L5 27l7.2-1.9c1.7.9 3.6 1.3 5.8 1.3 6.1 0 11-4.9 11-11S22.1 3 16 3zm0 2c5 0 9 4 9 9s-4 9-9 9c-1.9 0-3.6-.6-5.1-1.5l-.4-.2-4 .9.9-3.9-.2-.4C6.2 16.6 6 15.3 6 14c0-5 4-9 10-9zm-3 5c-.2 0-.5.1-.7.4-.2.3-.7 1-.7 2 0 1.5 1 3.1 2.7 4.7 1.8 1.7 3.8 2.6 5.1 2.6 1 0 1.6-.5 1.9-.8.3-.3.5-.7.6-1 .1-.3 0-.6-.2-.7l-1.5-.7c-.2-.1-.4-.1-.6.1l-.7.8c-.1.1-.3.1-.5.1-.3 0-.9-.2-2-1.1-1.1-.8-1.7-1.7-1.9-2-.2-.3-.1-.4 0-.6l.6-.8c.1-.2.1-.4 0-.6l-.6-1.4c-.1-.3-.3-.4-.6-.4z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+</div>
 
 <section class="hero">
   <div class="container hero-inner">
@@ -172,16 +219,11 @@
         <span class="pill" role="listitem">Personalised toppers</span>
         <span class="pill" role="listitem">Freshly made to order</span>
       </div>
-
-      <!-- Equal-sized contact buttons -->
-      <div class="contact-cta" aria-label="Quick contact">
-        <a class="btn btn-ghost" href="mailto:hello@bettissweets.co.uk">hello@bettissweets.co.uk</a>
-        <a class="btn btn-ghost" href="tel:+447761297615">+44 7761 297615</a>
-        <a class="btn btn-ghost" href="https://wa.me/447761297615?text=Hi%20Betti%E2%80%99s%20Sweets%2C%20I%27d%20like%20to%20enquire%20about%20a%20custom%20cake." target="_blank" rel="noopener">WhatsApp chat</a>
-      </div>
+      <a class="btn btn-primary" href="#customise">Design your cake</a>
     </div>
     <div class="hero-card">
-      <img src="https://images.unsplash.com/photo-1527515545081-5db817172677?q=80&w=1200&auto=format&fit=crop" alt="Pastel celebration cake" fetchpriority="high" loading="eager">
+      <img src="https://images.unsplash.com/photo-1527515545081-5db817172677?q=80&w=1200&auto=format&fit=crop"
+           alt="Pastel celebration cake" fetchpriority="high" loading="eager">
     </div>
   </div>
 </section>
@@ -196,7 +238,8 @@
       <a class="btn btn-primary" href="#gallery">See our work</a>
     </div>
     <div>
-      <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?q=80&w=1200&auto=format&fit=crop" alt="Betti decorating a cake" style="border-radius:16px" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?q=80&w=1200&auto=format&fit=crop"
+           alt="Betti decorating a cake" style="border-radius:16px" loading="lazy">
     </div>
   </div>
 </section>
@@ -387,6 +430,7 @@
   </div>
 </section>
 
+<!-- CONTACT -->
 <footer id="contact" role="contentinfo">
   <div class="container" style="padding-block:38px">
     <div class="foot">
@@ -419,14 +463,19 @@
   </div>
 </footer>
 
-<!-- Lightbox -->
+<!-- WhatsApp floating button: mobile only -->
+<a class="wa-float" aria-label="Chat on WhatsApp"
+   href="https://wa.me/447761297615?text=Hi%20Betti%E2%80%99s%20Sweets%2C%20I%27d%20like%20to%20enquire%20about%20a%20custom%20cake."
+   target="_blank" rel="noopener">
+  <svg viewBox="0 0 32 32" role="img" aria-hidden="true"><path d="M16 3C9.9 3 5 7.9 5 14c0 2.2.6 4.2 1.7 6L5 27l7.2-1.9c1.7.9 3.6 1.3 5.8 1.3 6.1 0 11-4.9 11-11S22.1 3 16 3zm0 2c5 0 9 4 9 9s-4 9-9 9c-1.9 0-3.6-.6-5.1-1.5l-.4-.2-4 .9.9-3.9-.2-.4C6.2 16.6 6 15.3 6 14c0-5 4-9 10-9zm-3 5c-.2 0-.5.1-.7.4-.2.3-.7 1-.7 2 0 1.5 1 3.1 2.7 4.7 1.8 1.7 3.8 2.6 5.1 2.6 1 0 1.6-.5 1.9-.8.3-.3.5-.7.6-1 .1-.3 0-.6-.2-.7l-1.5-.7c-.2-.1-.4-.1-.6.1l-.7.8c-.1.1-.3.1-.5.1-.3 0-.9-.2-2-1.1-1.1-.8-1.7-1.7-1.9-2-.2-.3-.1-.4 0-.6l.6-.8c.1-.2.1-.4 0-.6l-.6-1.4c-.1-.3-.3-.4-.6-.4z"/></svg>
+</a>
+
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
   <img alt="" id="lb-img">
   <div class="lb-caption" id="lb-cap"></div>
 </div>
 
 <script>
-  // Lightbox
   const grid=document.getElementById('galleryGrid');
   const lb=document.getElementById('lightbox');
   const lbImg=document.getElementById('lb-img');
@@ -443,7 +492,6 @@
   }
   lb.addEventListener('click',()=> lb.classList.remove('active'));
 
-  // Estimator
   function minDate(days){const d=new Date(); d.setDate(d.getDate()+days); return d.toISOString().split('T')[0];}
   ['date','event_date'].forEach(id=>{const el=document.getElementById(id); if(el){ el.min=minDate(7); }});
 
