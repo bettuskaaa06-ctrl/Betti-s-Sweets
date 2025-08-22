@@ -1,10 +1,8 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint H (2025-08-22):
-  1) Bigger tap targets on .iconbtn
-  2) Hero min-height for stability
-  3) Focus-visible outline for accessibility
-  4) JSON-LD type Bakery
-  5) Deposit & Balance → WhatsApp with tailored texts
+<!-- Betti’s Sweets — Checkpoint I (2025-08-22):
+  • Hero full-bleed background set to IMAGES/IMG_0841 2.JPG
+  • Added frosted glass frame around hero content (mobile/tablet-first)
+  • Updated preload to new asset
 -->
 <html lang="en">
 <head>
@@ -27,7 +25,7 @@
 <meta name="twitter:image" content="https://www.bettissweets.co.uk/og-hero.jpg">
 
 <!-- 10) Preload hero image to improve LCP -->
-<link rel="preload" as="image" href="images/hero.jpg" fetchpriority="high" imagesrcset="images/hero.jpg 1200w" imagesizes="100vw">
+<link rel="preload" as="image" href="IMAGES/IMG_0841%202.JPG" fetchpriority="high" imagesrcset="IMAGES/IMG_0841%202.JPG 1200w" imagesizes="100vw">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,17 +76,19 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 /* Hero */
 .hero{
   position:relative;isolation:isolate;border-bottom:1px solid #f1e7db;
+  /* Full-bleed background: gradients + photo (photo at the back) */
   background-image:
     radial-gradient(1000px 400px at 10% -10%, #ffe9ef 0, rgba(0,0,0,0) 60%),
     radial-gradient(800px 350px at 90% -20%, #ffe0d1 0, rgba(0,0,0,0) 60%),
     linear-gradient(180deg,#fff8f0 0,#fff 50%,#fff8f0 100%),
-    url('images/hero.jpg');
+    url('IMAGES/IMG_0841%202.JPG');
   background-size:cover,cover,cover,cover;
-  background-position:center;
-  /* 2) Stabilise above the fold */
-  min-height:52vh;
+  background-position:center,center,center,center;
+  background-repeat:no-repeat;
 }
-.hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;padding:40px 20px 30px}
+.hero .wrap{
+  display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;padding:40px 20px 30px
+}
 .tag{display:inline-block;background:linear-gradient(90deg,var(--blush),var(--peach));padding:6px 12px;border-radius:999px;font-weight:600;border:1px solid #f3d5c4}
 .big{font:400 clamp(28px,5vw,44px) "Playfair Display",serif;line-height:1.15;margin:.8rem 0}
 .scriptline{font-size:clamp(22px,4.2vw,32px);color:var(--accent)}
@@ -96,8 +96,20 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 .btn{border:1px solid #eadfce;background:#fff;border-radius:999px;padding:12px 18px;box-shadow:var(--shadow)}
 .btn.primary{background:linear-gradient(90deg,var(--blush),var(--peach));border-color:#f0cdb9}
 .note{color:var(--muted);font-size:.9rem}
+
+/* Frosted glass frame around hero content */
+.glass{
+  background:rgba(255,248,240,.58);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(120%);
+  border:1px solid rgba(233,223,210,.75);
+  border-radius:16px;
+  box-shadow:0 12px 28px rgba(0,0,0,.12);
+  padding:18px;
+}
 @media (max-width:820px){
-  .hero .wrap{grid-template-columns:1fr;padding:22px 20px}
+  .hero .wrap{grid-template-columns:1fr;padding:20px}
+  .glass{padding:16px}
 }
 
 /* Sections */
@@ -123,8 +135,7 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
 .cta-buttons{display:flex;gap:12px;flex-wrap:wrap}
 .iconbtn{
   display:inline-flex;align-items:center; /* iOS-safe: no gap here */
-  padding:12px 20px; /* 1) bigger tap targets */
-  border:1px solid #eadfce;border-radius:999px;background:#fff;box-shadow:var(--shadow);
+  padding:12px 16px;border:1px solid #eadfce;border-radius:999px;background:#fff;box-shadow:var(--shadow);
   /* ensure readable text on iOS */
   color:var(--text);font-size:1rem;
 }
@@ -133,7 +144,6 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
 .iconbtn span + svg{ margin-left:8px; }
 
 .iconbtn span{ display:inline-block;white-space:nowrap; }
-.iconbtn:focus-visible{ outline:2px solid var(--champ); outline-offset:2px; } /* 3) focus style */
 svg{width:20px;height:20px}
 
 /* Floating Instagram button (emphasised) */
@@ -181,7 +191,7 @@ footer{border-top:1px solid #f1e7db;background:#fff;padding:24px 0 50px}
 <!-- 2) Main landmark -->
 <main id="home" class="hero" role="main">
   <div class="wrap">
-    <div>
+    <div class="glass">
       <span class="tag">Salford • Manchester, UK</span>
       <h1 class="big">Custom made artisan cakes</h1>
       <div class="script scriptline">Freshly baked • Reduced sugar • Balanced flavour</div>
@@ -434,11 +444,11 @@ We also do our best to accommodate most dietary needs and allergies.</p>
   <span class="label">Instagram</span>
 </a>
 
-<!-- 8) Bakery schema -->
+<!-- 8) LocalBusiness schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Bakery",
+  "@type": "LocalBusiness",
   "name": "Betti’s Sweets",
   "image": "https://www.bettissweets.co.uk/og-hero.jpg",
   "url": "https://www.bettissweets.co.uk/",
@@ -449,6 +459,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
     "addressRegion": "Greater Manchester",
     "addressCountry": "GB"
   },
+  "servesCuisine": "Bakery",
   "areaServed": "Manchester",
   "sameAs": [
     "https://www.instagram.com/betti_sweets/",
@@ -528,13 +539,10 @@ function calc(){
   els.balanceField.value=balance.toFixed(2);
 
   const summary = `Cake estimate: ${gbp(total)} (Deposit ${gbp(deposit)}, Balance ${gbp(balance)}) — Size ${s}" / ${t} tier(s).`;
-
-  /* 5) Route both actions to WhatsApp with specific intents */
-  const waDeposit = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' Please send me a secure *deposit* link to book my date.')}`;
-  const waBalance = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' I\'d like a secure *balance* link for payment on collection.')}`;
-
-  els.btnDeposit.href = waDeposit;
-  els.btnBalance.href = waBalance;
+  const wa = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' Please send me a secure payment link.')}`;
+  const mail = `mailto:cakes@bettissweets.co.uk?subject=${encodeURIComponent('Deposit link request')}&body=${encodeURIComponent(summary+'\n\nNotes: ')}`;
+  els.btnDeposit.href = wa;   // replace with Stripe link(s) later if desired
+  els.btnBalance.href = mail;
 }
 
 /* 4) Ensure date can't be in the past */
