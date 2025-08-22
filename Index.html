@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+5.1 (2025-08-23)
-  • Base: L+5
-  • Fix: In portrait on phones, hero card was a hair right of center.
-         -> On <=820px: remove horizontal padding from .hero .wrap
-         -> Size .glass from viewport: width: calc(100vw - 40px); max-width:720px
-         -> Keep justify-items:center to lock perfect centering
+<!-- Betti’s Sweets — Checkpoint L+7 (2025-08-23)
+  • Base: L+6 (base)
+  • Fixes:
+      1) Brand logo larger (fills its slot) while keeping aspect-ratio
+      2) Hamburger icon larger and coloured to match brand accent (IG button family)
+      3) Script tagline: single line normally; wrap on very narrow phones to avoid ellipsis
 -->
 <html lang="en">
 <head>
@@ -59,16 +59,33 @@ h3{font:600 1.2rem "Playfair Display",serif}
 p{margin:.6rem 0}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
 
-header{position:sticky;top:0;z-index:50;background:rgba(255,248,240,.85);backdrop-filter:saturate(150%) blur(8px);border-bottom:1px solid #f1e7db}
+/* Header */
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,248,240,.85);
+  backdrop-filter:saturate(150%) blur(8px);
+  border-bottom:1px solid #f1e7db
+}
 .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
 .brand{display:flex;gap:12px;align-items:center}
-/* 9) Prevent CLS on logo via aspect-ratio; keep existing visual size */
-.brand img{height:36px;width:auto;aspect-ratio: 120/36}
+/* L+7: bigger logo (fills its slot) with preserved aspect ratio */
+.brand img{
+  height:56px; width:auto; aspect-ratio:120/36; /* keeps proportions */
+}
+@media (max-width:820px){
+  .brand img{ height:48px; }
+}
 .brand .wordmark{font:600 18px "Playfair Display",serif;letter-spacing:.3px}
 nav ul{display:flex;gap:18px;list-style:none;padding:0;margin:0}
 nav a{padding:8px 10px;border-radius:10px}
 nav a:hover{background:#fff;border:1px solid #f0e6da}
-.burger{display:none;border:0;background:transparent;padding:8px;line-height:0}
+
+/* L+7: burger icon larger + brand colour + bigger tap target */
+.burger{
+  display:none;border:0;background:transparent;
+  padding:12px; line-height:0; color:var(--accent);
+}
+.burger svg{width:28px;height:28px;stroke-width:1.8}
 @media (max-width:820px){
   nav ul{display:none;position:absolute;top:64px;left:0;right:0;background:#fff8f0;border-bottom:1px solid #f1e7db;padding:14px}
   nav ul.open{display:grid;gap:8px}
@@ -78,7 +95,6 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 /* Hero */
 .hero{
   position:relative;isolation:isolate;border-bottom:1px solid #f1e7db;
-  /* Image must be first (bottom-most), then gradients on top */
   background-image:
     url('IMAGES/IMG_4972.jpg'),
     radial-gradient(1000px 400px at 10% -10%, #ffe9ef 0, rgba(0,0,0,0) 60%),
@@ -91,8 +107,15 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 .hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;padding:40px 20px 30px}
 .tag{display:inline-block;background:linear-gradient(90deg,var(--blush),var(--peach));padding:6px 12px;border-radius:999px;font-weight:600;border:1px solid #f3d5c4}
 .big{font:400 clamp(28px,5vw,44px) "Playfair Display",serif;line-height:1.15;margin:.8rem 0}
-/* L+4: keep the script tagline on one line */
+
+/* L+7 tagline behaviour:
+   - default: one line (no wrap)
+   - on very narrow screens (≤420px): allow gentle wrap to avoid ellipsis */
 .scriptline{font-size:clamp(22px,4.2vw,32px);color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:420px){
+  .scriptline{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.25}
+}
+
 .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
 .btn{border:1px solid #eadfce;background:#fff;border-radius:999px;padding:12px 18px;box-shadow:var(--shadow)}
 .btn.primary{background:linear-gradient(90deg,var(--blush),var(--peach));border-color:#f0cdb9}
@@ -109,17 +132,12 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
   padding:18px;
 }
 
-/* Mobile-first optimisation: zoom image on small screens */
+/* Mobile-first optimisation: zoom image on small screens
+   + centering adjustments from L+6 */
 @media (max-width:820px){
-  /* L+5.1: remove horizontal padding so centering uses viewport, not inner gutters */
   .hero .wrap{grid-template-columns:1fr; padding:20px 0; justify-items:center;}
-  /* L+5.1: ensure equal 20px gutters by sizing from viewport */
   .glass{margin:0 auto; width:calc(100vw - 40px); max-width:720px;}
-  /* Enlarge only the first (photo) layer; keep gradients covering fully */
-  .hero{
-    background-size:160% auto, cover, cover, cover;
-    background-position:center, center, center, center;
-  }
+  .hero{ background-size:160% auto, cover, cover, cover; background-position:center, center, center, center; }
 }
 
 /* Sections */
@@ -148,13 +166,12 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
   padding:12px 16px;border:1px solid #eadfce;border-radius:999px;background:#fff;box-shadow:var(--shadow);
   color:var(--text);font-size:1rem;line-height:1.3;box-sizing:border-box;
 }
-/* iOS-safe spacing: add margin on the second inline element only */
+.iconbtn svg{width:20px;height:20px;flex:0 0 auto}
 .iconbtn svg + span{ margin-left:8px; }
 .iconbtn span + svg{ margin-left:8px; }
 .iconbtn span{ display:inline-block;white-space:nowrap; }
-svg{width:20px;height:20px;flex:0 0 auto}
 
-/* L+4: make all three action buttons behave the same on mobile */
+/* Action buttons uniform on mobile */
 @media (max-width:820px){
   .paybuttons .iconbtn{ width:100%; justify-content:flex-start; }
 }
@@ -179,64 +196,29 @@ footer{border-top:1px solid #f1e7db;background:#fff;padding:24px 0 50px}
 .legal{color:#86766a;font-size:.9rem}
 
 /* ——— Mobile Fixes (Checkpoint L) ——— */
-
-/* 1) Anchors not hidden beneath sticky header */
 section, #home, #about, #estimator, #faq, #allergens, #contact { scroll-margin-top:72px; }
-
-/* 2) iOS input zoom prevention */
 input, select, textarea, button { font-size:16px; }
-
-/* 3) FAB safe-area + small-screen nudge */
 .fab-ig{ bottom: calc(18px + env(safe-area-inset-bottom)); }
-@supports (padding: max(0px)) {
-  .fab-ig{ bottom: max(18px, calc(18px + env(safe-area-inset-bottom))); }
-}
+@supports (padding: max(0px)) {.fab-ig{ bottom: max(18px, calc(18px + env(safe-area-inset-bottom))); }}
 @media (max-width:820px){
   .fab-ig{ right:14px; }
-  /* 7) Reserve space at the bottom so FAB doesn’t cover last CTAs */
   section:last-of-type{ padding-bottom:88px; }
 }
+@media (max-width:820px){ nav ul{ max-height:70vh; overflow:auto; padding:16px; } }
+:focus-visible{ outline:2px solid rgba(183,110,121,.6); outline-offset:3px; border-radius:8px; }
+@media (prefers-reduced-motion:reduce){ *{ scroll-behavior:auto !important } .fab-ig:hover{ transform:none } }
 
-/* 4) Mobile menu resilience on long labels */
-@media (max-width:820px){
-  nav ul{ max-height:70vh; overflow:auto; padding:16px; }
-}
-
-/* 5) Accessible focus styles */
-:focus-visible{
-  outline:2px solid rgba(183,110,121,.6);
-  outline-offset:3px;
-  border-radius:8px;
-}
-
-/* 6) Reduced motion preferences */
-@media (prefers-reduced-motion:reduce){
-  *{ scroll-behavior:auto !important }
-  .fab-ig:hover{ transform:none }
-}
-
-/* ===== L+1 PATCH (Safari/iPad date input overhang) ===== */
-/* Keep inputs neatly inside the card radius */
-.card{ overflow: hidden; }                 /* clips any control chrome inside rounded corners */
-
-/* Allow grid children to shrink inside their column (prevents edge push) */
+/* L+1 Safari date input overhang */
+.card{ overflow: hidden; }
 .grid > *{ min-width:0; }
-
-/* Make WebKit date control behave like the other fields */
 input[type="date"]{
-  -webkit-appearance:none;
-  appearance:none;
-  background-clip:padding-box;             /* prevents visual spill */
-  padding-right:38px;                      /* room for indicator */
+  -webkit-appearance:none; appearance:none; background-clip:padding-box; padding-right:38px;
 }
-
-/* Optional calendar icon kept commented per your note */
+/* Optional calendar icon kept commented */
 /*
 input[type="date"]{
   background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2" ry="2" fill="none" stroke="%236B5E5E" stroke-width="1.5"/><path d="M3 9h18" stroke="%236B5E5E" stroke-width="1.5"/></svg>');
-  background-repeat:no-repeat;
-  background-position:right 12px center;
-  background-size:18px 18px;
+  background-repeat:no-repeat;background-position:right 12px center;background-size:18px 18px;
 }
 */
 </style>
@@ -246,18 +228,18 @@ input[type="date"]{
 <header>
   <div class="wrap nav">
     <div class="brand">
-      <!-- 9) CLS: we keep CSS aspect-ratio; provide width/height fallback for non-supporting browsers -->
+      <!-- CLS-safe logo -->
       <img src="logo.svg" alt="Betti’s Sweets logo" width="120" height="36" onerror="this.onerror=null;this.src='logo.png'">
       <div class="wordmark">Betti’s Sweets</div>
     </div>
-    <!-- 1) Accessible burger: aria-controls + aria-expanded -->
-    <button class="burger" aria-label="Open menu" aria-controls="primary-menu" aria-expanded="false" onclick="(function(btn){const m=document.getElementById('primary-menu');m.classList.toggle('open');btn.setAttribute('aria-expanded', m.classList.contains('open'));})(this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18" stroke-width="1.5"/></svg>
+    <!-- Accessible burger: aria-controls + aria-expanded -->
+    <button class="burger" aria-label="Open menu" aria-controls="primary-menu" aria-expanded="false"
+      onclick="(function(btn){const m=document.getElementById('primary-menu');m.classList.toggle('open');btn.setAttribute('aria-expanded', m.classList.contains('open'));})(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
     <nav aria-label="Primary">
       <ul id="primary-menu">
         <li><a href="#home">Home</a></li>
-        <!-- Gallery/Instagram nav item removed previously -->
         <li><a href="#estimator">Design Your Cake</a></li>
         <li><a href="#faq">FAQ & Policies</a></li>
         <li><a href="#contact">Get a Quote</a></li>
@@ -266,17 +248,16 @@ input[type="date"]{
   </div>
 </header>
 
-<!-- 2) Main landmark -->
+<!-- Main -->
 <main id="home" class="hero" role="main">
   <div class="wrap">
     <div class="glass">
       <span class="tag">Salford • Manchester, UK</span>
       <h1 class="big">Custom made artisan cakes</h1>
-      <div class="script scriptline">Freshly baked/Reduced sugar/Balanced flavour</div>
+      <div class="script scriptline">Freshly baked • Reduced sugar • Balanced flavour</div>
       <p class="note">Celebrate every occasion with a fresh handmade cake—just a few clicks away.</p>
       <div class="cta">
         <a class="btn primary" href="#estimator">Design your cake</a>
-        <!-- “View gallery” button removed previously -->
       </div>
     </div>
     <div aria-hidden="true"></div>
@@ -299,7 +280,6 @@ We also do our best to accommodate most dietary needs and allergies.</p>
   <div class="wrap card">
     <h2>Design Your Cake — Price Estimator</h2>
 
-    <!-- 6) Netlify success page action -->
     <form id="estForm" name="cake-estimator" method="POST" action="/thank-you" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" autocomplete="on">
       <input type="hidden" name="form-name" value="cake-estimator">
       <p class="sr-only"><label>Don’t fill this out if you’re human: <input name="bot-field" autocomplete="off"></label></p>
@@ -345,7 +325,6 @@ We also do our best to accommodate most dietary needs and allergies.</p>
           </select>
         </div>
 
-        <!-- 4) Date input with min; 5) autocomplete is not meaningful here -->
         <div>
           <label for="date">Collection date</label>
           <input id="date" name="Collection date" type="date" placeholder="YYYY-MM-DD" inputmode="numeric" autocomplete="off" />
@@ -360,7 +339,6 @@ We also do our best to accommodate most dietary needs and allergies.</p>
           </label>
         </div>
 
-        <!-- Inspo: upload from device -->
         <div style="grid-column:1/-1" class="grid">
           <div>
             <label for="inspoUpload">Upload inspiration photo (optional)</label>
@@ -372,7 +350,6 @@ We also do our best to accommodate most dietary needs and allergies.</p>
           </div>
         </div>
 
-        <!-- 3) Live totals announcement -->
         <div class="grid totals" style="grid-column:1/-1" aria-live="polite">
           <div class="total-box">
             <h3>Estimated Total</h3>
@@ -406,7 +383,6 @@ We also do our best to accommodate most dietary needs and allergies.</p>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8" stroke-width="1.4"/><path d="M12 8v4l3 2" stroke-width="1.4"/></svg>
           <span>Request balance link</span>
         </a>
-        <!-- Submit button: identical structure (icon left) -->
         <button class="iconbtn" type="submit" aria-label="Submit estimate" title="Submit your estimate to Betti’s Sweets">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
             <path d="M22 2 11 13" stroke-width="1.4"/>
@@ -433,7 +409,6 @@ We also do our best to accommodate most dietary needs and allergies.</p>
   </div>
 </section>
 
-<!-- NEW: Allergens & Dietary Information -->
 <section id="allergens">
   <div class="wrap card">
     <h2>Allergens & Dietary Information</h2>
@@ -446,7 +421,6 @@ We also do our best to accommodate most dietary needs and allergies.</p>
   <div class="wrap card">
     <h2>Get in touch</h2>
     <div class="cta-buttons" style="margin-bottom:14px">
-      <!-- Call -->
       <a class="iconbtn" href="tel:+447761297615" aria-label="Call Betti’s Sweets">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 4.2 2 2 0 0 1 4.11 2h2a2 2 0 0 1 2 1.72c.12.9.37 1.77.72 2.58a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.5-1.27a2 2 0 0 1 2.11-.45 11.36 11.36 0 0 0 2.58.72A2 2 0 0 1 22 16.92z" stroke-width="1.4"/>
@@ -454,7 +428,6 @@ We also do our best to accommodate most dietary needs and allergies.</p>
         <span class="label">Call</span>
       </a>
 
-      <!-- WhatsApp (icon matches stroke/weight) -->
       <a class="iconbtn" href="https://wa.me/447761297615" target="_blank" rel="noopener" aria-label="Open WhatsApp">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <circle cx="12" cy="12" r="9" stroke-width="1.4"/>
@@ -463,15 +436,12 @@ We also do our best to accommodate most dietary needs and allergies.</p>
         </svg>
         <span class="label">WhatsApp</span>
       </a>
-      <!-- Email buttons intentionally removed per your decision -->
     </div>
 
-    <!-- General contact form (route to hello@ in Netlify → Forms → Notifications) -->
     <form name="general-contact" method="POST" action="/thank-you" data-netlify="true" netlify-honeypot="bot-field" autocomplete="on">
       <input type="hidden" name="form-name" value="general-contact">
       <p class="sr-only"><label>Don’t fill this out if you’re human: <input name="bot-field" autocomplete="off"></label></p>
       <div class="grid">
-        <!-- 5) Helpful autocomplete -->
         <div><label for="name">Name</label><input id="name" name="Name" required autocomplete="name"></div>
         <div><label for="phone">Phone</label><input id="phone" name="Phone" inputmode="tel" autocomplete="tel" placeholder="+44 7…"></div>
         <div style="grid-column:1/-1"><label for="message">Message</label><textarea id="message" name="Message" rows="4" required></textarea></div>
@@ -551,7 +521,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 /* Footer year */
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* 1) Mobile menu close + aria-expanded reset on nav tap */
+/* Mobile menu close on nav tap */
 document.querySelectorAll('nav a').forEach(a=>{
   a.addEventListener('click', ()=>{
     const menu = document.getElementById('primary-menu');
@@ -568,8 +538,8 @@ function fallbackIG(e){
 }
 
 /* Estimator + payments */
-const sizeBase = { "6": 65, "8": 85, "10": 115 }; // base single-tier
-const tierAdd  = { "6": 55, "8": 70, "10": 90  }; // per extra tier
+const sizeBase = { "6": 65, "8": 85, "10": 115 };
+const tierAdd  = { "6": 55, "8": 70, "10": 90  };
 const extraCost= { flowers: 18, gold: 15, topper: 20, textured: 12 };
 const reducedSugarFee = 6;
 const rushFee = 15;
@@ -619,11 +589,11 @@ function calc(){
   const summary = `Cake estimate: ${gbp(total)} (Deposit ${gbp(deposit)}, Balance ${gbp(balance)}) — Size ${s}" / ${t} tier(s).`;
   const wa = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' Please send me a secure payment link.')}`;
   const mail = `mailto:cakes@bettissweets.co.uk?subject=${encodeURIComponent('Deposit link request')}&body=${encodeURIComponent(summary+'\n\nNotes: ')}`;
-  els.btnDeposit.href = wa;   // replace with Stripe link(s) later if desired
+  els.btnDeposit.href = wa;
   els.btnBalance.href = mail;
 }
 
-/* 4) Ensure date can't be in the past */
+/* Ensure date can't be in the past */
 if (els.date) {
   const today = new Date(); today.setHours(0,0,0,0);
   const iso = today.toISOString().slice(0,10);
