@@ -212,6 +212,31 @@ input, select, textarea, button { font-size:16px; }
   *{ scroll-behavior:auto !important }
   .fab-ig:hover{ transform:none }
 }
+
+/* ===== L+1 PATCH (Safari/iPad date input overhang) ===== */
+/* Keep inputs neatly inside the card radius */
+.card{ overflow: hidden; }                 /* clips any control chrome inside rounded corners */
+
+/* Allow grid children to shrink inside their column (prevents edge push) */
+.grid > *{ min-width:0; }
+
+/* Make WebKit date control behave like the other fields */
+input[type="date"]{
+  -webkit-appearance:none;
+  appearance:none;
+  background-clip:padding-box;             /* prevents visual spill */
+  padding-right:38px;                      /* room for indicator */
+}
+
+/* Optional calendar icon kept commented per your note */
+/*
+input[type="date"]{
+  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2" ry="2" fill="none" stroke="%236B5E5E" stroke-width="1.5"/><path d="M3 9h18" stroke="%236B5E5E" stroke-width="1.5"/></svg>');
+  background-repeat:no-repeat;
+  background-position:right 12px center;
+  background-size:18px 18px;
+}
+*/
 </style>
 </head>
 <body>
@@ -591,9 +616,7 @@ function calc(){
 
   const summary = `Cake estimate: ${gbp(total)} (Deposit ${gbp(deposit)}, Balance ${gbp(balance)}) — Size ${s}" / ${t} tier(s).`;
   const wa = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' Please send me a secure payment link.')}`;
-  const mail = `mailto:cakes@bettissweets.co.uk?subject=${encodeURIComponent('Deposit link request')}&body=${encodeURIComponent(summary+'
-
-Notes: ')}`;
+  const mail = `mailto:cakes@bettissweets.co.uk?subject=${encodeURIComponent('Deposit link request')}&body=${encodeURIComponent(summary+'\n\nNotes: ')}`;
   els.btnDeposit.href = wa;   // replace with Stripe link(s) later if desired
   els.btnBalance.href = mail;
 }
