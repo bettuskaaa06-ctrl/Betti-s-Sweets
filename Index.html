@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+5 (2025-08-22):
-  • Base: L+4 (locked) 
-  • Fix: On MOBILE the hero “glass” card is now centered HORIZONTALLY.
-        - Add justify-items:center to .hero .wrap at <=820px
-        - Force the card to center with margin-inline:auto and a sane width cap
-        - Desktop/iPad layout unchanged (card stays left-aligned there)
+<!-- Betti’s Sweets — Checkpoint L+5.1 (2025-08-23)
+  • Base: L+5
+  • Fix: In portrait on phones, hero card was a hair right of center.
+         -> On <=820px: remove horizontal padding from .hero .wrap
+         -> Size .glass from viewport: width: calc(100vw - 40px); max-width:720px
+         -> Keep justify-items:center to lock perfect centering
 -->
 <html lang="en">
 <head>
@@ -111,8 +111,10 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 
 /* Mobile-first optimisation: zoom image on small screens */
 @media (max-width:820px){
-  .hero .wrap{grid-template-columns:1fr;padding:20px;justify-items:center;} /* NEW: center items horizontally */
-  .glass{margin-inline:auto;width:min(720px, 94vw);} /* NEW: force card to center & cap width */
+  /* L+5.1: remove horizontal padding so centering uses viewport, not inner gutters */
+  .hero .wrap{grid-template-columns:1fr; padding:20px 0; justify-items:center;}
+  /* L+5.1: ensure equal 20px gutters by sizing from viewport */
+  .glass{margin:0 auto; width:calc(100vw - 40px); max-width:720px;}
   /* Enlarge only the first (photo) layer; keep gradients covering fully */
   .hero{
     background-size:160% auto, cover, cover, cover;
@@ -270,7 +272,7 @@ input[type="date"]{
     <div class="glass">
       <span class="tag">Salford • Manchester, UK</span>
       <h1 class="big">Custom made artisan cakes</h1>
-      <div class="script scriptline">Freshly baked • Reduced sugar • Balanced flavour</div>
+      <div class="script scriptline">Freshly baked, Reduced sugar, Balanced flavour</div>
       <p class="note">Celebrate every occasion with a fresh handmade cake—just a few clicks away.</p>
       <div class="cta">
         <a class="btn primary" href="#estimator">Design your cake</a>
