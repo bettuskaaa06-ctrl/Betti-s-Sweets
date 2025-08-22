@@ -1,5 +1,11 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint D (2025-08-22 v4): iOS button fix — remove flex gap on .iconbtn; use directional margins between SVG and label. -->
+<!-- Betti’s Sweets — Checkpoint H (2025-08-22):
+  1) Bigger tap targets on .iconbtn
+  2) Hero min-height for stability
+  3) Focus-visible outline for accessibility
+  4) JSON-LD type Bakery
+  5) Deposit & Balance → WhatsApp with tailored texts
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -79,6 +85,8 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
     url('images/hero.jpg');
   background-size:cover,cover,cover,cover;
   background-position:center;
+  /* 2) Stabilise above the fold */
+  min-height:52vh;
 }
 .hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;padding:40px 20px 30px}
 .tag{display:inline-block;background:linear-gradient(90deg,var(--blush),var(--peach));padding:6px 12px;border-radius:999px;font-weight:600;border:1px solid #f3d5c4}
@@ -115,7 +123,8 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
 .cta-buttons{display:flex;gap:12px;flex-wrap:wrap}
 .iconbtn{
   display:inline-flex;align-items:center; /* iOS-safe: no gap here */
-  padding:12px 16px;border:1px solid #eadfce;border-radius:999px;background:#fff;box-shadow:var(--shadow);
+  padding:12px 20px; /* 1) bigger tap targets */
+  border:1px solid #eadfce;border-radius:999px;background:#fff;box-shadow:var(--shadow);
   /* ensure readable text on iOS */
   color:var(--text);font-size:1rem;
 }
@@ -124,6 +133,7 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
 .iconbtn span + svg{ margin-left:8px; }
 
 .iconbtn span{ display:inline-block;white-space:nowrap; }
+.iconbtn:focus-visible{ outline:2px solid var(--champ); outline-offset:2px; } /* 3) focus style */
 svg{width:20px;height:20px}
 
 /* Floating Instagram button (emphasised) */
@@ -326,7 +336,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 <section id="faq">
   <div class="wrap card">
     <h2>FAQ & Policies</h2>
-    <details><summary><strong>Difference between sponge layers and cake tiers</strong></summary><p>Sponge layers are the individual cake sections stacked with filling inside a single cake. Tiers are separate cakes stacked on top of each other to create a taller, multilevel cake.</p></details>
+    <details open><summary><strong>Difference between sponge layers and cake tiers</strong></summary><p>Sponge layers are the individual cake sections stacked with filling inside a single cake. Tiers are separate cakes stacked on top of each other to create a taller, multilevel cake.</p></details>
     <details><summary><strong>Lead time</strong></summary><p>Typical lead time is 5–10 days. Rush orders may be possible (fee applies if under 3 full working days).</p></details>
     <details><summary><strong>Dietary</strong></summary><p>Reduced sugar available. Our kitchen handles common allergens (gluten, eggs, dairy, nuts).</p></details>
     <details><summary><strong>Payments</strong></summary><p>50% deposit secures your booking; remaining 50% due on collection under the same invoice.</p></details>
@@ -424,11 +434,11 @@ We also do our best to accommodate most dietary needs and allergies.</p>
   <span class="label">Instagram</span>
 </a>
 
-<!-- 8) LocalBusiness schema -->
+<!-- 8) Bakery schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": "Bakery",
   "name": "Betti’s Sweets",
   "image": "https://www.bettissweets.co.uk/og-hero.jpg",
   "url": "https://www.bettissweets.co.uk/",
@@ -439,7 +449,6 @@ We also do our best to accommodate most dietary needs and allergies.</p>
     "addressRegion": "Greater Manchester",
     "addressCountry": "GB"
   },
-  "servesCuisine": "Bakery",
   "areaServed": "Manchester",
   "sameAs": [
     "https://www.instagram.com/betti_sweets/",
@@ -519,10 +528,13 @@ function calc(){
   els.balanceField.value=balance.toFixed(2);
 
   const summary = `Cake estimate: ${gbp(total)} (Deposit ${gbp(deposit)}, Balance ${gbp(balance)}) — Size ${s}" / ${t} tier(s).`;
-  const wa = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' Please send me a secure payment link.')}`;
-  const mail = `mailto:cakes@bettissweets.co.uk?subject=${encodeURIComponent('Deposit link request')}&body=${encodeURIComponent(summary+'\n\nNotes: ')}`;
-  els.btnDeposit.href = wa;   // replace with Stripe link(s) later if desired
-  els.btnBalance.href = mail;
+
+  /* 5) Route both actions to WhatsApp with specific intents */
+  const waDeposit = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' Please send me a secure *deposit* link to book my date.')}`;
+  const waBalance = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' I\'d like a secure *balance* link for payment on collection.')}`;
+
+  els.btnDeposit.href = waDeposit;
+  els.btnBalance.href = waBalance;
 }
 
 /* 4) Ensure date can't be in the past */
