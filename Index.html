@@ -1,567 +1,586 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Betti’s Sweets — Custom Cakes in Manchester</title>
-  <meta name="description" content="Custom-made artisan cakes, cupcakes and pastries in Salford, Manchester. Design your cake, get an instant estimate, and request a booking. Collection only." />
-  <meta name="robots" content="index,follow" />
-  <meta name="theme-color" content="#FADADD" />
-  <link rel="canonical" href="https://www.bettissweets.co.uk/" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Betti’s Sweets — Custom Cakes in Manchester</title>
+<meta name="description" content="Custom-made artisan cakes, cupcakes & pastries. Minimal, romantic design in pastels. Collection only — Salford, Manchester." />
+<link rel="canonical" href="https://www.bettissweets.co.uk/" />
+<meta name="theme-color" content="#FADADD" />
 
-  <!-- Performance: fonts -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      /* Pastel palette */
-      --blush:#FADADD;
-      --peach:#F6D0B1;
-      --ivory:#FFF8F0;
-      --champagne:#D9B26D;
-      --rosegold:#B76E79;
-      --sage:#BFC9B3;
+<style>
+:root{
+  /* Pastels */
+  --blush:#FADADD; --peach:#F6D0B1; --ivory:#FFF8F0; --champ:#D9B26D;
+  --rose:#B76E79; --sage:#BFC9B3; --text:#3A2E2E; --muted:#6B5E5E;
+  --bg:var(--ivory); --accent:var(--rose);
+  --maxw:1200px; --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.06);
+}
 
-      --text:#3A2E2E;
-      --muted:#6B5E5E;
-      --bg:var(--ivory);
-      --accent:var(--rosegold);
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font:inherit;cursor:pointer}
+.sr-only{position:absolute!important;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}
 
-      --maxw:1200px;
-      --radius:14px;
-      --shadow:0 10px 30px rgba(0,0,0,.06);
-    }
+.script{font-family:"Great Vibes",cursive;letter-spacing:.3px}
+h1,h2,h3{margin:.2rem 0 1rem;color:#2b2222}
+h1{font:600 2rem "Playfair Display",serif}
+h2{font:600 1.6rem "Playfair Display",serif}
+h3{font:600 1.2rem "Playfair Display",serif}
+p{margin:.6rem 0}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
 
-    /* Reset-ish */
-    *,*::before,*::after{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;background:var(--bg);color:var(--text);
-      font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-    }
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
-    button{font:inherit;cursor:pointer}
+header{position:sticky;top:0;z-index:50;background:rgba(255,248,240,.85);backdrop-filter:saturate(150%) blur(8px);border-bottom:1px solid #f1e7db}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;gap:12px;align-items:center}
+.brand img{height:36px;width:auto}
+.brand .wordmark{font:600 18px "Playfair Display",serif;letter-spacing:.3px}
+nav ul{display:flex;gap:18px;list-style:none;padding:0;margin:0}
+nav a{padding:8px 10px;border-radius:10px}
+nav a:hover{background:#fff;border:1px solid #f0e6da}
+.burger{display:none;border:0;background:transparent;padding:8px;line-height:0}
+@media (max-width:820px){
+  nav ul{display:none;position:absolute;top:64px;left:0;right:0;background:#fff8f0;border-bottom:1px solid #f1e7db;padding:14px}
+  nav ul.open{display:grid;gap:8px}
+  .burger{display:block}
+}
 
-    /* Typography */
-    .script{font-family:"Great Vibes",cursive;letter-spacing:.3px}
-    h1,h2,h3{margin:.2rem 0 1rem;color:#2b2222}
-    h1{font:600 2rem "Playfair Display",serif}
-    h2{font:600 1.6rem "Playfair Display",serif}
-    h3{font:600 1.2rem "Playfair Display",serif}
-    p{margin:.6rem 0}
+/* Hero */
+.hero{
+  position:relative;isolation:isolate;border-bottom:1px solid #f1e7db;
+  background:
+    radial-gradient(1000px 400px at 10% -10%, #ffe9ef 0, rgba(0,0,0,0) 60%),
+    radial-gradient(800px 350px at 90% -20%, #ffe0d1 0, rgba(0,0,0,0) 60%),
+    linear-gradient(180deg,#fff8f0 0,#fff 50%,#fff8f0 100%);
+  /* Optional local hero image (place images/hero.jpg) */
+  background-image:
+    radial-gradient(1000px 400px at 10% -10%, #ffe9ef 0, rgba(0,0,0,0) 60%),
+    radial-gradient(800px 350px at 90% -20%, #ffe0d1 0, rgba(0,0,0,0) 60%),
+    linear-gradient(180deg,#fff8f0 0,#fff 50%,#fff8f0 100%),
+    url('images/hero.jpg');
+  background-size:cover,cover,cover,cover;
+  background-position:center;
+}
+.hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;padding:40px 20px 30px}
+.tag{display:inline-block;background:linear-gradient(90deg,var(--blush),var(--peach));padding:6px 12px;border-radius:999px;font-weight:600;border:1px solid #f3d5c4}
+.big{font:400 clamp(28px,5vw,44px) "Playfair Display",serif;line-height:1.15;margin:.8rem 0}
+.scriptline{font-size:clamp(22px,4.2vw,32px);color:var(--accent)}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.btn{border:1px solid #eadfce;background:#fff;border-radius:999px;padding:12px 18px;box-shadow:var(--shadow)}
+.btn.primary{background:linear-gradient(90deg,var(--blush),var(--peach));border-color:#f0cdb9}
+.note{color:var(--muted);font-size:.9rem}
+@media (max-width:820px){
+  .hero .wrap{grid-template-columns:1fr;padding:22px 20px}
+}
 
-    /* Layout */
-    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+/* Sections */
+section{padding:56px 0}
+.card{background:#fff;border:1px solid #f2e8db;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
 
-    /* Header */
-    header{
-      position:sticky;top:0;z-index:50;background:rgba(255,248,240,.85);
-      backdrop-filter:saturate(150%) blur(8px);border-bottom:1px solid #f1e7db;
-    }
-    .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .brand img{height:36px;width:auto}
-    .brand .wordmark{font:600 18px "Playfair Display",serif;letter-spacing:.3px}
-    nav ul{display:flex;gap:18px;list-style:none;padding:0;margin:0}
-    nav a{padding:8px 10px;border-radius:10px}
-    nav a:hover{background:#fff;border:1px solid #f0e6da}
+/* Gallery */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tab{border:1px solid #eadfce;background:#fff;border-radius:999px;padding:8px 12px}
+.tab[aria-selected="true"]{background:linear-gradient(90deg,var(--blush),var(--peach));border-color:#f0cdb9}
+.gallery-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+@media (max-width:1200px){.gallery-grid{grid-template-columns:repeat(5,1fr)}}
+@media (max-width:820px){.gallery-grid{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:520px){.gallery-grid{grid-template-columns:repeat(3,1fr)}}
+.thumb{position:relative;aspect-ratio:1/1;border-radius:10px;overflow:hidden;border:1px solid #efe3d4;background:#fff}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb .mini{position:absolute;inset:auto 6px 6px auto;background:rgba(0,0,0,.5);color:#fff;font-size:10px;padding:3px 6px;border-radius:999px}
+.thumb .use{position:absolute;left:6px;bottom:6px;background:rgba(255,255,255,.85);border:1px solid #eadfce;border-radius:8px;padding:4px 6px;font-size:11px}
 
-    /* Mobile menu */
-    .burger{display:none;border:0;background:transparent;padding:8px;line-height:0}
-    @media (max-width:820px){
-      nav ul{display:none;position:absolute;top:64px;left:0;right:0;background:#fff8f0;border-bottom:1px solid #f1e7db;padding:14px}
-      nav ul.open{display:grid;gap:8px}
-      .burger{display:block}
-    }
+/* Lightbox */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;place-items:center;z-index:100}
+.lightbox.open{display:grid}
+.lightbox img{max-width:92vw;max-height:86vh;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.4);background:#fff}
 
-    /* Hero */
-    .hero{
-      position:relative;isolation:isolate;
-      background:
-        radial-gradient(1000px 400px at 10% -10%, #ffe9ef 0, rgba(0,0,0,0) 60%),
-        radial-gradient(800px 350px at 90% -20%, #ffe0d1 0, rgba(0,0,0,0) 60%),
-        linear-gradient(180deg,#fff8f0 0,#fff 50%,#fff8f0 100%);
-      border-bottom:1px solid #f1e7db;
-    }
-    .hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;padding:40px 20px 30px}
-    .tag{display:inline-block;background:linear-gradient(90deg,var(--blush),var(--peach));padding:6px 12px;border-radius:999px;font-weight:600;border:1px solid #f3d5c4}
-    .big{font:400 clamp(28px,5vw,44px) "Playfair Display",serif;line-height:1.15;margin:.8rem 0}
-    .scriptline{font-size:clamp(22px,4.2vw,32px);color:var(--accent)}
-    .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-    .btn{
-      border:1px solid #eadfce;background:#fff;border-radius:999px;padding:12px 18px;
-      box-shadow:var(--shadow);
-    }
-    .btn.primary{background:linear-gradient(90deg,var(--blush),var(--peach));border-color:#f0cdb9}
-    .note{color:var(--muted);font-size:.9rem}
+/* Forms */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:820px){.grid{grid-template-columns:1fr}}
+label{font-weight:600;font-size:.95rem}
+select,input[type="number"],input[type="text"],input[type="file"],textarea{
+  width:100%;padding:12px 14px;border:1px solid #e9dfd2;border-radius:10px;background:#fff
+}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid #e9dfd2;border-radius:999px;padding:8px 12px;background:#fff}
+.totals{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+@media (max-width:820px){.totals{grid-template-columns:1fr}}
+.total-box{border:1px solid #f0e6da;border-radius:12px;padding:14px;background:#fff8f0}
+.total-box h3{margin:.2rem 0 .6rem}
+.paybuttons{display:flex;gap:12px;flex-wrap:wrap}
 
-    @media (max-width:820px){
-      .hero .wrap{grid-template-columns:1fr;padding:22px 20px}
-      .hero img{max-width:420px;margin:0 auto}
-    }
+/* Contact Buttons */
+.cta-buttons{display:flex;gap:12px;flex-wrap:wrap}
+.iconbtn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid #eadfce;border-radius:999px;background:#fff;box-shadow:var(--shadow)}
+svg{width:20px;height:20px}
 
-    /* Sections & cards */
-    section{padding:60px 0}
-    .card{
-      background:#fff;border:1px solid #f2e8db;border-radius:var(--radius);box-shadow:var(--shadow);
-      padding:20px
-    }
+/* Floating Instagram button */
+.fab-ig{position:fixed;right:18px;bottom:18px;z-index:60;display:inline-flex;align-items:center;gap:8px;padding:12px 14px;border-radius:999px;border:1px solid #eadfce;background:#fff;box-shadow:0 10px 25px rgba(0,0,0,.12)}
+.fab-ig:hover{transform:translateY(-1px)}
+.fab-ig .label{font-weight:600}
 
-    /* Gallery */
-    .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    @media (max-width:1200px){.gallery-grid{grid-template-columns:repeat(3,1fr)}}
-    @media (max-width:820px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
-    .ph{aspect-ratio:1/1;background:linear-gradient(180deg,#fff,#fff8f0);border:1px dashed #e7d9c6;border-radius:12px;display:grid;place-items:center;color:#a79280}
-
-    /* IG grid for API feed (square tiles) */
-    .ig-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    @media (max-width:1200px){.ig-grid{grid-template-columns:repeat(3,1fr)}}
-    @media (max-width:820px){.ig-grid{grid-template-columns:repeat(2,1fr)}}
-    .ig-tile{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;border:1px solid #efe3d4;background:#fff}
-    .ig-tile img{width:100%;height:100%;object-fit:cover}
-    .ig-badge{position:absolute;right:8px;top:8px;background:rgba(0,0,0,.55);color:#fff;font-size:.75rem;padding:4px 6px;border-radius:8px}
-
-    /* Estimator */
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-    @media (max-width:820px){.grid{grid-template-columns:1fr}}
-    label{font-weight:600;font-size:.95rem}
-    select,input[type="number"],input[type="text"],textarea{
-      width:100%;padding:12px 14px;border:1px solid #e9dfd2;border-radius:10px;background:#fff
-    }
-    .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-    .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid #e9dfd2;border-radius:999px;padding:8px 12px;background:#fff}
-    .totals{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
-    @media (max-width:820px){.totals{grid-template-columns:1fr}}
-    .total-box{border:1px solid #f0e6da;border-radius:12px;padding:14px;background:#fff8f0}
-    .total-box h3{margin:.2rem 0 .6rem}
-    .paybuttons{display:flex;gap:12px;flex-wrap:wrap}
-
-    /* Contact & CTA buttons */
-    .cta-buttons{display:flex;gap:12px;flex-wrap:wrap}
-    .iconbtn{
-      display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid #eadfce;border-radius:999px;background:#fff;box-shadow:var(--shadow)
-    }
-    .hide-email .label{visibility:visible}
-    .sr-only{position:absolute!important;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}
-
-    /* Footer */
-    footer{border-top:1px solid #f1e7db;background:#fff; padding:24px 0 50px}
-    .footgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:20px}
-    @media (max-width:820px){.footgrid{grid-template-columns:1fr;gap:10px}}
-    .legal{color:#86766a;font-size:.9rem}
-
-    /* SVG size tweak */
-    svg{width:20px;height:20px}
-  </style>
+/* Footer */
+footer{border-top:1px solid #f1e7db;background:#fff;padding:24px 0 50px}
+.footgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:20px}
+@media (max-width:820px){.footgrid{grid-template-columns:1fr;gap:10px}}
+.legal{color:#86766a;font-size:.9rem}
+</style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <div class="wrap nav">
-      <div class="brand">
-        <img src="logo.svg" alt="Betti’s Sweets logo" onerror="this.onerror=null;this.src='logo.png'">
-        <div class="wordmark">Betti’s Sweets</div>
-      </div>
-      <button class="burger" aria-label="Open menu" onclick="document.querySelector('nav ul').classList.toggle('open')">
-        <!-- menu icon -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18" stroke-width="1.5"/></svg>
-      </button>
-      <nav aria-label="Primary">
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#estimator">Design Your Cake</a></li>
-          <li><a href="#faq">FAQ & Policies</a></li>
-          <li><a href="#contact">Get a Quote</a></li>
-        </ul>
-      </nav>
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <img src="logo.svg" alt="Betti’s Sweets logo" onerror="this.onerror=null;this.src='logo.png'">
+      <div class="wordmark">Betti’s Sweets</div>
     </div>
-  </header>
+    <button class="burger" aria-label="Open menu" onclick="document.querySelector('nav ul').classList.toggle('open')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18" stroke-width="1.5"/></svg>
+    </button>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#estimator">Design Your Cake</a></li>
+        <li><a href="#faq">FAQ & Policies</a></li>
+        <li><a href="#contact">Get a Quote</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-  <!-- Hero -->
-  <section id="home" class="hero">
-    <div class="wrap">
-      <div>
-        <span class="tag">Salford • Manchester, UK</span>
-        <h1 class="big">Custom cakes & artisan pastries — made to order</h1>
-        <div class="script scriptline">Romantic • Minimal • Modern</div>
-        <p class="note">Pastel styling in blush, peach, ivory, champagne & rose-gold accents. Collection only — no home delivery.</p>
-        <div class="cta">
-          <a class="btn primary" href="#estimator">Design your cake</a>
-          <a class="btn" href="#gallery">View gallery</a>
+<section id="home" class="hero">
+  <div class="wrap">
+    <div>
+      <span class="tag">Salford • Manchester, UK</span>
+      <h1 class="big">Custom cakes & artisan pastries — made to order</h1>
+      <div class="script scriptline">Whimsical • Elegant • Minimal</div>
+      <p class="note">Pastels (blush, peach, ivory, champagne, rose-gold). Collection only — no home delivery.</p>
+      <div class="cta">
+        <a class="btn primary" href="#estimator">Design your cake</a>
+        <a class="btn" href="#gallery">View gallery</a>
+      </div>
+    </div>
+    <div aria-hidden="true"></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap card">
+    <h2>About Betti’s Sweets</h2>
+    <p>We craft custom cakes, bento cakes, cupcakes and similar pastry products with a minimal, romantic aesthetic. Every piece is baked to order, with flavour pairings that are balanced and never overly sweet.</p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="wrap">
+    <h2>Gallery</h2>
+    <p class="note">Only local images are used. Add your photos to the repo (see steps below). Tap a thumbnail to enlarge; tap “Use as inspo” to attach it to your quote.</p>
+
+    <!-- Tabs -->
+    <div class="tabs" role="tablist" aria-label="Gallery categories">
+      <button class="tab" role="tab" aria-selected="true" data-cat="bento">Bento Cakes & Bento Boxes</button>
+      <button class="tab" role="tab" aria-selected="false" data-cat="celebration">Celebration Cakes</button>
+      <button class="tab" role="tab" aria-selected="false" data-cat="coquette">Coquette & Heart Cakes</button>
+      <button class="tab" role="tab" aria-selected="false" data-cat="wedding">Wedding Cakes</button>
+      <button class="tab" role="tab" aria-selected="false" data-cat="themed">Themed Cakes</button>
+      <button class="tab" role="tab" aria-selected="false" data-cat="cupcakes">Cupcakes & Others</button>
+    </div>
+
+    <div id="galleryGrid" class="gallery-grid" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+  <img id="lightboxImg" alt="">
+</div>
+
+<!-- ESTIMATOR -->
+<section id="estimator">
+  <div class="wrap card">
+    <h2>Design Your Cake — Price Estimator</h2>
+
+    <form id="estForm" name="cake-estimator" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data">
+      <input type="hidden" name="form-name" value="cake-estimator">
+      <p class="sr-only"><label>Don’t fill this out if you’re human: <input name="bot-field"></label></p>
+
+      <div class="grid">
+        <div>
+          <label for="size">Size</label>
+          <select id="size" name="Size" required>
+            <option value="6">6" (serves ~10–14)</option>
+            <option value="8" selected>8" (serves ~18–24)</option>
+            <option value="10">10" (serves ~28–36)</option>
+          </select>
         </div>
-      </div>
-      <div>
-        <img src="" alt="" aria-hidden="true">
-      </div>
-    </div>
-  </section>
+        <div>
+          <label for="tiers">Tiers</label>
+          <select id="tiers" name="Tiers">
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
 
-  <!-- About -->
-  <section id="about">
-    <div class="wrap card">
-      <h2>About Betti’s Sweets</h2>
-      <p>We craft custom cakes, cupcakes and similar pastry products with a minimal, romantic aesthetic. Every piece is baked to order, with flavour pairings that are balanced and never overly sweet. Reduced sugar options are available on request.</p>
-    </div>
-  </section>
+        <div>
+          <label for="flavour">Sponge flavour</label>
+          <select id="flavour" name="Flavour">
+            <option>Vanilla</option><option>Chocolate</option><option>Red Velvet</option><option>Lemon</option><option>Carrot</option>
+          </select>
+        </div>
+        <div>
+          <label for="filling">Filling</label>
+          <select id="filling" name="Filling">
+            <option>Vanilla buttercream</option><option>Chocolate buttercream</option><option>Cream cheese</option><option>Lemon curd</option><option>Raspberry</option>
+          </select>
+        </div>
 
-  <!-- Gallery -->
-  <section id="gallery">
-    <div class="wrap">
-      <h2>Gallery</h2>
-      <p class="note">Auto-loads your latest Instagram posts via the official API. You can also add direct links from iCloud / Google Photos if you wish.</p>
+        <div>
+          <label for="extras">Extras</label>
+          <select id="extras" name="Extras" multiple size="4">
+            <option value="flowers">Fresh florals</option>
+            <option value="gold">Gold leaf / metallic accents</option>
+            <option value="topper">Custom topper</option>
+            <option value="textured">Textured finish</option>
+          </select>
+        </div>
 
-      <!-- Instagram API feed (auto) -->
-      <div id="igGrid" class="ig-grid">
-        <div class="ph">Loading Instagram…</div>
-        <div class="ph"></div>
-        <div class="ph"></div>
-        <div class="ph"></div>
-      </div>
+        <div>
+          <label for="date">Collection date</label>
+          <input id="date" name="Collection date" type="text" placeholder="YYYY-MM-DD" inputmode="numeric" />
+        </div>
 
-      <!-- Optional: extra direct images grid (manual links) -->
-      <div id="galleryGrid" class="gallery-grid" style="margin-top:16px">
-        <!-- Add optional direct image URLs in the script's IMAGE_URLS array -->
-        <div class="ph">Optional extra images</div>
-        <div class="ph"></div>
-        <div class="ph"></div>
-        <div class="ph"></div>
-      </div>
-    </div>
-  </section>
+        <div class="row">
+          <label class="pill" title="Reduced sugar option (no artificial sweeteners)">
+            <input type="checkbox" id="reduced" name="Reduced sugar"> Reduced sugar
+          </label>
+          <label class="pill" title="Rush fee applies if under 3 full working days">
+            <input type="checkbox" id="rush" name="Rush order"> Rush order
+          </label>
+        </div>
 
-  <!-- Estimator -->
-  <section id="estimator">
-    <div class="wrap card">
-      <h2>Design Your Cake — Price Estimator</h2>
-      <form id="estForm" name="cake-estimator" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="cake-estimator">
-        <p class="sr-only"><label>Don’t fill this out if you’re human: <input name="bot-field"></label></p>
-
-        <div class="grid">
+        <!-- Inspo: choose from gallery or upload -->
+        <div style="grid-column:1/-1" class="grid">
           <div>
-            <label for="size">Size</label>
-            <select id="size" name="Size" required>
-              <option value="6">6&quot; (serves ~10–14)</option>
-              <option value="8" selected>8&quot; (serves ~18–24)</option>
-              <option value="10">10&quot; (serves ~28–36)</option>
-            </select>
+            <label for="inspoChoice">Chosen inspo (from gallery)</label>
+            <input id="inspoChoice" name="Inspo (from gallery)" type="text" placeholder="Tap ‘Use as inspo’ in Gallery" readonly>
           </div>
           <div>
-            <label for="tiers">Tiers</label>
-            <select id="tiers" name="Tiers">
-              <option value="1" selected>1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
+            <label for="inspoUpload">Upload inspo (from device)</label>
+            <input id="inspoUpload" name="Inspo upload" type="file" accept="image/*">
           </div>
-
-          <div>
-            <label for="flavour">Sponge flavour</label>
-            <select id="flavour" name="Flavour">
-              <option>Vanilla</option><option>Chocolate</option><option>Red Velvet</option><option>Lemon</option><option>Carrot</option>
-            </select>
-          </div>
-          <div>
-            <label for="filling">Filling</label>
-            <select id="filling" name="Filling">
-              <option>Vanilla buttercream</option><option>Chocolate buttercream</option><option>Cream cheese</option><option>Lemon curd</option><option>Raspberry</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="extras">Extras</label>
-            <select id="extras" name="Extras" multiple size="4">
-              <option value="flowers">Fresh florals</option>
-              <option value="gold">Gold leaf / metallic accents</option>
-              <option value="topper">Custom topper</option>
-              <option value="textured">Textured finish</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="date">Collection date</label>
-            <input id="date" name="Collection date" type="text" placeholder="YYYY-MM-DD" inputmode="numeric" />
-          </div>
-
-          <div class="row">
-            <label class="pill" title="Reduced sugar option (no artificial sweeteners)">
-              <input type="checkbox" id="reduced" name="Reduced sugar"> Reduced sugar
-            </label>
-            <label class="pill" title="Rush fee applies if under 3 full working days">
-              <input type="checkbox" id="rush" name="Rush order"> Rush order
-            </label>
-          </div>
-
-          <div class="grid" style="grid-column:1/-1">
-            <div class="total-box">
-              <h3>Estimated Total</h3>
-              <div id="total">£0.00</div>
-              <input type="hidden" name="Estimated Total (GBP)" id="totalField">
-            </div>
-            <div class="total-box">
-              <h3>50% Deposit</h3>
-              <div id="deposit">£0.00</div>
-              <input type="hidden" name="Deposit (GBP)" id="depositField">
-            </div>
-            <div class="total-box">
-              <h3>Balance on Collection</h3>
-              <div id="balance">£0.00</div>
-              <input type="hidden" name="Balance (GBP)" id="balanceField">
-            </div>
-          </div>
-
           <div style="grid-column:1/-1">
-            <label for="notes">Design notes (theme, colours, inspo links)</label>
-            <textarea id="notes" name="Notes" rows="4" placeholder="E.g., blush & champagne, pampas, rose-gold accents. Paste Instagram/iCloud/Google Photos links here."></textarea>
+            <label>Inspo preview</label>
+            <div id="inspoPreview" class="row"></div>
           </div>
         </div>
 
-        <div class="paybuttons" style="margin-top:14px">
-          <a class="iconbtn" id="btnDeposit" href="#" target="_blank" rel="noopener" title="Request a secure deposit link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.4"/></svg>
-            <span>Request deposit link</span>
-          </a>
-          <a class="iconbtn" id="btnBalance" href="#" target="_blank" rel="noopener" title="Request a secure balance link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8" stroke-width="1.4"/><path d="M12 8v4l3 2" stroke-width="1.4"/></svg>
-            <span>Request balance link</span>
-          </a>
-          <button class="iconbtn" type="submit" title="Send order details to Betti’s Sweets">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m22 2-7 20-4-9-9-4Z" stroke-width="1.4"/><path d="M22 2 11 13" stroke-width="1.4"/></svg>
-            <span>Send quote request</span>
-          </button>
+        <div class="grid" style="grid-column:1/-1">
+          <div class="total-box">
+            <h3>Estimated Total</h3>
+            <div id="total">£0.00</div>
+            <input type="hidden" name="Estimated Total (GBP)" id="totalField">
+          </div>
+          <div class="total-box">
+            <h3>50% Deposit</h3>
+            <div id="deposit">£0.00</div>
+            <input type="hidden" name="Deposit (GBP)" id="depositField">
+          </div>
+          <div class="total-box">
+            <h3>Balance on Collection</h3>
+            <div id="balance">£0.00</div>
+            <input type="hidden" name="Balance (GBP)" id="balanceField">
+          </div>
         </div>
 
-        <p class="note">A 50% deposit is required to secure the order. One invoice; balance due on collection. Collection only (no delivery).</p>
-      </form>
-    </div>
-  </section>
-
-  <!-- FAQ / Policies -->
-  <section id="faq">
-    <div class="wrap card">
-      <h2>FAQ & Policies</h2>
-      <details><summary><strong>Lead time</strong></summary><p>Typical lead time is 5–10 days. Rush orders may be possible (fee applies if under 3 full working days).</p></details>
-      <details><summary><strong>Dietary</strong></summary><p>We can offer reduced sugar. Please note we handle common allergens (gluten, eggs, dairy, nuts) in our kitchen.</p></details>
-      <details open><summary><strong>Payments</strong></summary><p>50% deposit secures your booking. Remaining 50% due on collection under the same invoice.</p></details>
-      <details open><summary><strong>Collection only</strong></summary><p>Orders are strictly <em>collection only</em>. We currently do not offer home delivery.</p></details>
-      <details><summary><strong>Location</strong></summary><p>Salford • Manchester, UK.</p></details>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact">
-    <div class="wrap card">
-      <h2>Get in touch</h2>
-      <div class="cta-buttons" style="margin-bottom:14px">
-        <a class="iconbtn" href="tel:+447761297615" aria-label="Call Betti’s Sweets">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 4.2 2 2 0 0 1 4.11 2h2a2 2 0 0 1 2 1.72c.12.9.37 1.77.72 2.58a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.5-1.27a2 2 0 0 1 2.11-.45 11.36 11.36 0 0 0 2.58.72A2 2 0 0 1 22 16.92z" stroke-width="1.4"/></svg>
-          <span class="label">Call</span>
-        </a>
-        <a class="iconbtn" href="https://wa.me/447761297615" target="_blank" rel="noopener" aria-label="Open WhatsApp chat">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 11.3A8.7 8.7 0 1 1 11.3 2.6 8.7 8.7 0 0 1 20 11.3Z" stroke-width="1.4"/><path d="m3.6 20.4 1.4-4A8.7 8.7 0 1 0 20.4 12" stroke-width="1.4"/></svg>
-          <span class="label">WhatsApp</span>
-        </a>
-        <!-- Emails hidden under icon buttons -->
-        <a class="iconbtn hide-email" href="mailto:hello@bettissweets.co.uk?subject=General%20enquiry%20via%20website" aria-label="Email general enquiry (hello at bettissweets dot co dot uk)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m4 6 8 6 8-6" stroke-width="1.4"/><rect x="3" y="5" width="18" height="14" rx="2" ry="2" stroke-width="1.4"/></svg>
-          <span class="label">Email (general)</span>
-        </a>
-        <a class="iconbtn hide-email" href="mailto:cakes@bettissweets.co.uk?subject=Cake%20estimate%20request%20via%20website" aria-label="Email orders (cakes at bettissweets dot co dot uk)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m4 6 8 6 8-6" stroke-width="1.4"/><rect x="3" y="5" width="18" height="14" rx="2" ry="2" stroke-width="1.4"/></svg>
-          <span class="label">Email (orders)</span>
-        </a>
-      </div>
-
-      <!-- General contact form -->
-      <form name="general-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="general-contact">
-        <p class="sr-only"><label>Don’t fill this out if you’re human: <input name="bot-field"></label></p>
-        <div class="grid">
-          <div><label for="name">Name</label><input id="name" name="Name" required></div>
-          <div><label for="phone">Phone</label><input id="phone" name="Phone" inputmode="tel" placeholder="+44 7…"></div>
-          <div style="grid-column:1/-1"><label for="message">Message</label><textarea id="message" name="Message" rows="4" required></textarea></div>
+        <div style="grid-column:1/-1">
+          <label for="notes">Design notes (theme, colours, links)</label>
+          <textarea id="notes" name="Notes" rows="4" placeholder="E.g., blush & champagne, pampas, rose-gold accents."></textarea>
         </div>
-        <div style="margin-top:12px">
-          <button class="btn primary" type="submit">Send</button>
-        </div>
-        <p class="note">Or reach us on Instagram / Facebook / TikTok below.</p>
-      </form>
+      </div>
+
+      <div class="paybuttons" style="margin-top:14px">
+        <!-- Replace href values with Stripe Payment Links or Invoice links when ready -->
+        <a class="iconbtn" id="btnDeposit" href="#" target="_blank" rel="noopener" title="Request a secure deposit link">
+          <!-- menu icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.4"/></svg>
+          <span>Request deposit link</span>
+        </a>
+        <a class="iconbtn" id="btnBalance" href="#" target="_blank" rel="noopener" title="Request a secure balance link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8" stroke-width="1.4"/><path d="M12 8v4l3 2" stroke-width="1.4"/></svg>
+          <span>Request balance link</span>
+        </a>
+        <button class="iconbtn" type="submit" title="Send order details">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m22 2-7 20-4-9-9-4Z" stroke-width="1.4"/><path d="M22 2 11 13" stroke-width="1.4"/></svg>
+          <span>Send quote request</span>
+        </button>
+      </div>
+
+      <p class="note">A 50% deposit is required to secure the order. One invoice; balance due on collection. Collection only (no delivery).</p>
+    </form>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap card">
+    <h2>FAQ & Policies</h2>
+    <details><summary><strong>Lead time</strong></summary><p>Typical lead time is 5–10 days. Rush orders may be possible (fee applies if under 3 full working days).</p></details>
+    <details><summary><strong>Dietary</strong></summary><p>Reduced sugar available. Our kitchen handles common allergens (gluten, eggs, dairy, nuts).</p></details>
+    <details open><summary><strong>Payments</strong></summary><p>50% deposit secures your booking; remaining 50% due on collection under the same invoice.</p></details>
+    <details open><summary><strong>Collection only</strong></summary><p>Orders are strictly <em>collection only</em>. We currently do not offer home delivery.</p></details>
+    <details><summary><strong>Location</strong></summary><p>Salford • Manchester, UK.</p></details>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap card">
+    <h2>Get in touch</h2>
+    <div class="cta-buttons" style="margin-bottom:14px">
+      <!-- Call -->
+      <a class="iconbtn" href="tel:+447761297615" aria-label="Call Betti’s Sweets">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 4.2 2 2 0 0 1 4.11 2h2a2 2 0 0 1 2 1.72c.12.9.37 1.77.72 2.58a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.5-1.27a2 2 0 0 1 2.11-.45 11.36 11.36 0 0 0 2.58.72A2 2 0 0 1 22 16.92z" stroke-width="1.4"/></svg>
+        <span class="label">Call</span>
+      </a>
+      <!-- WhatsApp -->
+      <a class="iconbtn" href="https://wa.me/447761297615" target="_blank" rel="noopener" aria-label="Open WhatsApp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 11.3A8.7 8.7 0 1 1 11.3 2.6 8.7 8.7 0 0 1 20 11.3Z" stroke-width="1.4"/><path d="m3.6 20.4 1.4-4A8.7 8.7 0 1 0 20.4 12" stroke-width="1.4"/></svg>
+        <span class="label">WhatsApp</span>
+      </a>
+      <!-- Emails hidden under icon buttons -->
+      <a class="iconbtn" href="mailto:hello@bettissweets.co.uk?subject=General%20enquiry%20via%20website" aria-label="Email general">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m4 6 8 6 8-6" stroke-width="1.4"/><rect x="3" y="5" width="18" height="14" rx="2" ry="2" stroke-width="1.4"/></svg>
+        <span class="label">Email (general)</span>
+      </a>
+      <a class="iconbtn" href="mailto:cakes@bettissweets.co.uk?subject=Cake%20estimate%20request%20via%20website" aria-label="Email orders">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m4 6 8 6 8-6" stroke-width="1.4"/><rect x="3" y="5" width="18" height="14" rx="2" ry="2" stroke-width="1.4"/></svg>
+        <span class="label">Email (orders)</span>
+      </a>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="wrap footgrid">
-      <div>
-        <div class="script" style="font-size:28px;color:var(--accent)">Betti’s Sweets</div>
-        <p class="legal">© <span id="year"></span> Betti’s Sweets • <a href="https://www.bettissweets.co.uk/">www.bettissweets.co.uk</a><br>
-        Salford • Manchester, UK • Collection only</p>
+    <!-- General contact form -->
+    <form name="general-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="general-contact">
+      <p class="sr-only"><label>Don’t fill this out if you’re human: <input name="bot-field"></label></p>
+      <div class="grid">
+        <div><label for="name">Name</label><input id="name" name="Name" required></div>
+        <div><label for="phone">Phone</label><input id="phone" name="Phone" inputmode="tel" placeholder="+44 7…"></div>
+        <div style="grid-column:1/-1"><label for="message">Message</label><textarea id="message" name="Message" rows="4" required></textarea></div>
       </div>
-      <div>
-        <h3>Follow</h3>
-        <p class="cta-buttons">
-          <a class="iconbtn" href="https://www.instagram.com/betti_sweets?igsh=OHg4Y28yeGFvcWI2&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" stroke-width="1.4"/><circle cx="12" cy="12" r="3.2" stroke-width="1.4"/><circle cx="17.5" cy="6.5" r="1" /></svg>
-            <span>Instagram</span>
-          </a>
-          <a class="iconbtn" href="https://www.facebook.com/share/15rjNJViaL/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke-width="1.4"/></svg>
-            <span>Facebook</span>
-          </a>
-          <a class="iconbtn" href="https://www.tiktok.com/@bettis.sweets" target="_blank" rel="noopener" aria-label="TikTok">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 3c.3 1.8 1.4 3.2 3.4 3.7v3.1c-1.3.1-2.6-.3-3.8-1V14a5 5 0 1 1-4-4.9V13" stroke-width="1.4"/></svg>
-            <span>TikTok</span>
-          </a>
-        </p>
-      </div>
-      <div>
-        <h3>Contact</h3>
-        <p class="legal">
-          hello@bettissweets.co.uk (general)<br>
-          cakes@bettissweets.co.uk (orders)<br>
-          +44 7761 297615
-        </p>
-      </div>
+      <div style="margin-top:12px"><button class="btn primary" type="submit">Send</button></div>
+      <p class="note">Or reach us via Instagram / Facebook / TikTok below.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footgrid">
+    <div>
+      <div class="script" style="font-size:28px;color:var(--accent)">Betti’s Sweets</div>
+      <p class="legal">© <span id="year"></span> Betti’s Sweets • <a href="https://www.bettissweets.co.uk/">www.bettissweets.co.uk</a><br>Salford • Manchester, UK • Collection only</p>
     </div>
-  </footer>
+    <div>
+      <h3>Follow</h3>
+      <p class="cta-buttons">
+        <a class="iconbtn" href="instagram://user?username=betti_sweets" onclick="fallbackIG(event)" aria-label="Instagram (open app)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" stroke-width="1.4"/><circle cx="12" cy="12" r="3.2" stroke-width="1.4"/><circle cx="17.5" cy="6.5" r="1" /></svg>
+          <span>Instagram</span>
+        </a>
+        <a class="iconbtn" href="https://www.facebook.com/share/15rjNJViaL/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke-width="1.4"/></svg>
+          <span>Facebook</span>
+        </a>
+        <a class="iconbtn" href="https://www.tiktok.com/@bettis.sweets" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 3c.3 1.8 1.4 3.2 3.4 3.7v3.1c-1.3.1-2.6-.3-3.8-1V14a5 5 0 1 1-4-4.9V13" stroke-width="1.4"/></svg>
+          <span>TikTok</span>
+        </a>
+      </p>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <p class="legal">
+        hello@bettissweets.co.uk (general)<br>
+        cakes@bettissweets.co.uk (orders)<br>
+        +44 7761 297615
+      </p>
+    </div>
+  </div>
+</footer>
 
-  <script>
-    // Footer year
-    document.getElementById('year').textContent = new Date().getFullYear();
+<!-- Floating Instagram button (replicates “floating Insta” CTA) -->
+<a class="fab-ig" href="instagram://user?username=betti_sweets" onclick="fallbackIG(event)" aria-label="Open Instagram profile">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" stroke-width="1.4"/><circle cx="12" cy="12" r="3.2" stroke-width="1.4"/><circle cx="17.5" cy="6.5" r="1" /></svg>
+  <span class="label">@betti_sweets</span>
+</a>
 
-    // Mobile menu close on link tap
-    document.querySelectorAll('nav a').forEach(a=>{
-      a.addEventListener('click', ()=>document.querySelector('nav ul').classList.remove('open'));
-    });
+<script>
+/* ---------- Owner setup: put your images in these folders ----------
+Create these folders in your repo and drop images:
+images/bento/       e.g., bento-1.jpg, bento-2.jpg ...
+images/celebration/ e.g., celebration-1.jpg ...
+images/coquette/    e.g., coquette-1.jpg ...
+images/wedding/     e.g., wedding-1.jpg ...
+images/themed/      e.g., themed-1.jpg ...
+images/cupcakes/    e.g., cupcakes-1.jpg ...
 
-    // ===== Optional extra images (manual) =====
-    const IMAGE_URLS = [
-      // "https://...your-image1.jpg",
-      // "https://...your-image2.png",
-    ];
-    function renderDirectImages(){
-      const grid=document.getElementById('galleryGrid');
-      if(!grid) return;
-      if(!IMAGE_URLS.length) return;
-      grid.innerHTML='';
-      IMAGE_URLS.forEach(u=>{
-        const img=new Image();
-        img.loading='lazy';
-        img.decoding='async';
-        img.src=u;
-        img.alt='Cake by Betti’s Sweets';
-        img.style.borderRadius='12px';
-        img.style.border='1px solid #efe3d4';
-        img.style.background='#fff';
-        grid.appendChild(img);
-      });
-    }
+Then list them below. Tip: keep filenames simple; small JPGs (≤ 1500px) work best.
+--------------------------------------------------------------------- */
 
-    // ===== Instagram API feed via Netlify Function =====
-    async function loadInstagram(){
-      const grid = document.getElementById('igGrid');
-      if(!grid) return;
-      try{
-        const res = await fetch('/.netlify/functions/ig-feed?limit=8', {cache:'no-store'});
-        if(!res.ok) throw new Error('Feed error');
-        const data = await res.json(); // {data:[{id,media_type,media_url,thumbnail_url,permalink,timestamp,caption}]}
-        grid.innerHTML='';
-        data.data.forEach(item=>{
-          const a = document.createElement('a');
-          a.href = item.permalink;
-          a.target = '_blank';
-          a.rel = 'noopener';
-          a.className = 'ig-tile';
-          const img = new Image();
-          img.loading='lazy';
-          img.decoding='async';
-          img.src = (item.media_type === 'VIDEO' && item.thumbnail_url) ? item.thumbnail_url : item.media_url;
-          img.alt = 'Instagram — Betti’s Sweets';
-          a.appendChild(img);
-          if(item.media_type !== 'IMAGE'){
-            const badge=document.createElement('div');
-            badge.className='ig-badge';
-            badge.textContent = item.media_type === 'VIDEO' ? 'Video' : 'Carousel';
-            a.appendChild(badge);
-          }
-          grid.appendChild(a);
-        });
-        if(!data.data || !data.data.length){
-          grid.innerHTML = '<div class="ph">No posts yet</div>';
-        }
-      }catch(e){
-        grid.innerHTML = '<div class="ph">Could not load Instagram feed</div>';
-        console.error(e);
-      }
-    }
+const GALLERY = {
+  bento:       ['images/bento/bento-1.jpg','images/bento/bento-2.jpg','images/bento/bento-3.jpg','images/bento/bento-4.jpg'],
+  celebration: ['images/celebration/celebration-1.jpg','images/celebration/celebration-2.jpg','images/celebration/celebration-3.jpg','images/celebration/celebration-4.jpg'],
+  coquette:    ['images/coquette/coquette-1.jpg','images/coquette/coquette-2.jpg','images/coquette/coquette-3.jpg','images/coquette/coquette-4.jpg'],
+  wedding:     ['images/wedding/wedding-1.jpg','images/wedding/wedding-2.jpg','images/wedding/wedding-3.jpg','images/wedding/wedding-4.jpg'],
+  themed:      ['images/themed/themed-1.jpg','images/themed/themed-2.jpg','images/themed/themed-3.jpg','images/themed/themed-4.jpg'],
+  cupcakes:    ['images/cupcakes/cupcakes-1.jpg','images/cupcakes/cupcakes-2.jpg','images/cupcakes/cupcakes-3.jpg','images/cupcakes/cupcakes-4.jpg']
+};
 
-    // Estimator / payments
-    const sizeBase = { "6": 65, "8": 85, "10": 115 }; // base single-tier
-    const tierAdd  = { "6": 55, "8": 70, "10": 90  }; // per extra tier
-    const extraCost= { flowers: 18, gold: 15, topper: 20, textured: 12 };
-    const reducedSugarFee = 6;
-    const rushFee = 15;
+/* ---------- Footer year ---------- */
+document.getElementById('year').textContent = new Date().getFullYear();
 
-    const els = {
-      size:    document.getElementById('size'),
-      tiers:   document.getElementById('tiers'),
-      extras:  document.getElementById('extras'),
-      reduced: document.getElementById('reduced'),
-      rush:    document.getElementById('rush'),
-      total:   document.getElementById('total'),
-      deposit: document.getElementById('deposit'),
-      balance: document.getElementById('balance'),
-      totalField: document.getElementById('totalField'),
-      depositField: document.getElementById('depositField'),
-      balanceField: document.getElementById('balanceField'),
-      btnDeposit: document.getElementById('btnDeposit'),
-      btnBalance: document.getElementById('btnBalance'),
-      form: document.getElementById('estForm')
-    };
+/* ---------- Mobile menu close on nav tap ---------- */
+document.querySelectorAll('nav a').forEach(a=>{
+  a.addEventListener('click', ()=>document.querySelector('nav ul').classList.remove('open'));
+});
 
-    function gbp(n){ return new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(n); }
+/* ---------- Floating Instagram: try app deep link, fall back to web ---------- */
+function fallbackIG(e){
+  const web = 'https://www.instagram.com/betti_sweets/?utm_source=qr';
+  // If opened in app, fine; otherwise go to web after ~800ms
+  setTimeout(()=>{ window.open(web,'_blank','noopener'); }, 800);
+}
 
-    function calc(){
-      const s=els.size.value;
-      const t=+els.tiers.value;
-      let total=sizeBase[s] + (t-1)*tierAdd[s];
+/* ---------- Gallery render, tabs, lightbox, "Use as inspo" ---------- */
+const grid = document.getElementById('galleryGrid');
+const tabs = document.querySelectorAll('.tab');
+let currentCat = 'bento';
 
-      [...els.extras.selectedOptions].forEach(o=> total += extraCost[o.value] || 0);
-      if(els.reduced.checked) total += reducedSugarFee;
-      if(els.rush.checked) total += rushFee;
+tabs.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    tabs.forEach(b=>b.setAttribute('aria-selected','false'));
+    btn.setAttribute('aria-selected','true');
+    currentCat = btn.dataset.cat;
+    renderCat(currentCat);
+  });
+});
 
-      const deposit = Math.round((total*0.5)*100)/100;
-      const balance = Math.max(total - deposit, 0);
+function renderCat(cat){
+  grid.innerHTML = '';
+  (GALLERY[cat]||[]).forEach(src=>{
+    const card = document.createElement('div'); card.className='thumb';
+    const img = new Image(); img.loading='lazy'; img.decoding='async'; img.src=src; img.alt='Cake by Betti’s Sweets';
+    card.appendChild(img);
+    const badge = document.createElement('div'); badge.className='mini'; badge.textContent='Tap to enlarge'; card.appendChild(badge);
+    const use = document.createElement('button'); use.className='use'; use.type='button'; use.textContent='Use as inspo';
+    use.addEventListener('click', (ev)=>{ ev.stopPropagation(); setInspoFromGallery(src); });
+    card.appendChild(use);
+    card.addEventListener('click',()=>openLightbox(src));
+    grid.appendChild(card);
+  });
+}
+renderCat(currentCat);
 
-      els.total.textContent=gbp(total);
-      els.deposit.textContent=gbp(deposit);
-      els.balance.textContent=gbp(balance);
+/* Lightbox */
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lightboxImg');
+function openLightbox(src){ lbImg.src=src; lb.classList.add('open'); }
+lb.addEventListener('click', ()=>lb.classList.remove('open'));
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') lb.classList.remove('open'); });
 
-      els.totalField.value=total.toFixed(2);
-      els.depositField.value=deposit.toFixed(2);
-      els.balanceField.value=balance.toFixed(2);
+/* ---------- Estimator + inspo wiring ---------- */
+const sizeBase = { "6": 65, "8": 85, "10": 115 }; // base single-tier
+const tierAdd  = { "6": 55, "8": 70, "10": 90  }; // per extra tier
+const extraCost= { flowers: 18, gold: 15, topper: 20, textured: 12 };
+const reducedSugarFee = 6;
+const rushFee = 15;
 
-      const summary = `Cake estimate: ${gbp(total)} (Deposit ${gbp(deposit)}, Balance ${gbp(balance)}) — Size ${s}" / ${t} tier(s).`;
-      const wa = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' Please send me a secure payment link.')}`;
-      const mail = `mailto:cakes@bettissweets.co.uk?subject=${encodeURIComponent('Deposit link request')}&body=${encodeURIComponent(summary+'\n\nNotes: ')}`;
-      els.btnDeposit.href = wa;   // replace with Stripe Payment Link if desired
-      els.btnBalance.href = mail; // or Stripe invoice link
-    }
+const els = {
+  size:    document.getElementById('size'),
+  tiers:   document.getElementById('tiers'),
+  extras:  document.getElementById('extras'),
+  reduced: document.getElementById('reduced'),
+  rush:    document.getElementById('rush'),
+  total:   document.getElementById('total'),
+  deposit: document.getElementById('deposit'),
+  balance: document.getElementById('balance'),
+  totalField: document.getElementById('totalField'),
+  depositField: document.getElementById('depositField'),
+  balanceField: document.getElementById('balanceField'),
+  btnDeposit: document.getElementById('btnDeposit'),
+  btnBalance: document.getElementById('btnBalance'),
+  form: document.getElementById('estForm'),
+  inspoChoice: document.getElementById('inspoChoice'),
+  inspoUpload: document.getElementById('inspoUpload'),
+  inspoPreview: document.getElementById('inspoPreview')
+};
 
-    ['change','input'].forEach(evt=>{
-      document.getElementById('estimator').addEventListener(evt, calc, true);
-    });
+function gbp(n){ return new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(n); }
 
-    // Init
-    renderDirectImages();
-    loadInstagram();
-    calc();
-  </script>
+function calc(){
+  const s=els.size.value;
+  const t=+els.tiers.value;
+  let total=sizeBase[s] + (t-1)*tierAdd[s];
+
+  [...els.extras.selectedOptions].forEach(o=> total += extraCost[o.value] || 0);
+  if(els.reduced.checked) total += reducedSugarFee;
+  if(els.rush.checked) total += rushFee;
+
+  const deposit = Math.round((total*0.5)*100)/100;
+  const balance = Math.max(total - deposit, 0);
+
+  els.total.textContent=gbp(total);
+  els.deposit.textContent=gbp(deposit);
+  els.balance.textContent=gbp(balance);
+
+  els.totalField.value=total.toFixed(2);
+  els.depositField.value=deposit.toFixed(2);
+  els.balanceField.value=balance.toFixed(2);
+
+  const summary = `Cake estimate: ${gbp(total)} (Deposit ${gbp(deposit)}, Balance ${gbp(balance)}) — Size ${s}" / ${t} tier(s).`;
+  const wa = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' Please send me a secure payment link.')}`;
+  const mail = `mailto:cakes@bettissweets.co.uk?subject=${encodeURIComponent('Deposit link request')}&body=${encodeURIComponent(summary+'\n\nNotes: ')}`;
+  els.btnDeposit.href = wa;   // Swap to Stripe Payment Link or Invoice when ready
+  els.btnBalance.href = mail;
+}
+['change','input'].forEach(evt=>{
+  document.getElementById('estimator').addEventListener(evt, calc, true);
+});
+
+/* Inspo from gallery */
+function setInspoFromGallery(path){
+  els.inspoChoice.value = path;
+  // Show preview
+  els.inspoPreview.innerHTML = '';
+  const img = new Image(); img.src = path; img.alt = 'Chosen inspiration'; img.style.maxHeight='100px'; img.style.borderRadius='8px'; img.style.border='1px solid #eadfce';
+  els.inspoPreview.appendChild(img);
+  // Jump to estimator
+  document.querySelector('#estimator').scrollIntoView({behavior:'smooth'});
+}
+
+/* Inspo upload preview */
+els.inspoUpload.addEventListener('change', ()=>{
+  els.inspoChoice.value = els.inspoChoice.value; // keep gallery choice if any
+  els.inspoPreview.innerHTML = '';
+  const file = els.inspoUpload.files?.[0];
+  if(file){
+    const url = URL.createObjectURL(file);
+    const img = new Image(); img.src = url; img.alt = 'Uploaded inspiration'; img.style.maxHeight='100px'; img.style.borderRadius='8px'; img.style.border='1px solid #eadfce';
+    els.inspoPreview.appendChild(img);
+  }
+});
+
+/* Init */
+calc();
+</script>
 </body>
 </html>
