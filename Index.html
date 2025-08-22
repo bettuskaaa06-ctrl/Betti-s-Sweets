@@ -1,14 +1,9 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L (2025-08-22):
-  • Mobile fixes ONLY (approved):
-    - Scroll-margin-top for sticky-header anchor jumps
-    - Form controls at 16px to prevent iOS zoom-on-focus
-    - Floating Instagram button respects iOS safe-area; nudged on small screens
-    - Extra bottom padding for last section on small screens to avoid FAB overlap
-    - Mobile menu resilience: max-height + scroll + padding
-    - Accessible :focus-visible outline
-    - Motion preferences respected (reduced transforms/scroll)
-  • No structural/content changes from K
+<!-- Betti’s Sweets — Checkpoint L+2 (2025-08-22):
+  • Patch: Keep hero USP line (“Freshly baked • Reduced sugar • Balanced flavour”) on a single line on small screens
+    - Enforce no-wrap for .scriptline at ≤420px
+    - Slightly tighter clamp to ensure it fits without breaking
+  • Base: Checkpoint L (+ L+1 date-input overhang fix) — no other structural/content changes
 -->
 <html lang="en">
 <head>
@@ -237,6 +232,16 @@ input[type="date"]{
   background-size:18px 18px;
 }
 */
+
+/* ===== L+2 PATCH (USP one-line on small screens) ===== */
+@media (max-width:420px){
+  .scriptline{
+    white-space:nowrap;                    /* prevent line break */
+    font-size:clamp(16px, 3.9vw, 24px);    /* slightly tighter to fit */
+    line-height:1.1;                       /* keeps it compact, still readable */
+    letter-spacing:.1px;                   /* subtle polish on script font */
+  }
+}
 </style>
 </head>
 <body>
