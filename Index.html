@@ -1,10 +1,11 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+7 (2025-08-23)
-  • Base: L+6 (base)
-  • Fixes:
-      1) Brand logo larger (fills its slot) while keeping aspect-ratio
-      2) Hamburger icon larger and coloured to match brand accent (IG button family)
-      3) Script tagline: single line normally; wrap on very narrow phones to avoid ellipsis
+<!-- Betti’s Sweets — Checkpoint L+8 (2025-08-23)
+  • Base: L+7
+  • Changes:
+      1) Logo made 100% larger (desktop 112px tall, mobile 96px) with preserved aspect‑ratio.
+      2) Header height increased accordingly; anchor jump offset updated.
+      3) Burger icon remains larger and in brand accent (from L+7).
+      4) All previous fixes retained (L+6 centering, tagline wrap <=420px, button consistency, Safari date fix, etc.).
 -->
 <html lang="en">
 <head>
@@ -15,7 +16,7 @@
 <link rel="canonical" href="https://www.bettissweets.co.uk/" />
 <meta name="theme-color" content="#FADADD" />
 
-<!-- 7) Open Graph / Twitter -->
+<!-- Open Graph / Twitter -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.bettissweets.co.uk/">
 <meta property="og:title" content="Betti’s Sweets — Custom Cakes in Manchester">
@@ -26,7 +27,7 @@
 <meta name="twitter:description" content="Custom-made artisan cakes, cupcakes & pastries. Collection only — Salford, Manchester.">
 <meta name="twitter:image" content="https://www.bettissweets.co.uk/og-hero.jpg">
 
-<!-- 10) Preload hero image to improve LCP -->
+<!-- Preload hero image -->
 <link rel="preload" as="image" href="IMAGES/IMG_4972.jpg" fetchpriority="high" imagesrcset="IMAGES/IMG_4972.jpg 1200w" imagesizes="100vw">
 
 <!-- Fonts -->
@@ -41,6 +42,16 @@
   --rose:#B76E79; --sage:#BFC9B3; --text:#3A2E2E; --muted:#6B5E5E;
   --bg:var(--ivory); --accent:var(--rose);
   --maxw:1200px; --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.06);
+
+  /* L+8 header sizing */
+  --header-h:120px;            /* desktop/tablet */
+  --anchor-offset:120px;       /* section jump offset to clear sticky header */
+}
+@media (max-width:820px){
+  :root{
+    --header-h:100px;          /* phones */
+    --anchor-offset:104px;
+  }
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -66,28 +77,25 @@ header{
   backdrop-filter:saturate(150%) blur(8px);
   border-bottom:1px solid #f1e7db
 }
-.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav{display:flex;align-items:center;justify-content:space-between;height:var(--header-h)}
 .brand{display:flex;gap:12px;align-items:center}
-/* L+7: bigger logo (fills its slot) with preserved aspect ratio */
-.brand img{
-  height:56px; width:auto; aspect-ratio:120/36; /* keeps proportions */
-}
-@media (max-width:820px){
-  .brand img{ height:48px; }
-}
-.brand .wordmark{font:600 18px "Playfair Display",serif;letter-spacing:.3px}
+/* L+8: bigger logo (100% larger) with preserved aspect ratio */
+.brand img{height:112px;width:auto;aspect-ratio:120/36}
+@media (max-width:820px){ .brand img{height:96px} }
+.brand .wordmark{font:600 20px "Playfair Display",serif;letter-spacing:.3px}
+
 nav ul{display:flex;gap:18px;list-style:none;padding:0;margin:0}
 nav a{padding:8px 10px;border-radius:10px}
 nav a:hover{background:#fff;border:1px solid #f0e6da}
 
-/* L+7: burger icon larger + brand colour + bigger tap target */
-.burger{
-  display:none;border:0;background:transparent;
-  padding:12px; line-height:0; color:var(--accent);
-}
+/* Burger: large & in accent colour (from L+7) */
+.burger{display:none;border:0;background:transparent;padding:12px;line-height:0;color:var(--accent)}
 .burger svg{width:28px;height:28px;stroke-width:1.8}
 @media (max-width:820px){
-  nav ul{display:none;position:absolute;top:64px;left:0;right:0;background:#fff8f0;border-bottom:1px solid #f1e7db;padding:14px}
+  nav ul{
+    display:none;position:absolute;top:var(--header-h);left:0;right:0;
+    background:#fff8f0;border-bottom:1px solid #f1e7db;padding:14px
+  }
   nav ul.open{display:grid;gap:8px}
   .burger{display:block}
 }
@@ -108,13 +116,9 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 .tag{display:inline-block;background:linear-gradient(90deg,var(--blush),var(--peach));padding:6px 12px;border-radius:999px;font-weight:600;border:1px solid #f3d5c4}
 .big{font:400 clamp(28px,5vw,44px) "Playfair Display",serif;line-height:1.15;margin:.8rem 0}
 
-/* L+7 tagline behaviour:
-   - default: one line (no wrap)
-   - on very narrow screens (≤420px): allow gentle wrap to avoid ellipsis */
+/* Tagline: one line, but allow wrap on very narrow phones */
 .scriptline{font-size:clamp(22px,4.2vw,32px);color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media (max-width:420px){
-  .scriptline{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.25}
-}
+@media (max-width:420px){ .scriptline{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.25} }
 
 .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
 .btn{border:1px solid #eadfce;background:#fff;border-radius:999px;padding:12px 18px;box-shadow:var(--shadow)}
@@ -132,12 +136,11 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
   padding:18px;
 }
 
-/* Mobile-first optimisation: zoom image on small screens
-   + centering adjustments from L+6 */
+/* Mobile hero tweaks + centering (from L+6) */
 @media (max-width:820px){
-  .hero .wrap{grid-template-columns:1fr; padding:20px 0; justify-items:center;}
-  .glass{margin:0 auto; width:calc(100vw - 40px); max-width:720px;}
-  .hero{ background-size:160% auto, cover, cover, cover; background-position:center, center, center, center; }
+  .hero .wrap{grid-template-columns:1fr;padding:20px 0;justify-items:center}
+  .glass{margin:0 auto;width:calc(100vw - 40px);max-width:720px}
+  .hero{background-size:160% auto, cover, cover, cover;background-position:center, center, center, center}
 }
 
 /* Sections */
@@ -162,21 +165,21 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
 /* Contact Buttons */
 .cta-buttons{display:flex;gap:12px;flex-wrap:wrap}
 .iconbtn{
-  display:inline-flex;align-items:center; /* iOS-safe: no gap here */
+  display:inline-flex;align-items:center;
   padding:12px 16px;border:1px solid #eadfce;border-radius:999px;background:#fff;box-shadow:var(--shadow);
   color:var(--text);font-size:1rem;line-height:1.3;box-sizing:border-box;
 }
 .iconbtn svg{width:20px;height:20px;flex:0 0 auto}
-.iconbtn svg + span{ margin-left:8px; }
-.iconbtn span + svg{ margin-left:8px; }
-.iconbtn span{ display:inline-block;white-space:nowrap; }
+.iconbtn svg + span{margin-left:8px}
+.iconbtn span + svg{margin-left:8px}
+.iconbtn span{display:inline-block;white-space:nowrap}
 
 /* Action buttons uniform on mobile */
 @media (max-width:820px){
-  .paybuttons .iconbtn{ width:100%; justify-content:flex-start; }
+  .paybuttons .iconbtn{width:100%;justify-content:flex-start}
 }
 
-/* Floating Instagram button (matches primary gradient) */
+/* Floating Instagram button */
 .fab-ig{
   position:fixed;right:18px;bottom:18px;z-index:60;
   display:inline-flex;align-items:center;gap:10px;
@@ -195,32 +198,23 @@ footer{border-top:1px solid #f1e7db;background:#fff;padding:24px 0 50px}
 @media (max-width:820px){.footgrid{grid-template-columns:1fr;gap:10px}}
 .legal{color:#86766a;font-size:.9rem}
 
-/* ——— Mobile Fixes (Checkpoint L) ——— */
-section, #home, #about, #estimator, #faq, #allergens, #contact { scroll-margin-top:72px; }
-input, select, textarea, button { font-size:16px; }
-.fab-ig{ bottom: calc(18px + env(safe-area-inset-bottom)); }
-@supports (padding: max(0px)) {.fab-ig{ bottom: max(18px, calc(18px + env(safe-area-inset-bottom))); }}
+/* ——— Mobile Fixes (from L) ——— */
+section,#home,#about,#estimator,#faq,#allergens,#contact{scroll-margin-top:var(--anchor-offset)}
+input,select,textarea,button{font-size:16px}
+.fab-ig{bottom:calc(18px + env(safe-area-inset-bottom))}
+@supports (padding:max(0px)){.fab-ig{bottom:max(18px,calc(18px + env(safe-area-inset-bottom)))}}
 @media (max-width:820px){
-  .fab-ig{ right:14px; }
-  section:last-of-type{ padding-bottom:88px; }
+  .fab-ig{right:14px}
+  section:last-of-type{padding-bottom:88px}
+  nav ul{max-height:70vh;overflow:auto;padding:16px}
 }
-@media (max-width:820px){ nav ul{ max-height:70vh; overflow:auto; padding:16px; } }
-:focus-visible{ outline:2px solid rgba(183,110,121,.6); outline-offset:3px; border-radius:8px; }
-@media (prefers-reduced-motion:reduce){ *{ scroll-behavior:auto !important } .fab-ig:hover{ transform:none } }
+:focus-visible{outline:2px solid rgba(183,110,121,.6);outline-offset:3px;border-radius:8px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.fab-ig:hover{transform:none}}
 
-/* L+1 Safari date input overhang */
-.card{ overflow: hidden; }
-.grid > *{ min-width:0; }
-input[type="date"]{
-  -webkit-appearance:none; appearance:none; background-clip:padding-box; padding-right:38px;
-}
-/* Optional calendar icon kept commented */
-/*
-input[type="date"]{
-  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2" ry="2" fill="none" stroke="%236B5E5E" stroke-width="1.5"/><path d="M3 9h18" stroke="%236B5E5E" stroke-width="1.5"/></svg>');
-  background-repeat:no-repeat;background-position:right 12px center;background-size:18px 18px;
-}
-*/
+/* Safari/iPad date input overhang (from L+1) */
+.card{overflow:hidden}
+.grid > *{min-width:0}
+input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:padding-box;padding-right:38px}
 </style>
 </head>
 <body>
@@ -229,14 +223,16 @@ input[type="date"]{
   <div class="wrap nav">
     <div class="brand">
       <!-- CLS-safe logo -->
-      <img src="logo.svg" alt="Betti’s Sweets logo" width="120" height="36" onerror="this.onerror=null;this.src='logo.png'">
+      <img src="logo.svg" alt="Betti’s Sweets logo" width="240" height="72" onerror="this.onerror=null;this.src='logo.png'">
       <div class="wordmark">Betti’s Sweets</div>
     </div>
-    <!-- Accessible burger: aria-controls + aria-expanded -->
+
+    <!-- Accessible burger -->
     <button class="burger" aria-label="Open menu" aria-controls="primary-menu" aria-expanded="false"
       onclick="(function(btn){const m=document.getElementById('primary-menu');m.classList.toggle('open');btn.setAttribute('aria-expanded', m.classList.contains('open'));})(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
+
     <nav aria-label="Primary">
       <ul id="primary-menu">
         <li><a href="#home">Home</a></li>
@@ -254,7 +250,7 @@ input[type="date"]{
     <div class="glass">
       <span class="tag">Salford • Manchester, UK</span>
       <h1 class="big">Custom made artisan cakes</h1>
-      <div class="script scriptline">Freshly baked for you.</div>
+      <div class="script scriptline">Freshly baked for you. </div>
       <p class="note">Celebrate every occasion with a handmade cake—just a few clicks away.</p>
       <div class="cta">
         <a class="btn primary" href="#estimator">Design your cake</a>
@@ -492,7 +488,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
   <span class="label">Instagram</span>
 </a>
 
-<!-- 8) LocalBusiness schema -->
+<!-- LocalBusiness schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -521,7 +517,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 /* Footer year */
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* Mobile menu close on nav tap */
+/* Close mobile menu on nav click */
 document.querySelectorAll('nav a').forEach(a=>{
   a.addEventListener('click', ()=>{
     const menu = document.getElementById('primary-menu');
@@ -531,7 +527,7 @@ document.querySelectorAll('nav a').forEach(a=>{
   });
 });
 
-/* Instagram app deep link → fallback to web */
+/* Instagram deep link fallback */
 function fallbackIG(e){
   const web = 'https://www.instagram.com/betti_sweets/?utm_source=qr';
   setTimeout(()=>{ window.open(web,'_blank','noopener'); }, 800);
@@ -606,7 +602,8 @@ els.inspoUpload.addEventListener('change', ()=>{
   const file = els.inspoUpload.files?.[0];
   if(file){
     const url = URL.createObjectURL(file);
-    const img = new Image(); img.src = url; img.alt = 'Uploaded inspiration'; img.style.maxHeight='100px'; img.style.borderRadius='8px'; img.style.border='1px solid #eadfce';
+    const img = new Image(); img.src = url; img.alt = 'Uploaded inspiration';
+    img.style.maxHeight='100px'; img.style.borderRadius='8px'; img.style.border='1px solid #eadfce';
     els.inspoPreview.appendChild(img);
   }
 });
