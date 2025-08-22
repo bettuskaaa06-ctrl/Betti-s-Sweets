@@ -1,7 +1,7 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint I (2025-08-22):
-  • Fix: Hero background layer order — image first, then gradients (so photo is visible)
-  • Everything else unchanged from base H
+<!-- Betti’s Sweets — Checkpoint K (2025-08-22):
+  • Change: Mobile-only zoom for Hero background (image layer enlarged on small screens)
+  • Everything else unchanged from base J
 -->
 <html lang="en">
 <head>
@@ -104,9 +104,16 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
   box-shadow:0 12px 28px rgba(0,0,0,.12);
   padding:18px;
 }
+
+/* Mobile-first optimisation: zoom image on small screens */
 @media (max-width:820px){
   .hero .wrap{grid-template-columns:1fr;padding:20px}
   .glass{padding:16px}
+  /* Enlarge only the first (photo) layer; keep gradients covering fully */
+  .hero{
+    background-size:160% auto, cover, cover, cover;
+    background-position:center, center, center, center;
+  }
 }
 
 /* Sections */
