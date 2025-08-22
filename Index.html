@@ -1,13 +1,11 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+4 (2025-08-22):
-  • Base: L (your provided base) + L+1 Safari date fix + “scriptline” no-wrap + button consistency
-  • Mobile fixes ONLY (approved in L) remain unchanged.
-  • New in L+4:
-      - Keep the script tagline on a single line on mobile.
-      - Make the Submit estimate button identical to the two link buttons:
-        * Icon always on the left (paper plane)
-        * Same width behavior as others on small screens
-        * Aligned text start
+<!-- Betti’s Sweets — Checkpoint L+5 (2025-08-22):
+  • Base: L+4 (your saved base)
+  • Change in L+5:
+      - Hero overlay card stays left-aligned on tablet/desktop.
+      - On small screens, the hero overlay card is centered (both axes),
+        with centered text and CTA alignment.
+      - No structural/content changes elsewhere.
 -->
 <html lang="en">
 <head>
@@ -112,10 +110,16 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
   padding:18px;
 }
 
-/* Mobile-first optimisation: zoom image on small screens */
+/* Mobile-first optimisation + L+5 centering for phones */
 @media (max-width:820px){
-  .hero .wrap{grid-template-columns:1fr;padding:20px}
-  .glass{padding:16px}
+  .hero .wrap{
+    grid-template-columns:1fr;
+    padding:20px;
+    min-height:64vh;           /* give the hero some height so we can center */
+    place-items:center;        /* centers the overlay card in both axes */
+  }
+  .glass{padding:16px;text-align:center}
+  .cta{justify-content:center}
   /* Enlarge only the first (photo) layer; keep gradients covering fully */
   .hero{
     background-size:160% auto, cover, cover, cover;
@@ -403,11 +407,11 @@ We also do our best to accommodate most dietary needs and allergies.</p>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.4"/></svg>
           <span>Request deposit link</span>
         </a>
-        <a class="iconbtn" id="btnBalance" href="#" target="_blank" rel="noopener" title="Request a secure balance link">
+      <a class="iconbtn" id="btnBalance" href="#" target="_blank" rel="noopener" title="Request a secure balance link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8" stroke-width="1.4"/><path d="M12 8v4l3 2" stroke-width="1.4"/></svg>
           <span>Request balance link</span>
         </a>
-        <!-- Submit button: now identical structure (icon left) -->
+        <!-- Submit button: identical structure (icon left) -->
         <button class="iconbtn" type="submit" aria-label="Submit estimate" title="Submit your estimate to Betti’s Sweets">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
             <path d="M22 2 11 13" stroke-width="1.4"/>
