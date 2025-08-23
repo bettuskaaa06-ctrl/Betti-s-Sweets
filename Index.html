@@ -1,11 +1,16 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+17 (UB+1) — 2025-08-23
-  • Base: L+16 (UB)
-  • Fix: Rush checkbox no longer stays ticked after choosing a later date.
-         - We mark auto-applied rush with data-autoset and uncheck it if date moves outside threshold.
-         - Still auto-checks & locks when < 3 full working days.
-  • All UB fixes retained (logo crop window + zoom, shorter header, pinned-left logo,
-    Instagram FAB icon sizing, burger size/colour, centred hero, tagline wrap ≤420px, etc.)
+<!-- Betti’s Sweets — Checkpoint L+18 (UB+2) — 2025-08-23
+  • Base: L+17 (UB+1)
+  • Change: FAQ → Dietary wording updated per client-approved copy:
+      “All of our cakes are made with reduced sugar for a balanced flavour.
+       Because our kitchen also works with common allergens (gluten, eggs, dairy, nuts),
+       we can’t guarantee complete absence, but we always do our best to accommodate requests.”
+  • All UB fixes retained:
+      - Logo crop window + zoom (no inner whitespace), pinned hard-left, header height matches visible logo
+      - Reduced-sugar option removed from estimator
+      - Rush auto-check & lock when < 3 working days; unlocks & unticks when date moves outside threshold
+      - Instagram FAB icon explicitly sized (iOS Safari-safe)
+      - Burger size/colour, centred hero, tagline wrap ≤420px, Safari date fix, etc.
 -->
 <html lang="en">
 <head>
@@ -428,7 +433,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
     <h2>FAQ & Policies</h2>
     <details open><summary><strong>Difference between sponge layers and cake tiers</strong></summary><p>Sponge layers are the individual cake sections stacked with filling inside a single cake. Tiers are separate cakes stacked on top of each other to create a taller, multilevel cake.</p></details>
     <details><summary><strong>Lead time</strong></summary><p>Typical lead time is 5–10 days. Rush orders may be possible (fee applies if under 3 full working days).</p></details>
-    <details><summary><strong>Dietary</strong></summary><p>Reduced sugar as standard. Our kitchen handles common allergens (gluten, eggs, dairy, nuts).</p></details>
+    <details><summary><strong>Dietary</strong></summary><p>All of our cakes are made with reduced sugar for a balanced flavour. Because our kitchen also works with common allergens (gluten, eggs, dairy, nuts), we can’t guarantee complete absence, but we always do our best to accommodate requests.</p></details>
     <details><summary><strong>Payments</strong></summary><p>50% deposit secures your booking; remaining 50% due on collection under the same invoice.</p></details>
     <details><summary><strong>Collection only</strong></summary><p>Orders are strictly <em>collection only</em>. We currently do not offer home delivery.</p></details>
     <details><summary><strong>Location</strong></summary><p>Salford • Manchester, UK.</p></details>
