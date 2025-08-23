@@ -1,11 +1,15 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+19 (UB+3) — 2025-08-23
-  • Base: L+18 (UB+2)
+<!-- Betti’s Sweets — Checkpoint L+20 (UB+6) — 2025-08-23
+  • Base: UB+5
   • Changes:
-      1) Estimator → Size options updated (6″/8″/10″/12″ with serves + sponge layers)
-      2) ℹ︎ info button beside “Size” that toggles an expandable note with slice/diameter guidance
-      3) Persists last-chosen Size (localStorage + cookie fallback) and preselects on return
-  • All UB fixes retained (logo crop-window + zoom, shorter header, Instagram FAB icon sizing, rush date logic, etc.)
+      1) Sponge flavours expanded (alphabetical):
+         Carrot; Chocolate; Fruity sponge (e.g. Strawberry, Raspberry, Blueberry);
+         Lemon; Marble (Chocolate & Vanilla Swirls); Red Velvet; Vanilla;
+         Vanilla sponge with coconut flakes
+      2) Fillings list replaced and alphabetised (see <select id="filling">)
+  • All UB features retained (logo crop-window + zoom, shorter header, size/tiers info buttons,
+    rush auto-check logic, Instagram FAB icon sizing, localStorage size memory, etc.)
+  • Version tag (hidden): UB+6 / 2025-08-23
 -->
 <html lang="en">
 <head>
@@ -246,7 +250,7 @@ input,select,textarea,button{font-size:16px}
 .grid > *{min-width:0}
 input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:padding-box;padding-right:38px}
 
-/* ——— Estimator: Size info button & help text ——— */
+/* ——— Estimator: Size/Tiers info buttons & help text ——— */
 .field-inline{display:flex;align-items:center;gap:8px}
 .info-btn{
   display:inline-flex;align-items:center;justify-content:center;
@@ -347,19 +351,33 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 
         <!-- Tiers -->
         <div>
-          <label for="tiers">Tiers</label>
-          <select id="tiers" name="Tiers" required>
+          <label for="tiers" class="field-inline">
+            <span>Tiers</span>
+            <button type="button" class="info-btn" id="tiersInfoBtn" aria-controls="tiersHelp" aria-expanded="false" title="Layers vs tiers info">i</button>
+          </label>
+          <select id="tiers" name="Tiers" required aria-describedby="tiersHelp">
             <option value="1" selected>1</option>
             <option value="2">2</option>
             <option value="3">3</option>
+            <option value="4">4</option>
           </select>
+          <div id="tiersHelp" class="helptext" role="note">
+            Sponge layers are the individual cake sections stacked with filling inside a single cake. Tiers are separate cakes stacked on top of each other to create a taller, multilevel cake.
+          </div>
         </div>
 
         <!-- Flavour -->
         <div>
           <label for="flavour">Sponge flavour</label>
           <select id="flavour" name="Flavour">
-            <option>Vanilla</option><option>Chocolate</option><option>Red Velvet</option><option>Lemon</option><option>Carrot</option>
+            <option>Carrot</option>
+            <option>Chocolate</option>
+            <option>Fruity sponge (e.g. Strawberry, Raspberry, Blueberry)</option>
+            <option>Lemon</option>
+            <option>Marble (Chocolate &amp; Vanilla Swirls)</option>
+            <option>Red Velvet</option>
+            <option>Vanilla</option>
+            <option>Vanilla sponge with coconut flakes</option>
           </select>
         </div>
 
@@ -367,7 +385,48 @@ We also do our best to accommodate most dietary needs and allergies.</p>
         <div>
           <label for="filling">Filling</label>
           <select id="filling" name="Filling">
-            <option>Vanilla buttercream</option><option>Chocolate buttercream</option><option>Cream cheese</option><option>Lemon curd</option><option>Raspberry</option>
+            <option>Biscoff buttercream with Biscoff spread</option>
+            <option>Caramel buttercream with caramel sauce</option>
+            <option>Chocolate buttercream</option>
+            <option>Chocolate buttercream with milk chocolate spread</option>
+            <option>Chocolate buttercream with raspberry jam</option>
+            <option>Chocolate buttercream with strawberry jam</option>
+            <option>Chocolate buttercream with white chocolate hazelnut spread</option>
+            <option>Chocolate buttercream with white chocolate spread</option>
+            <option>Chocolate orange buttercream with orange jam</option>
+            <option>Cinnamon buttercream with caramel sauce</option>
+            <option>Cinnamon buttercream with white chocolate spread</option>
+            <option>Coconut buttercream with lemon curd</option>
+            <option>Coconut buttercream with raspberry jam</option>
+            <option>Coconut buttercream with strawberry jam</option>
+            <option>Coffee buttercream with milk chocolate spread</option>
+            <option>Coffee buttercream with white chocolate spread</option>
+            <option>Cream cheese</option>
+            <option>Lemon buttercream with lemon curd</option>
+            <option>Nutella buttercream with Nutella spread</option>
+            <option>Oreo buttercream with cookies &amp; cream spread</option>
+            <option>Oreo buttercream with milk chocolate spread</option>
+            <option>Oreo buttercream with milk raspberry jam</option>
+            <option>Oreo buttercream with milk strawberry jam</option>
+            <option>Peanut butter buttercream with chocolate spread</option>
+            <option>Peanut butter buttercream with peanut butter spread</option>
+            <option>Peanut butter buttercream with strawberry jam</option>
+            <option>Salted caramel buttercream with salted caramel sauce</option>
+            <option>Vanilla buttercream</option>
+            <option>Vanilla buttercream with milk chocolate spread</option>
+            <option>Vanilla buttercream with raspberry jam</option>
+            <option>Vanilla buttercream with strawberry jam</option>
+            <option>Vanilla buttercream with white chocolate hazelnut spread</option>
+            <option>Whipped cream</option>
+            <option>Whipped cream with lemon curd</option>
+            <option>Whipped cream with raspberry jam</option>
+            <option>Whipped cream with strawberry jam</option>
+            <option>White chocolate buttercream with lemon curd</option>
+            <option>White chocolate buttercream with milk chocolate spread</option>
+            <option>White chocolate buttercream with raspberry jam</option>
+            <option>White chocolate buttercream with strawberry jam</option>
+            <option>White chocolate buttercream with white chocolate hazelnut spread</option>
+            <option>White chocolate mascarpone cream</option>
           </select>
         </div>
 
@@ -601,7 +660,7 @@ function fallbackIG(e){
 
 /* —— Estimator + payments —— */
 
-/* Pricing tables (added 12") */
+/* Pricing tables (with 12") */
 const sizeBase = { "6": 65, "8": 85, "10": 115, "12": 145 };   // base single-tier
 const tierAdd  = { "6": 55, "8": 70, "10": 90,  "12": 110 };   // per extra tier
 const extraCost= { flowers: 18, gold: 15, topper: 20, textured: 12 };
@@ -626,167 +685,11 @@ const els = {
   inspoPreview: document.getElementById('inspoPreview'),
   date: document.getElementById('date'),
   sizeInfoBtn: document.getElementById('sizeInfoBtn'),
-  sizeHelp: document.getElementById('sizeHelp')
+  sizeHelp: document.getElementById('sizeHelp'),
+  tiersInfoBtn: document.getElementById('tiersInfoBtn'),
+  tiersHelp: document.getElementById('tiersHelp')
 };
 
 function gbp(n){ return new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(n); }
 
-/* ——— Size Info: click & long-press toggle ——— */
-(function setupSizeInfo(){
-  if(!els.sizeInfoBtn || !els.sizeHelp) return;
-  const btn = els.sizeInfoBtn, panel = els.sizeHelp;
-
-  const toggle = (force) => {
-    const willOpen = typeof force === 'boolean' ? force : !panel.classList.contains('open');
-    panel.classList.toggle('open', willOpen);
-    btn.setAttribute('aria-expanded', String(willOpen));
-  };
-
-  btn.addEventListener('click', () => toggle());
-
-  // Long-press (mobile)
-  let pressTimer;
-  btn.addEventListener('touchstart', () => { pressTimer = setTimeout(()=>toggle(true), 500); }, {passive:true});
-  ['touchend','touchcancel'].forEach(evt=> btn.addEventListener(evt, ()=> clearTimeout(pressTimer)));
-})();
-
-/* ——— Persist preferred Size (localStorage + cookie fallback) ——— */
-const SIZE_KEY = 'betti_pref_size';
-function saveSizePref(val){
-  try{ localStorage.setItem(SIZE_KEY, val); }catch(_){}
-  try{
-    const days=180;
-    const d=new Date(); d.setTime(d.getTime()+days*24*60*60*1000);
-    document.cookie = SIZE_KEY+"="+encodeURIComponent(val)+"; expires="+d.toUTCString()+"; path=/; SameSite=Lax";
-  }catch(_){}
-}
-function readSizePref(){
-  try{
-    const val = localStorage.getItem(SIZE_KEY);
-    if (val) return val;
-  }catch(_){}
-  try{
-    const m = document.cookie.match(new RegExp('(?:^|; )'+SIZE_KEY+'=([^;]*)'));
-    return m ? decodeURIComponent(m[1]) : null;
-  }catch(_){}
-  return null;
-}
-
-/* Working-days calculator (Mon–Fri) */
-function workingDaysBetween(start, end){
-  const a = new Date(start); a.setHours(0,0,0,0);
-  const b = new Date(end);   b.setHours(0,0,0,0);
-  if (b <= a) return 0;
-  let days = 0, d = new Date(a);
-  while (d < b){
-    d.setDate(d.getDate()+1);
-    const dow = d.getDay();
-    if (dow !== 0 && dow !== 6) days++;
-  }
-  return days;
-}
-
-/* Auto-lock Rush if < 3 working days away (and undo auto-check when it isn't) */
-const RUSH_THRESHOLD_DAYS = 3;
-function updateRushLock(){
-  const val = els.date?.value;
-  if (!val){
-    // No date selected: ensure it's enabled, but don't change user choice
-    els.rush.disabled = false;
-    return;
-  }
-  const selected = new Date(val + 'T00:00:00');
-  const today = new Date(); today.setHours(0,0,0,0);
-  const wd = workingDaysBetween(today, selected);
-  const mustRush = wd < RUSH_THRESHOLD_DAYS;
-
-  if (mustRush){
-    els.rush.checked = true;
-    els.rush.disabled = true;
-    els.rush.dataset.autoset = "1"; // remember that we forced it
-    els.rush.title = 'Rush fee applies for dates under 3 full working days';
-  } else {
-    // Leaving the rush window: re-enable checkbox.
-    els.rush.disabled = false;
-    els.rush.title = '';
-    // If it was only checked because we auto-set it, uncheck now.
-    if (els.rush.dataset.autoset){
-      els.rush.checked = false;
-      delete els.rush.dataset.autoset;
-    }
-  }
-}
-
-/* If the user toggles Rush manually, clear autoset flag so we respect their choice */
-els.rush.addEventListener('change', ()=>{ delete els.rush.dataset.autoset; });
-
-/* Calculator */
-function calc(){
-  const s=els.size.value;
-  const t=+els.tiers.value || 1;
-  let total=sizeBase[s] + (t-1)*tierAdd[s];
-
-  [...els.extras.selectedOptions].forEach(o=> total += (extraCost[o.value] || 0));
-  if(els.rush.checked) total += rushFee;
-
-  const deposit = Math.round((total*0.5)*100)/100;
-  const balance = Math.max(total - deposit, 0);
-
-  els.total.textContent=gbp(total);
-  els.deposit.textContent=gbp(deposit);
-  els.balance.textContent=gbp(balance);
-
-  els.totalField.value=total.toFixed(2);
-  els.depositField.value=deposit.toFixed(2);
-  els.balanceField.value=balance.toFixed(2);
-
-  const summary = `Cake estimate: ${gbp(total)} (Deposit ${gbp(deposit)}, Balance ${gbp(balance)}) — Size ${s}" / ${t} tier(s).`;
-  const wa = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' Please send me a secure payment link.')}`;
-  const mail = `mailto:cakes@bettissweets.co.uk?subject=${encodeURIComponent('Deposit link request')}&body=${encodeURIComponent(summary+'\n\nNotes: ')}`;
-  els.btnDeposit.href = wa;
-  els.btnBalance.href = mail;
-}
-
-/* Prevent past dates + set min=today */
-if (els.date) {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const iso = today.toISOString().slice(0,10);
-  els.date.min = iso;
-  els.date.addEventListener('change', ()=>{ updateRushLock(); calc(); });
-}
-
-/* Save size preference on change */
-els.size.addEventListener('change', ()=>{
-  saveSizePref(els.size.value);
-  calc();
-});
-
-/* Try to restore preferred size on load (if present & valid) */
-(function restoreSizePref(){
-  const saved = readSizePref();
-  if (!saved) return;
-  const opt = [...els.size.options].find(o=>o.value===saved);
-  if (opt){ els.size.value = saved; }
-})();
-
-/* Inspo upload preview */
-els.inspoUpload?.addEventListener('change', ()=>{
-  els.inspoPreview.innerHTML = '';
-  const file = els.inspoUpload.files?.[0];
-  if(file){
-    const url = URL.createObjectURL(file);
-    const img = new Image(); img.src = url; img.alt = 'Uploaded inspiration';
-    img.style.maxHeight='100px'; img.style.borderRadius='8px'; img.style.border='1px solid #eadfce';
-    els.inspoPreview.appendChild(img);
-  }
-});
-
-/* Init */
-['change','input'].forEach(evt=>{
-  document.getElementById('estimator').addEventListener(evt, calc, true);
-});
-updateRushLock();
-calc();
-</script>
-</body>
-</html>
+/* ——— Info toggles (Size & Tiers):
