@@ -1,11 +1,12 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+8 (2025-08-23)
-  • Base: L+7
-  • Changes:
-      1) Logo made 100% larger (desktop 112px tall, mobile 96px) with preserved aspect‑ratio.
-      2) Header height increased accordingly; anchor jump offset updated.
-      3) Burger icon remains larger and in brand accent (from L+7).
-      4) All previous fixes retained (L+6 centering, tagline wrap <=420px, button consistency, Safari date fix, etc.).
+<!-- Betti’s Sweets — Checkpoint L+9 (2025-08-23)
+  • Base: L+8
+  • Change: Logo size increased again by 100%
+      - Desktop logo height: 224px
+      - Mobile logo height: 192px
+      - Header height + anchor offset updated
+  • All previous fixes retained (centering, burger colour/size, tagline wrap on ≤420px,
+    button consistency, Safari date fix, etc.).
 -->
 <html lang="en">
 <head>
@@ -27,7 +28,7 @@
 <meta name="twitter:description" content="Custom-made artisan cakes, cupcakes & pastries. Collection only — Salford, Manchester.">
 <meta name="twitter:image" content="https://www.bettissweets.co.uk/og-hero.jpg">
 
-<!-- Preload hero image -->
+<!-- Preload hero image to improve LCP -->
 <link rel="preload" as="image" href="IMAGES/IMG_4972.jpg" fetchpriority="high" imagesrcset="IMAGES/IMG_4972.jpg 1200w" imagesizes="100vw">
 
 <!-- Fonts -->
@@ -43,14 +44,14 @@
   --bg:var(--ivory); --accent:var(--rose);
   --maxw:1200px; --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.06);
 
-  /* L+8 header sizing */
-  --header-h:120px;            /* desktop/tablet */
-  --anchor-offset:120px;       /* section jump offset to clear sticky header */
+  /* L+9 header sizing (logo enlarged again by 100%) */
+  --header-h:240px;            /* desktop/tablet header height */
+  --anchor-offset:240px;       /* sticky-header anchor offset */
 }
 @media (max-width:820px){
   :root{
-    --header-h:100px;          /* phones */
-    --anchor-offset:104px;
+    --header-h:200px;          /* phones */
+    --anchor-offset:200px;
   }
 }
 
@@ -79,16 +80,15 @@ header{
 }
 .nav{display:flex;align-items:center;justify-content:space-between;height:var(--header-h)}
 .brand{display:flex;gap:12px;align-items:center}
-/* L+8: bigger logo (100% larger) with preserved aspect ratio */
-.brand img{height:112px;width:auto;aspect-ratio:120/36}
-@media (max-width:820px){ .brand img{height:96px} }
+/* L+9: logo 100% larger again; keep aspect ratio */
+.brand img{height:224px;width:auto;aspect-ratio:120/36}
+@media (max-width:820px){ .brand img{height:192px} }
 .brand .wordmark{font:600 20px "Playfair Display",serif;letter-spacing:.3px}
-
 nav ul{display:flex;gap:18px;list-style:none;padding:0;margin:0}
 nav a{padding:8px 10px;border-radius:10px}
 nav a:hover{background:#fff;border:1px solid #f0e6da}
 
-/* Burger: large & in accent colour (from L+7) */
+/* Burger: large & accent colour */
 .burger{display:none;border:0;background:transparent;padding:12px;line-height:0;color:var(--accent)}
 .burger svg{width:28px;height:28px;stroke-width:1.8}
 @media (max-width:820px){
@@ -116,9 +116,11 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 .tag{display:inline-block;background:linear-gradient(90deg,var(--blush),var(--peach));padding:6px 12px;border-radius:999px;font-weight:600;border:1px solid #f3d5c4}
 .big{font:400 clamp(28px,5vw,44px) "Playfair Display",serif;line-height:1.15;margin:.8rem 0}
 
-/* Tagline: one line, but allow wrap on very narrow phones */
+/* Tagline behaviour: one line normally; allow wrap on ultra-narrow screens */
 .scriptline{font-size:clamp(22px,4.2vw,32px);color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media (max-width:420px){ .scriptline{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.25} }
+@media (max-width:420px){
+  .scriptline{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.25}
+}
 
 .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
 .btn{border:1px solid #eadfce;background:#fff;border-radius:999px;padding:12px 18px;box-shadow:var(--shadow)}
@@ -136,7 +138,7 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
   padding:18px;
 }
 
-/* Mobile hero tweaks + centering (from L+6) */
+/* Mobile-first optimisation + centering */
 @media (max-width:820px){
   .hero .wrap{grid-template-columns:1fr;padding:20px 0;justify-items:center}
   .glass{margin:0 auto;width:calc(100vw - 40px);max-width:720px}
@@ -170,13 +172,13 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
   color:var(--text);font-size:1rem;line-height:1.3;box-sizing:border-box;
 }
 .iconbtn svg{width:20px;height:20px;flex:0 0 auto}
-.iconbtn svg + span{margin-left:8px}
-.iconbtn span + svg{margin-left:8px}
-.iconbtn span{display:inline-block;white-space:nowrap}
+.iconbtn svg + span{ margin-left:8px; }
+.iconbtn span + svg{ margin-left:8px; }
+.iconbtn span{ display:inline-block;white-space:nowrap; }
 
 /* Action buttons uniform on mobile */
 @media (max-width:820px){
-  .paybuttons .iconbtn{width:100%;justify-content:flex-start}
+  .paybuttons .iconbtn{ width:100%; justify-content:flex-start; }
 }
 
 /* Floating Instagram button */
@@ -199,22 +201,27 @@ footer{border-top:1px solid #f1e7db;background:#fff;padding:24px 0 50px}
 .legal{color:#86766a;font-size:.9rem}
 
 /* ——— Mobile Fixes (from L) ——— */
-section,#home,#about,#estimator,#faq,#allergens,#contact{scroll-margin-top:var(--anchor-offset)}
-input,select,textarea,button{font-size:16px}
-.fab-ig{bottom:calc(18px + env(safe-area-inset-bottom))}
-@supports (padding:max(0px)){.fab-ig{bottom:max(18px,calc(18px + env(safe-area-inset-bottom)))}}
+section, #home, #about, #estimator, #faq, #allergens, #contact { scroll-margin-top:var(--anchor-offset); }
+input, select, textarea, button { font-size:16px; }
+.fab-ig{ bottom: calc(18px + env(safe-area-inset-bottom)); }
+@supports (padding: max(0px)) {.fab-ig{ bottom: max(18px, calc(18px + env(safe-area-inset-bottom))); }}
 @media (max-width:820px){
-  .fab-ig{right:14px}
-  section:last-of-type{padding-bottom:88px}
-  nav ul{max-height:70vh;overflow:auto;padding:16px}
+  .fab-ig{ right:14px; }
+  section:last-of-type{ padding-bottom:88px; }
+  nav ul{ max-height:70vh; overflow:auto; padding:16px; }
 }
-:focus-visible{outline:2px solid rgba(183,110,121,.6);outline-offset:3px;border-radius:8px}
-@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.fab-ig:hover{transform:none}}
+:focus-visible{ outline:2px solid rgba(183,110,121,.6); outline-offset:3px; border-radius:8px; }
+@media (prefers-reduced-motion:reduce){ *{ scroll-behavior:auto !important } .fab-ig:hover{ transform:none } }
 
 /* Safari/iPad date input overhang (from L+1) */
-.card{overflow:hidden}
-.grid > *{min-width:0}
-input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:padding-box;padding-right:38px}
+.card{ overflow: hidden; }
+.grid > *{ min-width:0; }
+input[type="date"]{
+  -webkit-appearance:none;
+  appearance:none;
+  background-clip:padding-box;
+  padding-right:38px;
+}
 </style>
 </head>
 <body>
@@ -222,17 +229,14 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 <header>
   <div class="wrap nav">
     <div class="brand">
-      <!-- CLS-safe logo -->
-      <img src="logo.svg" alt="Betti’s Sweets logo" width="240" height="72" onerror="this.onerror=null;this.src='logo.png'">
+      <!-- CLS-safe logo with width/height fallback -->
+      <img src="logo.svg" alt="Betti’s Sweets logo" width="480" height="144" onerror="this.onerror=null;this.src='logo.png'">
       <div class="wordmark">Betti’s Sweets</div>
     </div>
-
-    <!-- Accessible burger -->
-    <button class="burger" aria-label="Open menu" aria-controls="primary-menu" aria-expanded="false"
-      onclick="(function(btn){const m=document.getElementById('primary-menu');m.classList.toggle('open');btn.setAttribute('aria-expanded', m.classList.contains('open'));})(this)">
+    <!-- Accessible burger: aria-controls + aria-expanded -->
+    <button class="burger" aria-label="Open menu" aria-controls="primary-menu" aria-expanded="false" onclick="(function(btn){const m=document.getElementById('primary-menu');m.classList.toggle('open');btn.setAttribute('aria-expanded', m.classList.contains('open'));})(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
-
     <nav aria-label="Primary">
       <ul id="primary-menu">
         <li><a href="#home">Home</a></li>
@@ -250,7 +254,7 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
     <div class="glass">
       <span class="tag">Salford • Manchester, UK</span>
       <h1 class="big">Custom made artisan cakes</h1>
-      <div class="script scriptline">Freshly baked for you. </div>
+      <div class="script scriptline">Freshly baked for you.</div>
       <p class="note">Celebrate every occasion with a handmade cake—just a few clicks away.</p>
       <div class="cta">
         <a class="btn primary" href="#estimator">Design your cake</a>
@@ -335,6 +339,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
           </label>
         </div>
 
+        <!-- Inspo upload -->
         <div style="grid-column:1/-1" class="grid">
           <div>
             <label for="inspoUpload">Upload inspiration photo (optional)</label>
@@ -346,6 +351,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
           </div>
         </div>
 
+        <!-- Totals -->
         <div class="grid totals" style="grid-column:1/-1" aria-live="polite">
           <div class="total-box">
             <h3>Estimated Total</h3>
@@ -379,6 +385,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8" stroke-width="1.4"/><path d="M12 8v4l3 2" stroke-width="1.4"/></svg>
           <span>Request balance link</span>
         </a>
+        <!-- Submit button: same structure as links (icon left) -->
         <button class="iconbtn" type="submit" aria-label="Submit estimate" title="Submit your estimate to Betti’s Sweets">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
             <path d="M22 2 11 13" stroke-width="1.4"/>
@@ -396,12 +403,30 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 <section id="faq">
   <div class="wrap card">
     <h2>FAQ & Policies</h2>
-    <details open><summary><strong>Difference between sponge layers and cake tiers</strong></summary><p>Sponge layers are the individual cake sections stacked with filling inside a single cake. Tiers are separate cakes stacked on top of each other to create a taller, multilevel cake.</p></details>
-    <details><summary><strong>Lead time</strong></summary><p>Typical lead time is 5–10 days. Rush orders may be possible (fee applies if under 3 full working days).</p></details>
-    <details><summary><strong>Dietary</strong></summary><p>Reduced sugar available. Our kitchen handles common allergens (gluten, eggs, dairy, nuts).</p></details>
-    <details><summary><strong>Payments</strong></summary><p>50% deposit secures your booking; remaining 50% due on collection under the same invoice.</p></details>
-    <details><summary><strong>Collection only</strong></summary><p>Orders are strictly <em>collection only</em>. We currently do not offer home delivery.</p></details>
-    <details><summary><strong>Location</strong></summary><p>Salford • Manchester, UK.</p></details>
+    <details open>
+      <summary><strong>Difference between sponge layers and cake tiers</strong></summary>
+      <p>Sponge layers are the individual cake sections stacked with filling inside a single cake. Tiers are separate cakes stacked on top of each other to create a taller, multilevel cake.</p>
+    </details>
+    <details>
+      <summary><strong>Lead time</strong></summary>
+      <p>Typical lead time is 5–10 days. Rush orders may be possible (fee applies if under 3 full working days).</p>
+    </details>
+    <details>
+      <summary><strong>Dietary</strong></summary>
+      <p>Reduced sugar available. Our kitchen handles common allergens (gluten, eggs, dairy, nuts).</p>
+    </details>
+    <details>
+      <summary><strong>Payments</strong></summary>
+      <p>50% deposit secures your booking; remaining 50% due on collection under the same invoice.</p>
+    </details>
+    <details>
+      <summary><strong>Collection only</strong></summary>
+      <p>Orders are strictly <em>collection only</em>. We currently do not offer home delivery.</p>
+    </details>
+    <details>
+      <summary><strong>Location</strong></summary>
+      <p>Salford • Manchester, UK.</p>
+    </details>
   </div>
 </section>
 
@@ -434,6 +459,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
       </a>
     </div>
 
+    <!-- General contact form (Netlify) -->
     <form name="general-contact" method="POST" action="/thank-you" data-netlify="true" netlify-honeypot="bot-field" autocomplete="on">
       <input type="hidden" name="form-name" value="general-contact">
       <p class="sr-only"><label>Don’t fill this out if you’re human: <input name="bot-field" autocomplete="off"></label></p>
@@ -517,7 +543,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 /* Footer year */
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* Close mobile menu on nav click */
+/* Close mobile menu on nav tap + aria-expanded reset */
 document.querySelectorAll('nav a').forEach(a=>{
   a.addEventListener('click', ()=>{
     const menu = document.getElementById('primary-menu');
@@ -527,15 +553,15 @@ document.querySelectorAll('nav a').forEach(a=>{
   });
 });
 
-/* Instagram deep link fallback */
+/* Instagram deep link → fallback to web */
 function fallbackIG(e){
   const web = 'https://www.instagram.com/betti_sweets/?utm_source=qr';
   setTimeout(()=>{ window.open(web,'_blank','noopener'); }, 800);
 }
 
 /* Estimator + payments */
-const sizeBase = { "6": 65, "8": 85, "10": 115 };
-const tierAdd  = { "6": 55, "8": 70, "10": 90  };
+const sizeBase = { "6": 65, "8": 85, "10": 115 }; // base single-tier
+const tierAdd  = { "6": 55, "8": 70, "10": 90  }; // per extra tier
 const extraCost= { flowers: 18, gold: 15, topper: 20, textured: 12 };
 const reducedSugarFee = 6;
 const rushFee = 15;
@@ -567,7 +593,7 @@ function calc(){
   const t=+els.tiers.value || 1;
   let total=sizeBase[s] + (t-1)*tierAdd[s];
 
-  [...els.extras.selectedOptions].forEach(o=> total += extraCost[o.value] || 0);
+  [...els.extras.selectedOptions].forEach(o=> total += (extraCost[o.value] || 0));
   if(els.reduced.checked) total += reducedSugarFee;
   if(els.rush.checked) total += rushFee;
 
@@ -585,7 +611,7 @@ function calc(){
   const summary = `Cake estimate: ${gbp(total)} (Deposit ${gbp(deposit)}, Balance ${gbp(balance)}) — Size ${s}" / ${t} tier(s).`;
   const wa = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' Please send me a secure payment link.')}`;
   const mail = `mailto:cakes@bettissweets.co.uk?subject=${encodeURIComponent('Deposit link request')}&body=${encodeURIComponent(summary+'\n\nNotes: ')}`;
-  els.btnDeposit.href = wa;
+  els.btnDeposit.href = wa;   // replace with Stripe link(s) later if desired
   els.btnBalance.href = mail;
 }
 
@@ -597,7 +623,7 @@ if (els.date) {
 }
 
 /* Inspo upload preview */
-els.inspoUpload.addEventListener('change', ()=>{
+els.inspoUpload?.addEventListener('change', ()=>{
   els.inspoPreview.innerHTML = '';
   const file = els.inspoUpload.files?.[0];
   if(file){
