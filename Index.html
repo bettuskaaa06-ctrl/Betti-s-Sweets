@@ -1,12 +1,13 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+10 (2025-08-23)
-  • Base: L+9
+<!-- Betti’s Sweets — Checkpoint L+11 (2025-08-23)
+  • Base: L+10
   • Changes:
-      1) Logo looks 50% larger: cropped container + scale(1.5) to ignore SVG whitespace.
-      2) Header height reduced to match visible logo.
-      3) Header wordmark text removed.
-      4) Instagram glyph confirmed on floating button.
-      5) All earlier fixes retained (hero centering, burger colour/size, tagline wrap, Safari date fix, etc.).
+      1) Enlarge logo’s visible area: .logo-box height increased (desktop 92px, mobile 76px).
+         The image is still scaled 1.5x inside the crop box to ignore transparent padding.
+      2) Reduce header height to just fit the crop box + small breathing space.
+         --header-h desktop 98px, mobile 82px; anchor offset matched.
+      3) Floating Instagram button: force glyph size/visibility.
+      4) Wordmark text in header remains removed.
 -->
 <html lang="en">
 <head>
@@ -44,14 +45,14 @@
   --bg:var(--ivory); --accent:var(--rose);
   --maxw:1200px; --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.06);
 
-  /* L+10 header sizing (reduced to fit visible logo) */
-  --header-h:120px;            /* desktop/tablet */
-  --anchor-offset:120px;
+  /* L+11 header sizing (tight to visible logo) */
+  --header-h:98px;             /* desktop/tablet */
+  --anchor-offset:100px;       /* sticky-header anchor offset */
 }
 @media (max-width:820px){
   :root{
-    --header-h:100px;          /* phones */
-    --anchor-offset:104px;
+    --header-h:82px;           /* phones */
+    --anchor-offset:86px;
   }
 }
 
@@ -81,19 +82,17 @@ header{
 .nav{display:flex;align-items:center;justify-content:space-between;height:var(--header-h)}
 .brand{display:flex;gap:12px;align-items:center}
 
-/* L+10: crop box that shows only the visible logo area; img inside is scaled 150% */
+/* L+11: crop box area (larger than L+10 so the visible logo appears bigger) */
 .logo-box{
-  height:72px;                /* visible logo height (desktop) */
-  width:auto;
-  display:flex; align-items:center; justify-content:center;
-  overflow:hidden; border-radius:6px; /* subtle tidy edge if needed */
+  height:92px;                 /* desktop visible window */
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;border-radius:6px;
 }
-@media (max-width:820px){ .logo-box{ height:60px; } }
+@media (max-width:820px){ .logo-box{ height:76px; } }
 .logo-box img{
-  height:100%; width:auto; aspect-ratio:120/36;
-  transform:scale(1.5);       /* 50% larger look */
+  height:100%;width:auto;aspect-ratio:120/36;
+  transform:scale(1.5);        /* ignore extra transparent padding in the source */
   transform-origin:center;
-  will-change:transform;
 }
 
 /* Navigation */
@@ -131,9 +130,7 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 
 /* Tagline behaviour: one line normally; wrap on ≤420px */
 .scriptline{font-size:clamp(22px,4.2vw,32px);color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media (max-width:420px){
-  .scriptline{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.25}
-}
+@media (max-width:420px){ .scriptline{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.25} }
 
 .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
 .btn{border:1px solid #eadfce;background:#fff;border-radius:999px;padding:12px 18px;box-shadow:var(--shadow)}
@@ -194,7 +191,7 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
   .paybuttons .iconbtn{width:100%;justify-content:flex-start}
 }
 
-/* Floating Instagram button (with glyph) */
+/* Floating Instagram button (glyph forced visible) */
 .fab-ig{
   position:fixed;right:18px;bottom:18px;z-index:60;
   display:inline-flex;align-items:center;gap:10px;
@@ -204,6 +201,7 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
   color:var(--text);
   box-shadow:0 12px 28px rgba(0,0,0,.14);
 }
+.fab-ig svg{width:20px;height:20px;display:block;flex:0 0 auto}
 .fab-ig .label{font-weight:700}
 .fab-ig:hover{transform:translateY(-1px)}
 
@@ -237,7 +235,7 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 <header>
   <div class="wrap nav">
     <div class="brand">
-      <!-- Logo inside a crop box so transparent padding doesn't inflate header -->
+      <!-- Logo inside enlarged crop box (fills like your red rectangle within the green area) -->
       <div class="logo-box">
         <img src="logo.svg" alt="Betti’s Sweets logo" width="480" height="144" onerror="this.onerror=null;this.src='logo.png'">
       </div>
@@ -391,18 +389,12 @@ We also do our best to accommodate most dietary needs and allergies.</p>
       <div class="paybuttons" style="margin-top:14px">
         <a class="iconbtn" id="btnDeposit" href="#" target="_blank" rel="noopener" title="Request a secure deposit link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.4"/></svg>
-          <span>Request deposit link</span>
-        </a>
+        <span>Request deposit link</span></a>
         <a class="iconbtn" id="btnBalance" href="#" target="_blank" rel="noopener" title="Request a secure balance link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8" stroke-width="1.4"/><path d="M12 8v4l3 2" stroke-width="1.4"/></svg>
-          <span>Request balance link</span>
-        </a>
-        <!-- Submit button -->
+        <span>Request balance link</span></a>
         <button class="iconbtn" type="submit" aria-label="Submit estimate" title="Submit your estimate to Betti’s Sweets">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-            <path d="M22 2 11 13" stroke-width="1.4"/>
-            <path d="m22 2-7 20-4-9-9-4Z" stroke-width="1.4"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M22 2 11 13" stroke-width="1.4"/><path d="m22 2-7 20-4-9-9-4Z" stroke-width="1.4"/></svg>
           <span>Submit estimate</span>
         </button>
       </div>
@@ -415,30 +407,12 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 <section id="faq">
   <div class="wrap card">
     <h2>FAQ & Policies</h2>
-    <details open>
-      <summary><strong>Difference between sponge layers and cake tiers</strong></summary>
-      <p>Sponge layers are the individual cake sections stacked with filling inside a single cake. Tiers are separate cakes stacked on top of each other to create a taller, multilevel cake.</p>
-    </details>
-    <details>
-      <summary><strong>Lead time</strong></summary>
-      <p>Typical lead time is 5–10 days. Rush orders may be possible (fee applies if under 3 full working days).</p>
-    </details>
-    <details>
-      <summary><strong>Dietary</strong></summary>
-      <p>Reduced sugar available. Our kitchen handles common allergens (gluten, eggs, dairy, nuts).</p>
-    </details>
-    <details>
-      <summary><strong>Payments</strong></summary>
-      <p>50% deposit secures your booking; remaining 50% due on collection under the same invoice.</p>
-    </details>
-    <details>
-      <summary><strong>Collection only</strong></summary>
-      <p>Orders are strictly <em>collection only</em>. We currently do not offer home delivery.</p>
-    </details>
-    <details>
-      <summary><strong>Location</strong></summary>
-      <p>Salford • Manchester, UK.</p>
-    </details>
+    <details open><summary><strong>Difference between sponge layers and cake tiers</strong></summary><p>Sponge layers are the individual cake sections stacked with filling inside a single cake. Tiers are separate cakes stacked on top of each other to create a taller, multilevel cake.</p></details>
+    <details><summary><strong>Lead time</strong></summary><p>Typical lead time is 5–10 days. Rush orders may be possible (fee applies if under 3 full working days).</p></details>
+    <details><summary><strong>Dietary</strong></summary><p>Reduced sugar available. Our kitchen handles common allergens (gluten, eggs, dairy, nuts).</p></details>
+    <details><summary><strong>Payments</strong></summary><p>50% deposit secures your booking; remaining 50% due on collection under the same invoice.</p></details>
+    <details><summary><strong>Collection only</strong></summary><p>Orders are strictly <em>collection only</em>. We currently do not offer home delivery.</p></details>
+    <details><summary><strong>Location</strong></summary><p>Salford • Manchester, UK.</p></details>
   </div>
 </section>
 
