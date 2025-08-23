@@ -1,14 +1,11 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+15 (2025-08-23)
-  • Base: L+14
-  • Fixes:
-      1) Logo: true “crop window” using a clipped container + zoom so the visible mark fills the box
-         - No giant white box; no inner padding
-         - Pinned hard-left with tiny gutter
-      2) Header height reduced to match the visible logo (and anchor offset updated)
-      3) Floating Instagram button: explicit SVG sizing so the icon always shows on iOS Safari
-  • All previous improvements retained (burger size/colour, centred hero, tagline wrap ≤420px,
-    estimator, FAQ, footer, schema, Safari date fix, etc.)
+<!-- Betti’s Sweets — Checkpoint L+17 (UB+1) — 2025-08-23
+  • Base: L+16 (UB)
+  • Fix: Rush checkbox no longer stays ticked after choosing a later date.
+         - We mark auto-applied rush with data-autoset and uncheck it if date moves outside threshold.
+         - Still auto-checks & locks when < 3 full working days.
+  • All UB fixes retained (logo crop window + zoom, shorter header, pinned-left logo,
+    Instagram FAB icon sizing, burger size/colour, centred hero, tagline wrap ≤420px, etc.)
 -->
 <html lang="en">
 <head>
@@ -46,11 +43,11 @@
   --bg:var(--ivory); --accent:var(--rose);
   --maxw:1200px; --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.06);
 
-  /* Header sizing (reduced to match visible logo) */
+  /* Header sizing (matches visible logo) */
   --header-h:112px;          /* desktop/tablet */
   --anchor-offset:112px;
 
-  /* Logo zoom (to crop away internal whitespace in the SVG/PNG) */
+  /* Logo zoom (crop away internal whitespace in the SVG/PNG) */
   --logo-zoom:2.0;
 }
 @media (max-width:820px){
@@ -98,10 +95,9 @@ header .wrap.nav{
 /* Brand group */
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
 
-/* Logo clip window:
-   - fixes “tiny logo in massive white box” by zooming into the image and clipping */
+/* Logo clip window (no giant white box) */
 .logo-clip{
-  height:calc(var(--header-h) - 16px);  /* keeps a little breathing room */
+  height:calc(var(--header-h) - 16px);  /* little breathing room */
   aspect-ratio:120/36;
   overflow:hidden;
   border-radius:8px;
@@ -113,7 +109,7 @@ header .wrap.nav{
   object-fit:contain;
 }
 
-/* Remove brand wordmark text (by request) */
+/* Remove brand wordmark text (as requested) */
 .brand .wordmark{display:none}
 
 /* Nav */
@@ -363,9 +359,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
         </div>
 
         <div class="row" role="group" aria-label="Options">
-          <label class="pill" title="Reduced sugar option (no artificial sweeteners)">
-            <input type="checkbox" id="reduced" name="Reduced sugar"> Reduced sugar
-          </label>
+          <!-- Reduced sugar removed: default for all cakes -->
           <label class="pill" title="Rush fee applies if under 3 full working days">
             <input type="checkbox" id="rush" name="Rush order"> Rush order
           </label>
@@ -434,7 +428,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
     <h2>FAQ & Policies</h2>
     <details open><summary><strong>Difference between sponge layers and cake tiers</strong></summary><p>Sponge layers are the individual cake sections stacked with filling inside a single cake. Tiers are separate cakes stacked on top of each other to create a taller, multilevel cake.</p></details>
     <details><summary><strong>Lead time</strong></summary><p>Typical lead time is 5–10 days. Rush orders may be possible (fee applies if under 3 full working days).</p></details>
-    <details><summary><strong>Dietary</strong></summary><p>Reduced sugar available. Our kitchen handles common allergens (gluten, eggs, dairy, nuts).</p></details>
+    <details><summary><strong>Dietary</strong></summary><p>Reduced sugar as standard. Our kitchen handles common allergens (gluten, eggs, dairy, nuts).</p></details>
     <details><summary><strong>Payments</strong></summary><p>50% deposit secures your booking; remaining 50% due on collection under the same invoice.</p></details>
     <details><summary><strong>Collection only</strong></summary><p>Orders are strictly <em>collection only</em>. We currently do not offer home delivery.</p></details>
     <details><summary><strong>Location</strong></summary><p>Salford • Manchester, UK.</p></details>
@@ -577,14 +571,13 @@ function fallbackIG(e){
 const sizeBase = { "6": 65, "8": 85, "10": 115 };
 const tierAdd  = { "6": 55, "8": 70, "10": 90  };
 const extraCost= { flowers: 18, gold: 15, topper: 20, textured: 12 };
-const reducedSugarFee = 6;
 const rushFee = 15;
 
+/* Elements */
 const els = {
   size:    document.getElementById('size'),
   tiers:   document.getElementById('tiers'),
   extras:  document.getElementById('extras'),
-  reduced: document.getElementById('reduced'),
   rush:    document.getElementById('rush'),
   total:   document.getElementById('total'),
   deposit: document.getElementById('deposit'),
@@ -602,13 +595,61 @@ const els = {
 
 function gbp(n){ return new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(n); }
 
+/* Working-days calculator (Mon–Fri) */
+function workingDaysBetween(start, end){
+  const a = new Date(start); a.setHours(0,0,0,0);
+  const b = new Date(end);   b.setHours(0,0,0,0);
+  if (b <= a) return 0;
+  let days = 0, d = new Date(a);
+  while (d < b){
+    d.setDate(d.getDate()+1);
+    const dow = d.getDay();
+    if (dow !== 0 && dow !== 6) days++;
+  }
+  return days;
+}
+
+/* Auto-lock Rush if < 3 working days away (and undo auto-check when it isn't) */
+const RUSH_THRESHOLD_DAYS = 3;
+function updateRushLock(){
+  const val = els.date?.value;
+  if (!val){
+    // No date selected: ensure it's enabled, but don't change user choice
+    els.rush.disabled = false;
+    return;
+  }
+  const selected = new Date(val + 'T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const wd = workingDaysBetween(today, selected);
+  const mustRush = wd < RUSH_THRESHOLD_DAYS;
+
+  if (mustRush){
+    els.rush.checked = true;
+    els.rush.disabled = true;
+    els.rush.dataset.autoset = "1"; // remember that we forced it
+    els.rush.title = 'Rush fee applies for dates under 3 full working days';
+  } else {
+    // Leaving the rush window: re-enable checkbox.
+    els.rush.disabled = false;
+    els.rush.title = '';
+    // If it was only checked because we auto-set it, uncheck now.
+    if (els.rush.dataset.autoset){
+      els.rush.checked = false;
+      delete els.rush.dataset.autoset;
+    }
+  }
+}
+
+/* If the user toggles Rush manually, clear autoset flag so we respect their choice */
+els.rush.addEventListener('change', ()=>{ delete els.rush.dataset.autoset; });
+
+/* Calculator */
 function calc(){
   const s=els.size.value;
   const t=+els.tiers.value || 1;
   let total=sizeBase[s] + (t-1)*tierAdd[s];
 
   [...els.extras.selectedOptions].forEach(o=> total += (extraCost[o.value] || 0));
-  if(els.reduced.checked) total += reducedSugarFee;
   if(els.rush.checked) total += rushFee;
 
   const deposit = Math.round((total*0.5)*100)/100;
@@ -629,11 +670,12 @@ function calc(){
   els.btnBalance.href = mail;
 }
 
-/* Prevent past dates */
+/* Prevent past dates + set min=today */
 if (els.date) {
   const today = new Date(); today.setHours(0,0,0,0);
   const iso = today.toISOString().slice(0,10);
   els.date.min = iso;
+  els.date.addEventListener('change', ()=>{ updateRushLock(); calc(); });
 }
 
 /* Inspo upload preview */
@@ -652,6 +694,7 @@ els.inspoUpload?.addEventListener('change', ()=>{
 ['change','input'].forEach(evt=>{
   document.getElementById('estimator').addEventListener(evt, calc, true);
 });
+updateRushLock();
 calc();
 </script>
 </body>
