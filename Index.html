@@ -1,16 +1,11 @@
 <!doctype html>
 <!-- Betti’s Sweets — Checkpoint L+19 (UB+3) — 2025-08-23
   • Base: L+18 (UB+2)
-  • Change: Estimator → Size options & guidance
-      - Sizes updated with clearer servings & sponge layers (6", 8", 10", 12")
-      - Added inline “ℹ︎ Sizing guidance” toggle next to Size label
-      - Estimator pricing map extended to support 12" (provisional scaling)
-  • All UB fixes retained:
-      - Logo crop window + zoom (no inner whitespace), pinned hard-left, header height matches visible logo
-      - Reduced-sugar option removed from estimator
-      - Rush auto-check & lock when < 3 working days; unlocks & unticks when date moves outside threshold
-      - Instagram FAB icon explicitly sized (iOS Safari-safe)
-      - Burger size/colour, centred hero, tagline wrap ≤420px, Safari date fix, etc.
+  • Changes:
+      1) Estimator → Size options updated (6″/8″/10″/12″ with serves + sponge layers)
+      2) ℹ︎ info button beside “Size” that toggles an expandable note with slice/diameter guidance
+      3) Persists last-chosen Size (localStorage + cookie fallback) and preselects on return
+  • All UB fixes retained (logo crop-window + zoom, shorter header, Instagram FAB icon sizing, rush date logic, etc.)
 -->
 <html lang="en">
 <head>
@@ -233,18 +228,6 @@ footer{border-top:1px solid #f1e7db;background:#fff;padding:24px 0 50px}
 @media (max-width:820px){.footgrid{grid-template-columns:1fr;gap:10px}}
 .legal{color:#86766a;font-size:.9rem}
 
-/* Size help UI */
-.infobadge{
-  appearance:none;border:1px solid #e7d8c7;background:#fff; border-radius:999px;
-  padding:0 8px; height:22px; line-height:20px; font-size:12px; font-weight:700;
-  margin-left:8px; cursor:pointer; color:var(--muted);
-}
-.infobadge:hover{ background:#fffdf9 }
-.hint{
-  font-size:.9rem; color:#8a7b70; background:#fff8f0; border:1px solid #f1e7db;
-  padding:10px 12px; border-radius:10px; margin-top:8px;
-}
-
 /* ——— Mobile Fixes ——— */
 section,#home,#about,#estimator,#faq,#allergens,#contact{scroll-margin-top:var(--anchor-offset)}
 input,select,textarea,button{font-size:16px}
@@ -262,6 +245,21 @@ input,select,textarea,button{font-size:16px}
 .card{overflow:hidden}
 .grid > *{min-width:0}
 input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:padding-box;padding-right:38px}
+
+/* ——— Estimator: Size info button & help text ——— */
+.field-inline{display:flex;align-items:center;gap:8px}
+.info-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;border-radius:50%;
+  border:1px solid #e0d6c8;background:#fff;color:var(--muted);
+  line-height:1;font-weight:700;font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+.info-btn:focus-visible{outline:2px solid rgba(183,110,121,.55);outline-offset:2px;border-radius:50%}
+.helptext{
+  margin-top:8px;font-size:.9rem;color:#7a6f66;background:#fff8f0;
+  border:1px solid #f1e7db;border-radius:10px;padding:10px 12px;display:none;
+}
+.helptext.open{display:block}
 </style>
 </head>
 <body>
@@ -330,22 +328,24 @@ We also do our best to accommodate most dietary needs and allergies.</p>
       <p class="sr-only"><label>Don’t fill this out if you’re human: <input name="bot-field" autocomplete="off"></label></p>
 
       <div class="grid">
+        <!-- Size -->
         <div>
-          <label for="size">
-            Size
-            <button type="button" class="infobadge" aria-expanded="false" aria-controls="size-hint" title="Sizing guidance">ℹ︎</button>
+          <label for="size" class="field-inline">
+            <span>Size</span>
+            <button type="button" class="info-btn" id="sizeInfoBtn" aria-controls="sizeHelp" aria-expanded="false" title="Serving & diameter info">i</button>
           </label>
-          <select id="size" name="Size" required>
-            <option value="6">6&quot; (inch) cake — serves about 6–10 people (3 sponge layers)</option>
-            <option value="8" selected>8&quot; (inch) cake — serves about 12–20 people (4 sponge layers)</option>
-            <option value="10">10&quot; (inch) cake — serves about 22–28 people (4 sponge layers)</option>
-            <option value="12">12&quot; (inch) cake — serves about 30–38 people (4 sponge layers)</option>
+          <select id="size" name="Size" required aria-describedby="sizeHelp">
+            <option value="6">6&quot; — serves ~6–10 (3 layers)</option>
+            <option value="8" selected>8&quot; — serves ~12–20 (4 layers)</option>
+            <option value="10">10&quot; — serves ~22–28 (4 layers)</option>
+            <option value="12">12&quot; — serves ~30–38 (4 layers)</option>
           </select>
-          <div id="size-hint" class="hint" hidden>
-            <strong>Heads up:</strong> slice counts are estimates — it depends how you cut! Inch sizes refer to the cake’s <em>diameter</em>.
+          <div id="sizeHelp" class="helptext" role="note">
+            <em>Heads up:</em> The number of slices is an estimate — it depends on how you cut the cake and how big each slice is. Inch measurements refer to the cake’s <strong>diameter</strong>.
           </div>
         </div>
 
+        <!-- Tiers -->
         <div>
           <label for="tiers">Tiers</label>
           <select id="tiers" name="Tiers" required>
@@ -355,12 +355,15 @@ We also do our best to accommodate most dietary needs and allergies.</p>
           </select>
         </div>
 
+        <!-- Flavour -->
         <div>
           <label for="flavour">Sponge flavour</label>
           <select id="flavour" name="Flavour">
             <option>Vanilla</option><option>Chocolate</option><option>Red Velvet</option><option>Lemon</option><option>Carrot</option>
           </select>
         </div>
+
+        <!-- Filling -->
         <div>
           <label for="filling">Filling</label>
           <select id="filling" name="Filling">
@@ -368,6 +371,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
           </select>
         </div>
 
+        <!-- Extras -->
         <div>
           <label for="extras">Extras</label>
           <select id="extras" name="Extras" multiple size="4" aria-label="Select one or more extras">
@@ -378,13 +382,14 @@ We also do our best to accommodate most dietary needs and allergies.</p>
           </select>
         </div>
 
+        <!-- Date -->
         <div>
           <label for="date">Collection date</label>
           <input id="date" name="Collection date" type="date" placeholder="YYYY-MM-DD" inputmode="numeric" autocomplete="off" />
         </div>
 
+        <!-- Options (Rush only; reduced sugar is default) -->
         <div class="row" role="group" aria-label="Options">
-          <!-- Reduced sugar removed: default for all cakes -->
           <label class="pill" title="Rush fee applies if under 3 full working days">
             <input type="checkbox" id="rush" name="Rush order"> Rush order
           </label>
@@ -436,7 +441,6 @@ We also do our best to accommodate most dietary needs and allergies.</p>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8" stroke-width="1.4"/><path d="M12 8v4l3 2" stroke-width="1.4"/></svg>
           <span>Request balance link</span>
         </a>
-        <!-- Submit button: same structure as links (icon left) -->
         <button class="iconbtn" type="submit" aria-label="Submit estimate" title="Submit your estimate to Betti’s Sweets">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
             <path d="M22 2 11 13" stroke-width="1.4"/>
@@ -595,10 +599,11 @@ function fallbackIG(e){
   setTimeout(()=>{ window.open(web,'_blank','noopener'); }, 800);
 }
 
-/* Estimator + payments
-   NOTE: Added 12" pricing so the new size computes correctly (scales from existing tiers). */
-const sizeBase = { "6": 65, "8": 85, "10": 115, "12": 145 }; // base single-tier
-const tierAdd  = { "6": 55, "8": 70, "10": 90,  "12": 110 };  // per extra tier
+/* —— Estimator + payments —— */
+
+/* Pricing tables (added 12") */
+const sizeBase = { "6": 65, "8": 85, "10": 115, "12": 145 };   // base single-tier
+const tierAdd  = { "6": 55, "8": 70, "10": 90,  "12": 110 };   // per extra tier
 const extraCost= { flowers: 18, gold: 15, topper: 20, textured: 12 };
 const rushFee = 15;
 
@@ -620,11 +625,52 @@ const els = {
   inspoUpload: document.getElementById('inspoUpload'),
   inspoPreview: document.getElementById('inspoPreview'),
   date: document.getElementById('date'),
-  sizeHintBtn: document.querySelector('button.infobadge'),
-  sizeHint: document.getElementById('size-hint')
+  sizeInfoBtn: document.getElementById('sizeInfoBtn'),
+  sizeHelp: document.getElementById('sizeHelp')
 };
 
 function gbp(n){ return new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(n); }
+
+/* ——— Size Info: click & long-press toggle ——— */
+(function setupSizeInfo(){
+  if(!els.sizeInfoBtn || !els.sizeHelp) return;
+  const btn = els.sizeInfoBtn, panel = els.sizeHelp;
+
+  const toggle = (force) => {
+    const willOpen = typeof force === 'boolean' ? force : !panel.classList.contains('open');
+    panel.classList.toggle('open', willOpen);
+    btn.setAttribute('aria-expanded', String(willOpen));
+  };
+
+  btn.addEventListener('click', () => toggle());
+
+  // Long-press (mobile)
+  let pressTimer;
+  btn.addEventListener('touchstart', () => { pressTimer = setTimeout(()=>toggle(true), 500); }, {passive:true});
+  ['touchend','touchcancel'].forEach(evt=> btn.addEventListener(evt, ()=> clearTimeout(pressTimer)));
+})();
+
+/* ——— Persist preferred Size (localStorage + cookie fallback) ——— */
+const SIZE_KEY = 'betti_pref_size';
+function saveSizePref(val){
+  try{ localStorage.setItem(SIZE_KEY, val); }catch(_){}
+  try{
+    const days=180;
+    const d=new Date(); d.setTime(d.getTime()+days*24*60*60*1000);
+    document.cookie = SIZE_KEY+"="+encodeURIComponent(val)+"; expires="+d.toUTCString()+"; path=/; SameSite=Lax";
+  }catch(_){}
+}
+function readSizePref(){
+  try{
+    const val = localStorage.getItem(SIZE_KEY);
+    if (val) return val;
+  }catch(_){}
+  try{
+    const m = document.cookie.match(new RegExp('(?:^|; )'+SIZE_KEY+'=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : null;
+  }catch(_){}
+  return null;
+}
 
 /* Working-days calculator (Mon–Fri) */
 function workingDaysBetween(start, end){
@@ -674,15 +720,6 @@ function updateRushLock(){
 /* If the user toggles Rush manually, clear autoset flag so we respect their choice */
 els.rush.addEventListener('change', ()=>{ delete els.rush.dataset.autoset; });
 
-/* Size hint toggle */
-if (els.sizeHintBtn && els.sizeHint){
-  els.sizeHintBtn.addEventListener('click', ()=>{
-    const isOpen = els.sizeHint.hidden === false;
-    els.sizeHint.hidden = isOpen;
-    els.sizeHintBtn.setAttribute('aria-expanded', String(!isOpen));
-  });
-}
-
 /* Calculator */
 function calc(){
   const s=els.size.value;
@@ -717,6 +754,20 @@ if (els.date) {
   els.date.min = iso;
   els.date.addEventListener('change', ()=>{ updateRushLock(); calc(); });
 }
+
+/* Save size preference on change */
+els.size.addEventListener('change', ()=>{
+  saveSizePref(els.size.value);
+  calc();
+});
+
+/* Try to restore preferred size on load (if present & valid) */
+(function restoreSizePref(){
+  const saved = readSizePref();
+  if (!saved) return;
+  const opt = [...els.size.options].find(o=>o.value===saved);
+  if (opt){ els.size.value = saved; }
+})();
 
 /* Inspo upload preview */
 els.inspoUpload?.addEventListener('change', ()=>{
