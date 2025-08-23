@@ -1,12 +1,12 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+13 (2025-08-23)
-  • Base: L+12 / L+9 full site
-  • Changes in L+13:
-      - Logo enlarged (scale 2.2), aligned left inside a crop box.
-      - Header height tightened to match visible logo area.
-      - Removed "Betti’s Sweets" wordmark text.
-      - Floating Instagram button shows the IG glyph + label.
-      - All previous fixes retained (mobile hero centering, burger colour, tagline wrap, Safari date field, etc.).
+<!-- Betti’s Sweets — Checkpoint L+14 (2025-08-23)
+  • Base: L+13 (saved)
+  • Fix: Logo pinned to the LEFT edge on all breakpoints
+         - Header layout: brand at far-left, burger at far-right
+         - Added tiny inner gutter so logo doesn’t touch the edge
+  • Keeps: header height vars, logo crop-window framing, big burger in accent,
+           centered hero card (L+6), tagline wrap on ≤420px, Instagram icon in FAB,
+           Safari date input patch, estimator, FAQ, footer, schema, etc.
 -->
 <html lang="en">
 <head>
@@ -17,7 +17,7 @@
 <link rel="canonical" href="https://www.bettissweets.co.uk/" />
 <meta name="theme-color" content="#FADADD" />
 
-<!-- Open Graph / Twitter -->
+<!-- Social -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.bettissweets.co.uk/">
 <meta property="og:title" content="Betti’s Sweets — Custom Cakes in Manchester">
@@ -28,7 +28,7 @@
 <meta name="twitter:description" content="Custom-made artisan cakes, cupcakes & pastries. Collection only — Salford, Manchester.">
 <meta name="twitter:image" content="https://www.bettissweets.co.uk/og-hero.jpg">
 
-<!-- Preload hero image -->
+<!-- Performance -->
 <link rel="preload" as="image" href="IMAGES/IMG_4972.jpg" fetchpriority="high" imagesrcset="IMAGES/IMG_4972.jpg 1200w" imagesizes="100vw">
 
 <!-- Fonts -->
@@ -38,28 +38,23 @@
 
 <style>
 :root{
-  /* Palette */
+  /* Pastels */
   --blush:#FADADD; --peach:#F6D0B1; --ivory:#FFF8F0; --champ:#D9B26D;
   --rose:#B76E79; --sage:#BFC9B3; --text:#3A2E2E; --muted:#6B5E5E;
   --bg:var(--ivory); --accent:var(--rose);
-
   --maxw:1200px; --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.06);
 
-  /* Header sizing tuned to visible logo crop */
-  --header-h:126px;            /* desktop/tablet */
-  --anchor-offset:128px;       /* section jump offset to clear sticky header */
+  /* Header sizing (from L+13) */
+  --header-h:128px;          /* desktop/tablet visual */
+  --anchor-offset:128px;
 }
 @media (max-width:820px){
-  :root{
-    --header-h:102px;          /* phones */
-    --anchor-offset:104px;
-  }
+  :root{ --header-h:104px; --anchor-offset:108px; }
 }
 
 *,*::before,*::after{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--text);
-     font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 button{font:inherit;cursor:pointer}
@@ -73,45 +68,66 @@ h3{font:600 1.2rem "Playfair Display",serif}
 p{margin:.6rem 0}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
 
-/* ---------------- Header ---------------- */
+/* Header */
 header{
   position:sticky;top:0;z-index:50;
   background:rgba(255,248,240,.85);
   backdrop-filter:saturate(150%) blur(8px);
   border-bottom:1px solid #f1e7db
 }
-.nav{display:flex;align-items:center;justify-content:space-between;height:var(--header-h)}
-.brand{display:flex;align-items:center;justify-content:flex-start}
 
-/* Logo crop box: fits inside header; image scales up inside crop */
-.logo-box{
-  height:calc(var(--header-h) - 14px); /* small breathing space top/bottom */
-  display:flex;align-items:center;overflow:hidden;padding-left:4px;
+/* L+14 — pin brand left, burger right (explicit layout) */
+header .wrap.nav{
+  display:flex;
+  align-items:center;
+  justify-content:unset;         /* cancel space-between */
+  height:var(--header-h);
+  padding-left:12px;             /* small inner gutter on the left */
+  padding-right:16px;
 }
-.logo-box img{
-  height:100%;width:auto;aspect-ratio:120/36;
-  transform:scale(2.2);                 /* enlarge to fill the “green box” */
-  transform-origin:left center;         /* push visual mass left */
+.brand{
+  display:flex; align-items:center;
+  gap:10px; margin-right:auto !important; margin-left:0 !important;
 }
+
+/* Big logo, cropped inside its own frame (from L+13) */
+.brand img{
+  height:128px; width:auto;
+  aspect-ratio:120/36;
+  object-fit:contain;            /* keep full logo visible */
+  padding:8px 10px;              /* “crop window” breathing room */
+  border:1px solid #e7d7cd;      /* subtle frame like your red guide */
+  border-radius:10px;
+  background:#fffdf9;
+}
+@media (max-width:820px){
+  .brand img{ height:104px; padding:6px 8px; }
+}
+
+/* Remove wordmark text (per earlier decision) */
+.brand .wordmark{ display:none; }
 
 /* Nav */
 nav ul{display:flex;gap:18px;list-style:none;padding:0;margin:0}
 nav a{padding:8px 10px;border-radius:10px}
 nav a:hover{background:#fff;border:1px solid #f0e6da}
 
-/* Burger: large & brand-colour */
+/* Burger — big & brand-colored */
 .burger{
-  display:none;border:0;background:transparent;
-  padding:12px; line-height:0; color:var(--accent);
+  border:0;background:transparent;padding:10px;line-height:0;color:var(--accent);
+  margin-left:16px;              /* keeps distance from logo on tablet/desktop too */
 }
 .burger svg{width:28px;height:28px;stroke-width:1.8}
+@media (min-width:821px){ .burger{ display:none } }
 @media (max-width:820px){
-  nav ul{display:none;position:absolute;top:var(--header-h);left:0;right:0;background:#fff8f0;border-bottom:1px solid #f1e7db;padding:14px}
+  nav ul{
+    display:none;position:absolute;top:var(--header-h);left:0;right:0;
+    background:#fff8f0;border-bottom:1px solid #f1e7db;padding:14px
+  }
   nav ul.open{display:grid;gap:8px}
-  .burger{display:block}
 }
 
-/* ---------------- Hero ---------------- */
+/* Hero */
 .hero{
   position:relative;isolation:isolate;border-bottom:1px solid #f1e7db;
   background-image:
@@ -126,13 +142,17 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 .hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;padding:40px 20px 30px}
 .tag{display:inline-block;background:linear-gradient(90deg,var(--blush),var(--peach));padding:6px 12px;border-radius:999px;font-weight:600;border:1px solid #f3d5c4}
 .big{font:400 clamp(28px,5vw,44px) "Playfair Display",serif;line-height:1.15;margin:.8rem 0}
-.scriptline{font-size:clamp(22px,4.2vw,32px);color:var(--accent)}
+
+/* Tagline behaviour */
+.scriptline{font-size:clamp(22px,4.2vw,32px);color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:420px){ .scriptline{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.25} }
+
 .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
 .btn{border:1px solid #eadfce;background:#fff;border-radius:999px;padding:12px 18px;box-shadow:var(--shadow)}
 .btn.primary{background:linear-gradient(90deg,var(--blush),var(--peach));border-color:#f0cdb9}
 .note{color:var(--muted);font-size:.9rem}
 
-/* Frosted glass frame around hero content */
+/* Frosted glass */
 .glass{
   background:rgba(255,248,240,.58);
   -webkit-backdrop-filter: blur(10px) saturate(120%);
@@ -143,18 +163,18 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
   padding:18px;
 }
 
-/* Mobile hero tweaks + centering */
+/* Mobile hero tweaks + centering (from L+6) */
 @media (max-width:820px){
-  .hero .wrap{grid-template-columns:1fr; padding:20px 0; justify-items:center;}
-  .glass{margin:0 auto; width:calc(100vw - 40px); max-width:720px;}
-  .hero{ background-size:160% auto, cover, cover, cover; background-position:center, center, center, center; }
+  .hero .wrap{grid-template-columns:1fr;padding:20px 0;justify-items:center}
+  .glass{margin:0 auto;width:calc(100vw - 40px);max-width:720px}
+  .hero{background-size:160% auto, cover, cover, cover;background-position:center, center, center, center}
 }
 
-/* ---------------- Sections & cards ---------------- */
+/* Sections */
 section{padding:56px 0}
 .card{background:#fff;border:1px solid #f2e8db;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
 
-/* ---------------- Forms ---------------- */
+/* Forms */
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 @media (max-width:820px){.grid{grid-template-columns:1fr}}
 label{font-weight:600;font-size:.95rem}
@@ -169,7 +189,7 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
 .total-box h3{margin:.2rem 0 .6rem}
 .paybuttons{display:flex;gap:12px;flex-wrap:wrap}
 
-/* ---------------- Contact Buttons ---------------- */
+/* Contact Buttons */
 .cta-buttons{display:flex;gap:12px;flex-wrap:wrap}
 .iconbtn{
   display:inline-flex;align-items:center;
@@ -180,9 +200,13 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
 .iconbtn svg + span{ margin-left:8px; }
 .iconbtn span + svg{ margin-left:8px; }
 .iconbtn span{ display:inline-block;white-space:nowrap; }
-@media (max-width:820px){ .paybuttons .iconbtn{ width:100%; justify-content:flex-start; } }
 
-/* ---------------- Floating Instagram button ---------------- */
+/* Action buttons uniform on mobile */
+@media (max-width:820px){
+  .paybuttons .iconbtn{ width:100%; justify-content:flex-start; }
+}
+
+/* Floating Instagram button (with icon) */
 .fab-ig{
   position:fixed;right:18px;bottom:18px;z-index:60;
   display:inline-flex;align-items:center;gap:10px;
@@ -192,17 +216,16 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
   color:var(--text);
   box-shadow:0 12px 28px rgba(0,0,0,.14);
 }
-.fab-ig svg{width:20px;height:20px}
 .fab-ig .label{font-weight:700}
 .fab-ig:hover{transform:translateY(-1px)}
 
-/* ---------------- Footer ---------------- */
+/* Footer */
 footer{border-top:1px solid #f1e7db;background:#fff;padding:24px 0 50px}
 .footgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:20px}
 @media (max-width:820px){.footgrid{grid-template-columns:1fr;gap:10px}}
 .legal{color:#86766a;font-size:.9rem}
 
-/* -------- Mobile/Accessibility helpers -------- */
+/* ——— Mobile Fixes ——— */
 section,#home,#about,#estimator,#faq,#allergens,#contact{scroll-margin-top:var(--anchor-offset)}
 input,select,textarea,button{font-size:16px}
 .fab-ig{bottom:calc(18px + env(safe-area-inset-bottom))}
@@ -226,13 +249,12 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 <header>
   <div class="wrap nav">
     <div class="brand">
-      <!-- Logo inside a crop window; scaled and pinned left -->
-      <div class="logo-box">
-        <img src="logo.svg" alt="Betti’s Sweets logo" width="240" height="72" onerror="this.onerror=null;this.src='logo.png'">
-      </div>
+      <!-- CLS-safe logo, framed crop window -->
+      <img src="logo.svg" alt="Betti’s Sweets logo" width="256" height="77" onerror="this.onerror=null;this.src='logo.png'">
+      <div class="wordmark" aria-hidden="true">Betti’s Sweets</div>
     </div>
 
-    <!-- Accessible burger -->
+    <!-- Burger (right) -->
     <button class="burger" aria-label="Open menu" aria-controls="primary-menu" aria-expanded="false"
       onclick="(function(btn){const m=document.getElementById('primary-menu');m.classList.toggle('open');btn.setAttribute('aria-expanded', m.classList.contains('open'));})(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -249,7 +271,7 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
   </div>
 </header>
 
-<!-- Main / Hero -->
+<!-- Main -->
 <main id="home" class="hero" role="main">
   <div class="wrap">
     <div class="glass">
@@ -268,9 +290,11 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 <section id="about">
   <div class="wrap card">
     <h2>About Us</h2>
-    <p>With over a decade of experience in creating custom cakes, we felt it was time to begin our own journey — and so, Betti’s Sweets was born. I’m Betti, the baker behind the brand, and together with my team we run a small cake studio in Salford, Manchester.</p>
-    <p>Every cake is baked to order, with flavour pairings that are thoughtfully balanced and never overly sweet. Our passion is bringing your ideas to life with cakes that are as beautiful as they are delicious.</p>
-    <p>We also do our best to accommodate most dietary needs and allergies.</p>
+    <p>With over a decade of experience in creating custom cakes, we felt it was time to begin our own journey — and so, Betti’s Sweets was born. I’m Betti, the baker behind the brand, and together with my team we run a small cake studio in Salford, Manchester.
+
+Every cake is baked to order, with flavour pairings that are thoughtfully balanced and never overly sweet. Our passion is bringing your ideas to life with cakes that are as beautiful as they are delicious.
+
+We also do our best to accommodate most dietary needs and allergies.</p>
   </div>
 </section>
 
@@ -420,7 +444,6 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
   <div class="wrap card">
     <h2>Get in touch</h2>
     <div class="cta-buttons" style="margin-bottom:14px">
-      <!-- Call -->
       <a class="iconbtn" href="tel:+447761297615" aria-label="Call Betti’s Sweets">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 4.2 2 2 0 0 1 4.11 2h2a2 2 0 0 1 2 1.72c.12.9.37 1.77.72 2.58a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.5-1.27a2 2 0 0 1 2.11-.45 11.36 11.36 0 0 0 2.58.72A2 2 0 0 1 22 16.92z" stroke-width="1.4"/>
@@ -428,7 +451,6 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
         <span class="label">Call</span>
       </a>
 
-      <!-- WhatsApp -->
       <a class="iconbtn" href="https://wa.me/447761297615" target="_blank" rel="noopener" aria-label="Open WhatsApp">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <circle cx="12" cy="12" r="9" stroke-width="1.4"/>
@@ -439,7 +461,6 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
       </a>
     </div>
 
-    <!-- General contact form -->
     <form name="general-contact" method="POST" action="/thank-you" data-netlify="true" netlify-honeypot="bot-field" autocomplete="on">
       <input type="hidden" name="form-name" value="general-contact">
       <p class="sr-only"><label>Don’t fill this out if you’re human: <input name="bot-field" autocomplete="off"></label></p>
@@ -488,9 +509,9 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
   </div>
 </footer>
 
-<!-- Floating Instagram button (glyph + label) -->
+<!-- Floating Instagram button (with icon) -->
 <a class="fab-ig" href="instagram://user?username=betti_sweets" onclick="fallbackIG(event)" aria-label="Open Instagram profile">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
     <rect x="3" y="3" width="18" height="18" rx="5" ry="5" stroke-width="1.4"/>
     <circle cx="12" cy="12" r="3.2" stroke-width="1.4"/>
     <circle cx="17.5" cy="6.5" r="1" />
@@ -498,7 +519,7 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
   <span class="label">Instagram</span>
 </a>
 
-<!-- LocalBusiness schema -->
+<!-- Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -527,7 +548,7 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 /* Footer year */
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* Close mobile menu on nav tap + aria-expanded reset */
+/* Close mobile menu on nav tap */
 document.querySelectorAll('nav a').forEach(a=>{
   a.addEventListener('click', ()=>{
     const menu = document.getElementById('primary-menu');
@@ -537,13 +558,13 @@ document.querySelectorAll('nav a').forEach(a=>{
   });
 });
 
-/* Instagram deep link → fallback to web */
+/* Instagram deep-link → web fallback */
 function fallbackIG(e){
   const web = 'https://www.instagram.com/betti_sweets/?utm_source=qr';
   setTimeout(()=>{ window.open(web,'_blank','noopener'); }, 800);
 }
 
-/* ===== Estimator + payments ===== */
+/* Estimator + payments */
 const sizeBase = { "6": 65, "8": 85, "10": 115 };
 const tierAdd  = { "6": 55, "8": 70, "10": 90  };
 const extraCost= { flowers: 18, gold: 15, topper: 20, textured: 12 };
@@ -595,11 +616,11 @@ function calc(){
   const summary = `Cake estimate: ${gbp(total)} (Deposit ${gbp(deposit)}, Balance ${gbp(balance)}) — Size ${s}" / ${t} tier(s).`;
   const wa = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' Please send me a secure payment link.')}`;
   const mail = `mailto:cakes@bettissweets.co.uk?subject=${encodeURIComponent('Deposit link request')}&body=${encodeURIComponent(summary+'\n\nNotes: ')}`;
-  els.btnDeposit.href = wa;   // can be replaced with Stripe later
+  els.btnDeposit.href = wa;
   els.btnBalance.href = mail;
 }
 
-/* Ensure date can't be in the past */
+/* Prevent past dates */
 if (els.date) {
   const today = new Date(); today.setHours(0,0,0,0);
   const iso = today.toISOString().slice(0,10);
