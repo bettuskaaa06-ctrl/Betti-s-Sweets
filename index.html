@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+28.1 (UB+12 hotfix) — 2025-08-25
-  • LOGO HOTFIX (show full mark, no extra header whitespace)
-      - Remove top-bias; center anchor
-      - Gentle downward nudge so top + bottom are both visible
+<!-- Betti’s Sweets — Checkpoint L+28.2 (UB+12 hotfix #2) — 2025-08-25
+  • LOGO HOTFIX #2 (show full mark, no extra header whitespace)
+      - Centered anchor (no top/bottom bias)
+      - Remove vertical nudge; rely on centered crop
       - Keep “zoom” to trim internal SVG padding without growing the header
-  • Everything else unchanged from UB+12
+  • Everything else unchanged from your UB+12 hotfix
 -->
 <html lang="en">
 <head>
@@ -47,14 +47,12 @@
   --anchor-offset:112px;
 
   /* Logo tuning — show whole logo, keep header height */
-  --logo-zoom:2.2;       /* trims internal SVG padding without clipping */
-  --logo-nudge:2%;       /* subtle downward nudge so top doesn’t crop */
+  --logo-zoom:2.2;     /* trims internal SVG padding symmetrically */
 }
 @media (max-width:820px){
   :root{
     --header-h:88px; --anchor-offset:92px;
     --logo-zoom:2.4;
-    --logo-nudge:3%;
   }
 }
 
@@ -90,12 +88,15 @@ header .wrap.nav{
 /* Logo crop window — same height, no extra whitespace */
 .logo-clip{height:calc(var(--header-h) - 16px);aspect-ratio:120/36;overflow:hidden;border-radius:8px}
 
-/* The actual logo: fit height, zoom to trim internal padding, then nudge down a touch.
-   Centered anchor prevents either top or bottom from getting chopped on some devices. */
+/* The actual logo: fit height, zoom to trim internal padding, CENTERED anchor so
+   top/bottom crop evenly (prevents cutting the cake or the gold tagline). */
 .logo-clip img{
-  height:100%;width:auto;object-fit:contain;
-  transform-origin:left center;
-  transform: translateY(var(--logo-nudge)) scale(var(--logo-zoom));
+  height:100%;
+  width:auto;
+  object-fit:contain;
+  object-position:center center;
+  transform:scale(var(--logo-zoom));
+  transform-origin:center center;
 }
 
 .brand .wordmark{display:none}
@@ -987,6 +988,6 @@ updateRushWarning();
 calc();
 </script>
 
-<!-- Version: Betti’s Sweets — UB+12 hotfix (L+28.1) — 2025-08-25 -->
+<!-- Version: Betti’s Sweets — UB+12 hotfix #2 (L+28.2) — 2025-08-25 -->
 </body>
 </html>
