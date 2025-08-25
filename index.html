@@ -1001,6 +1001,96 @@ calc();
 </script>
 
 <script>
+/* === Estimator: Remember my choices (opt-in, localStorage only) === */
+(function(){
+  var CONSENT_KEY = 'betti_estimator_consent_v1';
+  var PREF_KEY    = 'betti_estimator_prefs_v1';
+
+  function canStore(){ try{ localStorage.setItem('__t','1'); localStorage.removeItem('__t'); return true; }catch(_){ return false; } }
+  function getConsent(){ try{ return localStorage.getItem(CONSENT_KEY)==='1'; }catch(_){ return false; } }
+  function setConsent(v){ try{ localStorage.setItem(CONSENT_KEY, v?'1':'0'); }catch(_){} }
+
+  function readPrefs(){
+    try{
+      var s = localStorage.getItem(PREF_KEY);
+      return s ? JSON.parse(s) : null;
+    }catch(_){ return null; }
+  }
+  function writePrefs(obj){
+    if (!getConsent() || !canStore()) return;
+    try{ localStorage.setItem(PREF_KEY, JSON.stringify(obj)); }catch(_){}
+  }
+  function clearPrefs(){
+    try{ localStorage.removeItem(PREF_KEY); localStorage.removeItem(CONSENT_KEY); }catch(_){}
+  }
+
+  // Uses your existing refs in `els`
+  var remember = document.getElementById('rememberChoices');
+  var clearBtn = document.getElementById('clearChoices');
+  if (!remember || !els || !canStore()) return;
+
+  function collect(){
+    var tierFF = [];
+    document.querySelectorAll('#tierPerFlavour select').forEach(function(sel){
+      tierFF.push({ id: sel.id, value: sel.value });
+    });
+    var extras = Array.from(els.extras?.selectedOptions || []).map(function(o){ return o.value; });
+    return {
+      ts: Date.now(),
+      stack:   els.stack?.value   || '',
+      sameAll: !!els.sameAll?.checked,
+      flavour: els.flavour?.value || '',
+      filling: els.filling?.value || '',
+      extras:  extras,
+      date:    els.date?.value    || '',
+      tierFF:  tierFF
+    };
+  }
+
+  function apply(p){
+    if (!p) return;
+    if (els.stack && p.stack){ els.stack.value = p.stack; }
+    if (typeof p.sameAll === 'boolean' && els.sameAll){ els.sameAll.checked = p.sameAll; }
+    if (typeof updateTierControls === 'function') updateTierControls();
+    if (els.flavour && p.flavour) els.flavour.value = p.flavour;
+    if (els.filling && p.filling) els.filling.value = p.filling;
+    if (els.extras && Array.isArray(p.extras)){
+      Array.from(els.extras.options).forEach(function(opt){ opt.selected = p.extras.indexOf(opt.value) !== -1; });
+    }
+    if (els.date && p.date) els.date.value = p.date;
+    if (Array.isArray(p.tierFF) && p.tierFF.length){
+      p.tierFF.forEach(function(item){
+        var sel = document.getElementById(item.id);
+        if (sel) sel.value = item.value;
+      });
+    }
+    if (typeof updateRushWarning === 'function') updateRushWarning();
+    if (typeof calc === 'function') calc();
+  }
+
+  remember.checked = getConsent();
+  remember.addEventListener('change', function(){
+    setConsent(remember.checked);
+    if (remember.checked){ writePrefs(collect()); } else { clearPrefs(); }
+  });
+
+  var saveHandler = function(){ if (getConsent()) writePrefs(collect()); };
+  document.getElementById('estimator').addEventListener('change', saveHandler, true);
+  document.getElementById('estimator').addEventListener('input',  saveHandler, true);
+
+  clearBtn && clearBtn.addEventListener('click', function(){
+    clearPrefs();
+    remember.checked = false;
+  });
+
+  if (getConsent()){
+    var prefs = readPrefs();
+    if (prefs) apply(prefs);
+  }
+})();
+</script>
+
+<script>
 /* === Estimator: disallow past dates (hard clamp) === */
 (function(){
   var dateEl  = document.getElementById('date');
