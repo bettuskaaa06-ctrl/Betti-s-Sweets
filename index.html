@@ -1,11 +1,10 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+28.3 (UB+12 hotfix #3) — 2025-08-25
-  • LOGO TUNE (match your screenshot)
-      - Keep header height identical (no extra whitespace)
-      - Make logo slightly smaller in the clip window
-      - Center the crop (no top/bottom bias)
-      - Trim internal SVG padding with a modest zoom
-  • Everything else unchanged
+<!-- Betti’s Sweets — Checkpoint L+28.2 (UB+12 logo-tune) — 2025-08-25
+  • LOGO TUNE (show full mark on iPhone & iPad, no extra header whitespace)
+      - Center transform anchor (fixes side clipping on iOS)
+      - Tiny X/Y micro-shifts per breakpoint
+      - Keep “zoom trim” to remove internal SVG padding
+  • Everything else unchanged from UB+12 hotfix
 -->
 <html lang="en">
 <head>
@@ -47,13 +46,18 @@
   --header-h:112px;
   --anchor-offset:112px;
 
-  /* Logo: smaller, centered, full mark visible */
-  --logo-zoom:2.02;    /* trims internal padding without clipping */
+  /* Logo tuning */
+  --logo-zoom:2.18;     /* trims internal SVG padding */
+  --logo-shift-x:1.1%;  /* → move slightly right to reveal the 'B' on iPhone */
+  --logo-shift-y:1.2%;  /* ↓ tiny nudge so the top icon isn’t cropped */
 }
 @media (max-width:820px){
   :root{
     --header-h:88px; --anchor-offset:92px;
-    --logo-zoom:2.18; /* a touch larger on small screens */
+    /* mobile needs a touch more trim + shift */
+    --logo-zoom:2.38;
+    --logo-shift-x:2.0%;
+    --logo-shift-y:2.0%;
   }
 }
 
@@ -86,19 +90,24 @@ header .wrap.nav{
 }
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
 
-/* Logo crop window — keep header fixed, show more breathing room inside */
+/* Logo crop window — same height, no extra vertical whitespace */
 .logo-clip{
-  height:calc(var(--header-h) - 24px); /* ↓ from -16px to make the mark smaller */
+  height:calc(var(--header-h) - 16px);
   aspect-ratio:120/36;
   overflow:hidden;border-radius:8px
 }
 
-/* Logo image — center crop so nothing gets chopped */
+/* Full-logo rendering without cropping:
+   - center transform origin (prevents one side clipping)
+   - micro-shift X/Y + zoom trim
+*/
 .logo-clip img{
-  height:100%; width:auto; object-fit:contain;
-  object-position:center center;
-  transform:scale(var(--logo-zoom));
+  height:100%;width:auto;object-fit:contain;object-position:center center;
   transform-origin:center center;
+  transform:
+    translate(var(--logo-shift-x), var(--logo-shift-y))
+    scale(var(--logo-zoom));
+  will-change:transform;
 }
 
 .brand .wordmark{display:none}
@@ -107,9 +116,6 @@ nav a{padding:8px 10px;border-radius:10px}
 nav a:hover{background:#fff;border:1px solid #f0e6da}
 .burger{border:0;background:transparent;padding:10px;line-height:0;color:var(--accent);margin-left:16px}
 .burger svg{width:28px;height:28px;stroke-width:1.8}
-@media (max-width:820px){
-  .logo-clip{height:calc(var(--header-h) - 18px);} /* scale similarly on mobile */
-}
 @media (min-width:821px){ .burger{display:none} }
 @media (max-width:820px){
   nav ul{display:none;position:absolute;top:var(--header-h);left:0;right:0;background:#fff8f0;border-bottom:1px solid #f1e7db;padding:14px}
@@ -993,6 +999,6 @@ updateRushWarning();
 calc();
 </script>
 
-<!-- Version: Betti’s Sweets — UB+12 hotfix #3 (L+28.3) — 2025-08-25 -->
+<!-- Version: Betti’s Sweets — UB+12 logo-tune (L+28.2) — 2025-08-25 -->
 </body>
 </html>
