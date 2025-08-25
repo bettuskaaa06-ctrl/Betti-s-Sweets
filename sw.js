@@ -1,26 +1,43 @@
 const CACHE_NAME = 'betti-v1';
-const OFFLINE_URLS = ['/', '/IMAGES/IMG_4972.webp'];
+const OFFLINE_URLS = [
+  '/', 
+  '/IMAGES/IMG_4972.webp'
+];
 
-self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(OFFLINE_URLS))
+// Install: pre-cache core assets
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(OFFLINE_URLS))
   );
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (e) => {
-  e.waitUntil(self.clients.claim());
+// Activate: cleanup old caches if you bump CACHE_NAME later
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      )
+    )
+  );
+  self.clients.claim();
 });
 
-self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then(resp => {
-      const fetchPromise = fetch(e.request).then(networkResp => {
+// Fetch: network-first with cache fallback
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    fetch(event.request)
+      .then((networkResp) => {
+        // Save a copy in cache
         const copy = networkResp.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(e.request, copy));
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
         return networkResp;
-      }).catch(() => resp);
-      return resp || fetchPromise;
-    })
+      })
+      .catch(() => caches.match(event.request))
   );
 });
