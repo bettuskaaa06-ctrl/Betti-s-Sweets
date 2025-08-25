@@ -1,7 +1,8 @@
 {
   "name": "Betti’s Sweets",
-  "short_name": "Betti’s Sweets",
+  "short_name": "Betti’s",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#FFF8F0",
   "theme_color": "#FADADD",
