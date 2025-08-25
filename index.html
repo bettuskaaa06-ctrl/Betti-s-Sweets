@@ -1,12 +1,10 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+28 (UB+12) — 2025-08-25
-  • Fix pass on UB+11:
-      - Local date formatting (no UTC rollover)
-      - Cleaner stack label in WA/email summary
-      - More reliable LCP hint for hero (hidden <img>)
-      - Preload cleanup (removed non-helpful fetchpriority on <link>)
-      - Cookie now marked Secure (served over HTTPS on Netlify)
-  • All previous logic retained (pricing, custom/rush warnings, per-tier UI, Netlify forms)
+<!-- Betti’s Sweets — Checkpoint L+28.1 (UB+12 hotfix) — 2025-08-25
+  • LOGO HOTFIX (show full mark, no extra header whitespace)
+      - Remove top-bias; center anchor
+      - Gentle downward nudge so top + bottom are both visible
+      - Keep “zoom” to trim internal SVG padding without growing the header
+  • Everything else unchanged from UB+12
 -->
 <html lang="en">
 <head>
@@ -44,19 +42,19 @@
   --bg:var(--ivory); --accent:var(--rose);
   --maxw:1200px; --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.06);
 
-  /* Header sizing (matches visible logo) */
+  /* Header sizing (kept the same) */
   --header-h:112px;
   --anchor-offset:112px;
 
-  /* Logo tuning — show full logo without adding whitespace */
-  --logo-zoom:2.0;
-  --logo-shift-y:-4%;   /* move the SVG down inside the clip a little */
+  /* Logo tuning — show whole logo, keep header height */
+  --logo-zoom:2.2;       /* trims internal SVG padding without clipping */
+  --logo-nudge:2%;       /* subtle downward nudge so top doesn’t crop */
 }
 @media (max-width:820px){
   :root{
     --header-h:88px; --anchor-offset:92px;
-    --logo-zoom:2.35;   /* slightly less zoom on small screens */
-    --logo-shift-y:-6%; /* show very top of stand */
+    --logo-zoom:2.4;
+    --logo-nudge:3%;
   }
 }
 
@@ -88,13 +86,18 @@ header .wrap.nav{
   height:var(--header-h);padding-left:8px;padding-right:16px;
 }
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+
+/* Logo crop window — same height, no extra whitespace */
 .logo-clip{height:calc(var(--header-h) - 16px);aspect-ratio:120/36;overflow:hidden;border-radius:8px}
+
+/* The actual logo: fit height, zoom to trim internal padding, then nudge down a touch.
+   Centered anchor prevents either top or bottom from getting chopped on some devices. */
 .logo-clip img{
-  height:100%;width:auto;
-  transform-origin:left top;
-  transform: translateY(var(--logo-shift-y)) scale(var(--logo-zoom));
-  object-fit:contain
+  height:100%;width:auto;object-fit:contain;
+  transform-origin:left center;
+  transform: translateY(var(--logo-nudge)) scale(var(--logo-zoom));
 }
+
 .brand .wordmark{display:none}
 nav ul{display:flex;gap:18px;list-style:none;padding:0;margin:0}
 nav a{padding:8px 10px;border-radius:10px}
@@ -234,7 +237,7 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 </head>
 <body>
 
-<!-- Hidden LCP hint for hero background (more reliable across browsers) -->
+<!-- Hidden LCP hint for hero background -->
 <img src="IMAGES/IMG_4972.jpg" alt="" width="1200" height="800" decoding="async" fetchpriority="high" aria-hidden="true" inert style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
 
 <header>
@@ -458,7 +461,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
               <small>We’ll confirm the exact total with you before any payment.</small>
             </div>
 
-            <!-- Base price includes helper (tuned) -->
+            <!-- Base price includes helper -->
             <details class="base-includes">
               <summary>What’s included in the base price?</summary>
               <div class="box">
@@ -984,6 +987,6 @@ updateRushWarning();
 calc();
 </script>
 
-<!-- Version: Betti’s Sweets — UB+12 (L+28) — 2025-08-25 -->
+<!-- Version: Betti’s Sweets — UB+12 hotfix (L+28.1) — 2025-08-25 -->
 </body>
 </html>
