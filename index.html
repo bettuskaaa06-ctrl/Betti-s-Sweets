@@ -992,6 +992,65 @@ updateRushWarning();
 calc();
 </script>
 
+<script>
+/* === Estimator: disallow past dates (hard clamp) === */
+(function(){
+  var dateEl  = document.getElementById('date');
+  var formEl  = document.getElementById('estForm');
+
+  if (!dateEl) return;
+
+  // Local YYYY-MM-DD (no UTC rollover)
+  function localISODate(d){
+    var y = d.getFullYear();
+    var m = String(d.getMonth()+1).padStart(2,'0');
+    var day = String(d.getDate()).padStart(2,'0');
+    return y + '-' + m + '-' + day;
+  }
+
+  // Today (local) as min
+  var today = new Date(); today.setHours(0,0,0,0);
+  var minISO = localISODate(today);
+
+  // Set native min + clamp current value if needed
+  dateEl.setAttribute('min', minISO);
+  if (!dateEl.value || dateEl.value < minISO) dateEl.value = minISO;
+
+  // Clamp helper (prevents past via typing/paste/picker)
+  function clampToMin() {
+    if (dateEl.value && dateEl.value < minISO) {
+      dateEl.value = minISO;
+      dateEl.setCustomValidity('Please choose today or a future date.');
+    } else {
+      dateEl.setCustomValidity('');
+    }
+    // Reuse your existing recalcs if present
+    if (typeof updateRushWarning === 'function') updateRushWarning();
+    if (typeof calc === 'function') calc();
+  }
+
+  // Enforce on all common interactions
+  dateEl.addEventListener('change', clampToMin);
+  dateEl.addEventListener('input', clampToMin);
+  dateEl.addEventListener('blur', clampToMin);
+  dateEl.addEventListener('paste', function(){ setTimeout(clampToMin, 0); });
+
+  // Final guard on submit
+  if (formEl) {
+    formEl.addEventListener('submit', function(e){
+      if (dateEl.value < minISO) {
+        e.preventDefault();
+        clampToMin();
+        dateEl.reportValidity();
+      }
+    });
+  }
+
+  // Initial sync (in case markup had a past default)
+  clampToMin();
+})();
+</script>
+
 <!-- Version: Betti’s Sweets — UB+12 logo-tune DEBUG2 (L+28.2b) — 2025-08-25 -->
 </body>
 </html>
