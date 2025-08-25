@@ -1,12 +1,15 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+28 (UB+12) — 2025-08-25
-  • Fix pass on UB+11:
+<!-- Betti’s Sweets — Checkpoint L+29 (UB+13) — 2025-08-25
+  • Carry-over from UB+12:
       - Local date formatting (no UTC rollover)
       - Cleaner stack label in WA/email summary
       - More reliable LCP hint for hero (hidden <img>)
-      - Preload cleanup (removed non-helpful fetchpriority on <link>)
-      - Cookie now marked Secure (served over HTTPS on Netlify)
-  • All previous logic retained (pricing, custom/rush warnings, per-tier UI, Netlify forms)
+      - Cookie marked Secure (HTTPS on Netlify)
+      - All previous logic retained (pricing, custom/rush warnings, per-tier UI, Netlify forms)
+  • This update:
+      - Logo now uses repo-root /logo.svg (yours), with graceful PNG fallback
+      - Keeps the exact header crop/zoom behavior (logo-clip + --logo-zoom)
+      - Minor accessibility polish on brand container
 -->
 <html lang="en">
 <head>
@@ -229,12 +232,14 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 
 <header>
   <div class="wrap nav">
-    <div class="brand">
+    <a class="brand" href="#home" aria-label="Betti’s Sweets — Home">
       <div class="logo-clip" aria-hidden="true">
-        <img src="logo.svg" alt="Betti’s Sweets logo" width="256" height="77" onerror="this.onerror=null;this.src='logo.png'">
+        <!-- Uses your /logo.svg at repo root; PNG fallback if SVG fails -->
+        <img src="logo.svg" alt="Betti’s Sweets" width="256" height="77" decoding="async"
+             onerror="this.onerror=null;this.src='logo.png'">
       </div>
       <div class="wordmark" aria-hidden="true">Betti’s Sweets</div>
-    </div>
+    </a>
 
     <button class="burger" aria-label="Open menu" aria-controls="primary-menu" aria-expanded="false"
       onclick="(function(btn){const m=document.getElementById('primary-menu');m.classList.toggle('open');btn.setAttribute('aria-expanded', m.classList.contains('open'));})(this)">
@@ -974,6 +979,6 @@ updateRushWarning();
 calc();
 </script>
 
-<!-- Version: Betti’s Sweets — UB+12 (L+28) — 2025-08-25 -->
+<!-- Version: Betti’s Sweets — UB+13 (L+29) — 2025-08-25 -->
 </body>
 </html>
