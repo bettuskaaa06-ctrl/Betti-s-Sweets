@@ -1,15 +1,12 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+29 (UB+13) — 2025-08-25
-  • Carry-over from UB+12:
+<!-- Betti’s Sweets — Checkpoint L+28 (UB+12) — 2025-08-25
+  • Fix pass on UB+11:
       - Local date formatting (no UTC rollover)
       - Cleaner stack label in WA/email summary
       - More reliable LCP hint for hero (hidden <img>)
-      - Cookie marked Secure (HTTPS on Netlify)
-      - All previous logic retained (pricing, custom/rush warnings, per-tier UI, Netlify forms)
-  • This update:
-      - Logo now uses repo-root /logo.svg (yours), with graceful PNG fallback
-      - Keeps the exact header crop/zoom behavior (logo-clip + --logo-zoom)
-      - Minor accessibility polish on brand container
+      - Preload cleanup (removed non-helpful fetchpriority on <link>)
+      - Cookie now marked Secure (served over HTTPS on Netlify)
+  • All previous logic retained (pricing, custom/rush warnings, per-tier UI, Netlify forms)
 -->
 <html lang="en">
 <head>
@@ -51,11 +48,16 @@
   --header-h:112px;
   --anchor-offset:112px;
 
-  /* Logo zoom (crop away internal whitespace in the SVG/PNG) */
+  /* Logo tuning — show full logo without adding whitespace */
   --logo-zoom:2.0;
+  --logo-shift-y:-4%;   /* move the SVG down inside the clip a little */
 }
 @media (max-width:820px){
-  :root{ --header-h:88px; --anchor-offset:92px; --logo-zoom:2.4; }
+  :root{
+    --header-h:88px; --anchor-offset:92px;
+    --logo-zoom:2.35;   /* slightly less zoom on small screens */
+    --logo-shift-y:-6%; /* show very top of stand */
+  }
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -87,7 +89,12 @@ header .wrap.nav{
 }
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
 .logo-clip{height:calc(var(--header-h) - 16px);aspect-ratio:120/36;overflow:hidden;border-radius:8px}
-.logo-clip img{height:100%;width:auto;transform:scale(var(--logo-zoom));transform-origin:left center;object-fit:contain}
+.logo-clip img{
+  height:100%;width:auto;
+  transform-origin:left top;
+  transform: translateY(var(--logo-shift-y)) scale(var(--logo-zoom));
+  object-fit:contain
+}
 .brand .wordmark{display:none}
 nav ul{display:flex;gap:18px;list-style:none;padding:0;margin:0}
 nav a{padding:8px 10px;border-radius:10px}
@@ -232,14 +239,12 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 
 <header>
   <div class="wrap nav">
-    <a class="brand" href="#home" aria-label="Betti’s Sweets — Home">
+    <div class="brand">
       <div class="logo-clip" aria-hidden="true">
-        <!-- Uses your /logo.svg at repo root; PNG fallback if SVG fails -->
-        <img src="logo.svg" alt="Betti’s Sweets" width="256" height="77" decoding="async"
-             onerror="this.onerror=null;this.src='logo.png'">
+        <img src="logo.svg" alt="Betti’s Sweets logo" width="256" height="77" onerror="this.onerror=null;this.src='logo.png'">
       </div>
       <div class="wordmark" aria-hidden="true">Betti’s Sweets</div>
-    </a>
+    </div>
 
     <button class="burger" aria-label="Open menu" aria-controls="primary-menu" aria-expanded="false"
       onclick="(function(btn){const m=document.getElementById('primary-menu');m.classList.toggle('open');btn.setAttribute('aria-expanded', m.classList.contains('open'));})(this)">
@@ -979,6 +984,6 @@ updateRushWarning();
 calc();
 </script>
 
-<!-- Version: Betti’s Sweets — UB+13 (L+29) — 2025-08-25 -->
+<!-- Version: Betti’s Sweets — UB+12 (L+28) — 2025-08-25 -->
 </body>
 </html>
