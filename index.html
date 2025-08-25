@@ -1,9 +1,9 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+28.3 (UB+12 logo-debug frame) — 2025-08-25
-  • LOGO DEBUG (visual crop frame, no other changes)
-      - Red outline on .logo-clip to show crop window
-      - Keep center transform anchor + micro X/Y shifts per breakpoint
-      - Keep zoom trim to remove internal SVG padding
+<!-- Betti’s Sweets — Checkpoint L+28.2b (UB+12 logo-tune DEBUG2) — 2025-08-25
+  • LOGO TUNE (iteration 2) — keep header height; tighten crop; remove pink fill; outline only
+      - Crop frame: 6px tighter (height: var(--header-h) - 22px) with RED outline for debug
+      - Slightly higher zoom + tiny vertical shift so the logo “kisses” the frame on iPad/iPhone
+      - Centered transform origin (prevents side clipping on iOS)
   • Everything else unchanged from UB+12 logo-tune
 -->
 <html lang="en">
@@ -47,16 +47,15 @@
   --anchor-offset:112px;
 
   /* Logo tuning */
-  --logo-zoom:2.18;     /* trims internal SVG padding */
-  --logo-shift-x:1.1%;  /* slight right nudge */
-  --logo-shift-y:1.2%;  /* slight downward nudge */
+  --logo-zoom:2.24;     /* a hair more trim so it fills the tighter frame */
+  --logo-shift-x:1.2%;  /* → reveal the left flourish */
+  --logo-shift-y:1.6%;  /* ↓ nudge to avoid top/bottom crop */
 }
 @media (max-width:820px){
   :root{
     --header-h:88px; --anchor-offset:92px;
-    /* mobile needs a touch more trim + shift */
-    --logo-zoom:2.38;
-    --logo-shift-x:2.0%;
+    --logo-zoom:2.42;
+    --logo-shift-x:1.8%;
     --logo-shift-y:2.0%;
   }
 }
@@ -90,19 +89,18 @@ header .wrap.nav{
 }
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
 
-/* Logo crop window — same height, no extra vertical whitespace
-   DEBUG: red outline to visualise the crop frame (remove at the end) */
+/* Logo crop window — same header height, but 6px tighter; RED outline for debug */
 .logo-clip{
-  height:calc(var(--header-h) - 16px);
+  height:calc(var(--header-h) - 22px);
   aspect-ratio:120/36;
   overflow:hidden;border-radius:8px;
-  outline:2px solid red; /* DEBUG */
+  outline:2px solid rgba(220,0,0,.85); outline-offset:0; /* DEBUG only */
 }
 
 /* Full-logo rendering without cropping:
-   - center transform origin (prevents one side clipping)
+   - center transform origin (prevents side clipping)
    - micro-shift X/Y + zoom trim
-   NOTE: No background set here; logo sits on header background. */
+*/
 .logo-clip img{
   height:100%;width:auto;object-fit:contain;object-position:center center;
   transform-origin:center center;
@@ -196,7 +194,7 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
 
 /* Contact Buttons */
 .cta-buttons{display:flex;gap:12px;flex-wrap:wrap}
-.iconbtn{display:inline-flex;align-items:center;padding:12px 16px;border:1px solid #eadfce;border-radius:999px;background:#fff;box-shadow:var(--shadow);color:#var(--text);font-size:1rem;line-height:1.3;box-sizing:border-box}
+.iconbtn{display:inline-flex;align-items:center;padding:12px 16px;border:1px solid #eadfce;border-radius:999px;background:#fff;box-shadow:var(--shadow);color:#3A2E2E;font-size:1rem;line-height:1.3;box-sizing:border-box}
 .iconbtn svg{width:20px;height:20px;flex:0 0 auto}
 .iconbtn svg + span{margin-left:8px}
 .iconbtn span + svg{margin-left:8px}
@@ -210,7 +208,7 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
 /* Floating Instagram button */
 .fab-ig{
   position:fixed;right:18px;bottom:18px;z-index:60;display:inline-flex;align-items:center;gap:10px;
-  padding:14px 16px;border-radius:999px;border:1px solid #f0cdb9;background:linear-gradient(90deg,var(--blush),var(--peach));color:#var(--text);
+  padding:14px 16px;border-radius:999px;border:1px solid #f0cdb9;background:linear-gradient(90deg,var(--blush),var(--peach));color:#3A2E2E;
   box-shadow:0 12px 28px rgba(0,0,0,.14)
 }
 .fab-ig svg{width:20px;height:20px;display:inline-block;flex:0 0 auto}
@@ -1001,6 +999,6 @@ updateRushWarning();
 calc();
 </script>
 
-<!-- Version: Betti’s Sweets — UB+12 logo-debug (L+28.3) — 2025-08-25 -->
+<!-- Version: Betti’s Sweets — UB+12 logo-tune DEBUG2 (L+28.2b) — 2025-08-25 -->
 </body>
 </html>
