@@ -1,11 +1,12 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+28.2-debug (UB+12 logo-tune) — 2025-08-25
-  • TEMP DEBUG: highlight logo crop frame in red so we can see its size/position
-  • LOGO TUNE (show full mark on iPhone & iPad, no extra header whitespace)
-      - Center transform anchor (fixes side clipping on iOS)
-      - Tiny X/Y micro-shifts per breakpoint
-      - Keep “zoom trim” to remove internal SVG padding
-  • Everything else unchanged from UB+12 hotfix
+<!-- Betti’s Sweets — Checkpoint L+28.3 (UB+12 logo-tune v2) — 2025-08-25
+  • LOGO INSIDE-FRAME MATCH (per sample) + DEBUG BORDER
+      - Keep same header height (no extra whitespace)
+      - Add in-frame padding so swashes + cake icon sit comfortably inside the red frame
+      - Center transform anchor; micro X/Y nudges per breakpoint
+      - Zoom “trim” reduced slightly to avoid edge touch on iOS
+      - Debug frame visible (red). Turn off by setting --debug-logo-frame:0
+  • Everything else unchanged from L+28.2
 -->
 <html lang="en">
 <head>
@@ -47,21 +48,23 @@
   --header-h:112px;
   --anchor-offset:112px;
 
-  /* Logo tuning */
-  --logo-zoom:2.18;     /* trims internal SVG padding */
-  --logo-shift-x:1.1%;  /* → move slightly right to reveal the 'B' on iPhone */
-  --logo-shift-y:1.2%;  /* ↓ tiny nudge so the top icon isn’t cropped */
-
-  /* DEBUG switch: set to 1 to highlight crop frame, 0 to hide */
-  --debug-logo-frame:1;
+  /* Logo tuning (desktop) — aim to fit like the reference image inside the frame */
+  --logo-zoom:2.10;     /* slightly less than before so swashes have breathing room */
+  --logo-shift-x:0.2%;  /* tiny right nudge */
+  --logo-shift-y:0.6%;  /* tiny down nudge so cake icon top is safe */
+  --logo-pad-x:10px;    /* horizontal inner padding of the red frame (does NOT change header height) */
+  --logo-pad-y:4px;     /* vertical inner padding */
+  --debug-logo-frame:1; /* 1 = show red frame; 0 = hide */
 }
 @media (max-width:820px){
   :root{
     --header-h:88px; --anchor-offset:92px;
-    /* mobile needs a touch more trim + shift */
-    --logo-zoom:2.38;
-    --logo-shift-x:2.0%;
-    --logo-shift-y:2.0%;
+    /* mobile: a touch more padding & slightly different scaling so nothing kisses the edges */
+    --logo-zoom:2.32;
+    --logo-shift-x:0.8%;
+    --logo-shift-y:1.2%;
+    --logo-pad-x:12px;
+    --logo-pad-y:5px;
   }
 }
 
@@ -94,21 +97,20 @@ header .wrap.nav{
 }
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
 
-/* Logo crop window — same height, no extra vertical whitespace */
+/* Logo crop window — same height, no extra vertical whitespace
+   The padding is *inside* the frame; it simply gives the art breathing room. */
 .logo-clip{
   height:calc(var(--header-h) - 16px);
   aspect-ratio:120/36;
+  padding:var(--logo-pad-y) var(--logo-pad-x);
   overflow:hidden;border-radius:8px;
-
-  /* TEMP DEBUG: red highlight of the crop frame */
-  outline: calc(var(--debug-logo-frame)*2px) solid rgba(255,0,0,.8);
-  box-shadow:
-    0 0 0 calc(var(--debug-logo-frame)*1px) rgba(255,0,0,.4) inset;
-  background: color-mix(in srgb, rgba(255,0,0,.08) var(--debug-logo-frame), transparent);
+  box-sizing:border-box;
+  outline:calc(var(--debug-logo-frame)*2px) solid rgba(220,0,0,.9);
+  background:rgba(255,0,0,calc(var(--debug-logo-frame)*.06));
 }
 
 /* Full-logo rendering without cropping:
-   - center transform origin (prevents one side clipping)
+   - center origin (prevents one-side clipping on iOS)
    - micro-shift X/Y + zoom trim
 */
 .logo-clip img{
@@ -1009,6 +1011,6 @@ updateRushWarning();
 calc();
 </script>
 
-<!-- Version: Betti’s Sweets — UB+12 logo-tune (L+28.2-debug) — 2025-08-25 -->
+<!-- Version: Betti’s Sweets — UB+12 logo-tune v2 (L+28.3) — 2025-08-25 -->
 </body>
 </html>
