@@ -1,5 +1,6 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+28.2 (UB+12 logo-tune) — 2025-08-25
+<!-- Betti’s Sweets — Checkpoint L+28.2-debug (UB+12 logo-tune) — 2025-08-25
+  • TEMP DEBUG: highlight logo crop frame in red so we can see its size/position
   • LOGO TUNE (show full mark on iPhone & iPad, no extra header whitespace)
       - Center transform anchor (fixes side clipping on iOS)
       - Tiny X/Y micro-shifts per breakpoint
@@ -47,17 +48,20 @@
   --anchor-offset:112px;
 
   /* Logo tuning */
-  --logo-zoom:1.2;     /* trims internal SVG padding */
+  --logo-zoom:2.18;     /* trims internal SVG padding */
   --logo-shift-x:1.1%;  /* → move slightly right to reveal the 'B' on iPhone */
   --logo-shift-y:1.2%;  /* ↓ tiny nudge so the top icon isn’t cropped */
+
+  /* DEBUG switch: set to 1 to highlight crop frame, 0 to hide */
+  --debug-logo-frame:1;
 }
 @media (max-width:820px){
   :root{
     --header-h:88px; --anchor-offset:92px;
     /* mobile needs a touch more trim + shift */
-    --logo-zoom:1.4;
-    --logo-shift-x:0%;
-    --logo-shift-y:0%;
+    --logo-zoom:2.38;
+    --logo-shift-x:2.0%;
+    --logo-shift-y:2.0%;
   }
 }
 
@@ -94,7 +98,13 @@ header .wrap.nav{
 .logo-clip{
   height:calc(var(--header-h) - 16px);
   aspect-ratio:120/36;
-  overflow:hidden;border-radius:8px
+  overflow:hidden;border-radius:8px;
+
+  /* TEMP DEBUG: red highlight of the crop frame */
+  outline: calc(var(--debug-logo-frame)*2px) solid rgba(255,0,0,.8);
+  box-shadow:
+    0 0 0 calc(var(--debug-logo-frame)*1px) rgba(255,0,0,.4) inset;
+  background: color-mix(in srgb, rgba(255,0,0,.08) var(--debug-logo-frame), transparent);
 }
 
 /* Full-logo rendering without cropping:
@@ -999,6 +1009,6 @@ updateRushWarning();
 calc();
 </script>
 
-<!-- Version: Betti’s Sweets — UB+12 logo-tune (L+28.2) — 2025-08-25 -->
+<!-- Version: Betti’s Sweets — UB+12 logo-tune (L+28.2-debug) — 2025-08-25 -->
 </body>
 </html>
