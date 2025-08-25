@@ -1055,7 +1055,6 @@ calc();
     if (els.extras && Array.isArray(p.extras)){
       Array.from(els.extras.options).forEach(function(opt){ opt.selected = p.extras.indexOf(opt.value) !== -1; });
     }
-    if (els.date && p.date) els.date.value = p.date;
     if (Array.isArray(p.tierFF) && p.tierFF.length){
       p.tierFF.forEach(function(item){
         var sel = document.getElementById(item.id);
