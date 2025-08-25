@@ -1,11 +1,5 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+28.2b (UB+12 logo-tune DEBUG2) — 2025-08-25
-  • LOGO TUNE (iteration 2) — keep header height; tighten crop; remove pink fill; outline only
-      - Crop frame: 6px tighter (height: var(--header-h) - 22px) with RED outline for debug
-      - Slightly higher zoom + tiny vertical shift so the logo “kisses” the frame on iPad/iPhone
-      - Centered transform origin (prevents side clipping on iOS)
-  • Everything else unchanged from UB+12 logo-tune
--->
+<!-- Betti’s Sweets — Clean version (no red debug outline) — 2025-08-25 -->
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -47,9 +41,9 @@
   --anchor-offset:112px;
 
   /* Logo tuning */
-  --logo-zoom:1.8;     /* a hair more trim so it fills the tighter frame */
-  --logo-shift-x:50%;  /* → reveal the left flourish */
-  --logo-shift-y:15%;  /* ↓ nudge to avoid top/bottom crop */
+  --logo-zoom:1.8;     
+  --logo-shift-x:50%;  
+  --logo-shift-y:15%;  
 }
 @media (max-width:820px){
   :root{
@@ -89,23 +83,20 @@ header .wrap.nav{
 }
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
 
-/* Logo crop window — same header height, but 6px tighter; RED outline for debug */
+/* Logo crop window — same header height, tighter crop (no debug outline) */
 .logo-clip{
   height:calc(var(--header-h) - 22px);
   aspect-ratio:120/36;
-  overflow:hidden;border-radius:8px;
-  outline:2px solid rgba(220,0,0,.85); outline-offset:0; /* DEBUG only */
+  overflow:hidden;
+  border-radius:8px;
 }
 
-/* Full-logo rendering without cropping:
-   - center transform origin (prevents side clipping)
-   - micro-shift X/Y + zoom trim
-*/
+/* Full-logo rendering */
 .logo-clip img {
   height:100%;
   width:auto;
   object-fit:contain;
-  object-position:right center; /* FIX: reveal left side */
+  object-position:right center; 
   transform-origin:center center;
   transform:
     translate(var(--logo-shift-x), var(--logo-shift-y))
