@@ -101,13 +101,15 @@ header .wrap.nav{
    - center transform origin (prevents side clipping)
    - micro-shift X/Y + zoom trim
 */
-.logo-clip img{
-  height:100%;width:auto;object-fit:contain;object-position:center center;
+.logo-clip img {
+  height:100%;
+  width:auto;
+  object-fit:contain;
+  object-position:left center; /* FIX: reveal left side */
   transform-origin:center center;
   transform:
     translate(var(--logo-shift-x), var(--logo-shift-y))
     scale(var(--logo-zoom));
-  will-change:transform;
 }
 
 .brand .wordmark{display:none}
