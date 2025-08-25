@@ -1051,6 +1051,68 @@ calc();
 })();
 </script>
 
+<script>
+/* === Instagram button: desktop-safe deep link + robust fallback === */
+(function(){
+  var IG_USERNAME = 'betti_sweets';
+  var appURL = 'instagram://user?username=' + IG_USERNAME;
+  var webURL = 'https://www.instagram.com/' + IG_USERNAME + '/?utm_source=qr';
+
+  // True if iOS or Android (can handle the app scheme)
+  var isMobile = /iphone|ipad|ipod|android/i.test(navigator.userAgent);
+
+  function openIG(e){
+    e.preventDefault();
+    // If mobile, try app first; otherwise go straight to web.
+    if (isMobile) {
+      // Try to open the app…
+      var opened = false;
+      // Create a hidden iframe trick for older mobile browsers
+      var iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = appURL;
+      document.body.appendChild(iframe);
+
+      // After a short delay, fall back to web (app not installed)
+      setTimeout(function(){
+        if (!opened) window.open(webURL, '_blank', 'noopener');
+        // cleanup
+        iframe.parentNode && iframe.parentNode.removeChild(iframe);
+      }, 800);
+
+      // Best-effort flag (most browsers won’t let us detect success reliably)
+      opened = true;
+    } else {
+      // Desktop → just open the web profile
+      window.open(webURL, '_blank', 'noopener');
+    }
+  }
+
+  // Hook both the footer link and the floating FAB (if present)
+  var linkSelectors = [
+    'a[href^="instagram://user?username="]',
+    'a.fab-ig'
+  ];
+  document.querySelectorAll(linkSelectors.join(',')).forEach(function(a){
+    // Normalise attributes for safety
+    a.setAttribute('rel','noopener');
+    a.setAttribute('target','_blank');
+
+    // Desktop: rewrite href to web
+    if (!isMobile) {
+      a.setAttribute('href', webURL);
+      a.removeAttribute('onclick'); // kill any inline handler
+    } else {
+      // Mobile: keep deeplink in href
+      a.setAttribute('href', appURL);
+    }
+
+    // One robust handler for both
+    a.addEventListener('click', openIG, {passive:false});
+  });
+})();
+</script>
+
 <!-- Version: Betti’s Sweets — UB+12 logo-tune DEBUG2 (L+28.2b) — 2025-08-25 -->
 </body>
 </html>
