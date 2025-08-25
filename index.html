@@ -1,11 +1,10 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+28.3 (UB+12 hotfix #3) — 2025-08-25
-  • LOGO TUNE (match your screenshot)
-      - Keep header height identical (no extra whitespace)
-      - Make logo slightly smaller in the clip window
-      - Center the crop (no top/bottom bias)
-      - Trim internal SVG padding with a modest zoom
-  • Everything else unchanged
+<!-- Betti’s Sweets — Checkpoint L+28.2 (UB+12 hotfix #2) — 2025-08-25
+  • LOGO HOTFIX #2 (show full mark, no extra header whitespace)
+      - Centered anchor (no top/bottom bias)
+      - Remove vertical nudge; rely on centered crop
+      - Keep “zoom” to trim internal SVG padding without growing the header
+  • Everything else unchanged from your UB+12 hotfix
 -->
 <html lang="en">
 <head>
@@ -43,17 +42,17 @@
   --bg:var(--ivory); --accent:var(--rose);
   --maxw:1200px; --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.06);
 
-  /* Header sizing (unchanged) */
+  /* Header sizing (kept the same) */
   --header-h:112px;
   --anchor-offset:112px;
 
-  /* Logo: smaller, centered, full mark visible */
-  --logo-zoom:1.6;    /* trims internal padding without clipping */
+  /* Logo tuning — show whole logo, keep header height */
+  --logo-zoom:1.4;     /* trims internal SVG padding symmetrically */
 }
 @media (max-width:820px){
   :root{
     --header-h:88px; --anchor-offset:92px;
-    --logo-zoom:1.9; /* a touch larger on small screens */
+    --logo-zoom:1.8;
   }
 }
 
@@ -86,16 +85,15 @@ header .wrap.nav{
 }
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
 
-/* Logo crop window — keep header fixed, show more breathing room inside */
-.logo-clip{
-  height:calc(var(--header-h) - 24px); /* ↓ from -16px to make the mark smaller */
-  aspect-ratio:120/36;
-  overflow:hidden;border-radius:8px
-}
+/* Logo crop window — same height, no extra whitespace */
+.logo-clip{height:calc(var(--header-h) - 16px);aspect-ratio:120/36;overflow:hidden;border-radius:8px}
 
-/* Logo image — center crop so nothing gets chopped */
+/* The actual logo: fit height, zoom to trim internal padding, CENTERED anchor so
+   top/bottom crop evenly (prevents cutting the cake or the gold tagline). */
 .logo-clip img{
-  height:100%; width:auto; object-fit:contain;
+  height:100%;
+  width:auto;
+  object-fit:contain;
   object-position:center center;
   transform:scale(var(--logo-zoom));
   transform-origin:center center;
@@ -107,9 +105,6 @@ nav a{padding:8px 10px;border-radius:10px}
 nav a:hover{background:#fff;border:1px solid #f0e6da}
 .burger{border:0;background:transparent;padding:10px;line-height:0;color:var(--accent);margin-left:16px}
 .burger svg{width:28px;height:28px;stroke-width:1.8}
-@media (max-width:820px){
-  .logo-clip{height:calc(var(--header-h) - 18px);} /* scale similarly on mobile */
-}
 @media (min-width:821px){ .burger{display:none} }
 @media (max-width:820px){
   nav ul{display:none;position:absolute;top:var(--header-h);left:0;right:0;background:#fff8f0;border-bottom:1px solid #f1e7db;padding:14px}
@@ -993,6 +988,6 @@ updateRushWarning();
 calc();
 </script>
 
-<!-- Version: Betti’s Sweets — UB+12 hotfix #3 (L+28.3) — 2025-08-25 -->
+<!-- Version: Betti’s Sweets — UB+12 hotfix #2 (L+28.2) — 2025-08-25 -->
 </body>
 </html>
