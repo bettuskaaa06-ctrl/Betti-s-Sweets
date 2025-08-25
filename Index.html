@@ -1,10 +1,14 @@
 <!doctype html>
-<!-- Betti’s Sweets — Checkpoint L+23 (UB+7) — 2025-08-23
-  • Base: UB+6
-  • Fix: Info buttons (Size & Tiers) clickable again.
-         - Moved buttons OUT of <label> into a sibling within .field-inline
-         - Keeps IDs the same (sizeInfoBtn / tiersInfoBtn) so existing JS works
-  • All UB+6 changes retained (new sponge flavours, alphabetised fillings, etc.)
+<!-- Betti’s Sweets — Checkpoint L+24 (UB+8) — 2025-08-25
+  • Base: UB+6 (last known good with all functions)
+  • Updates applied WITHOUT losing any behaviour:
+      - Keep all UB+6 logic (rush-date lock, totals calc, size preference, inspo preview, menu, etc.)
+      - Ensure info buttons (Size + Tiers) WORK again via JS (click + long-press)
+      - Keep Size set (6/8/10/12 with serves + layers)
+      - Keep Tiers up to 4
+      - Keep added Sponge flavours (Marble, Fruity sponge, Vanilla+coconut)
+      - Keep Filling list replaced and alphabetised
+  • Hidden version tag kept at the end of <footer> as a comment
 -->
 <html lang="en">
 <head>
@@ -87,7 +91,7 @@ header .wrap.nav{
   align-items:center;
   justify-content:unset;
   height:var(--header-h);
-  padding-left:8px;            /* tiny inner gutter so the logo doesn’t touch the edge */
+  padding-left:8px;
   padding-right:16px;
 }
 
@@ -96,7 +100,7 @@ header .wrap.nav{
 
 /* Logo clip window (no giant white box) */
 .logo-clip{
-  height:calc(var(--header-h) - 16px);  /* little breathing room */
+  height:calc(var(--header-h) - 16px);
   aspect-ratio:120/36;
   overflow:hidden;
   border-radius:8px;
@@ -245,7 +249,7 @@ input,select,textarea,button{font-size:16px}
 .grid > *{min-width:0}
 input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:padding-box;padding-right:38px}
 
-/* ——— Estimator: Size/Tiers info buttons & help text ——— */
+/* ——— Estimator: Size info button & help text ——— */
 .field-inline{display:flex;align-items:center;gap:8px}
 .info-btn{
   display:inline-flex;align-items:center;justify-content:center;
@@ -329,10 +333,10 @@ We also do our best to accommodate most dietary needs and allergies.</p>
       <div class="grid">
         <!-- Size -->
         <div>
-          <div class="field-inline">
-            <label for="size"><span>Size</span></label>
+          <label for="size" class="field-inline">
+            <span>Size</span>
             <button type="button" class="info-btn" id="sizeInfoBtn" aria-controls="sizeHelp" aria-expanded="false" title="Serving & diameter info">i</button>
-          </div>
+          </label>
           <select id="size" name="Size" required aria-describedby="sizeHelp">
             <option value="6">6&quot; — serves ~6–10 (3 layers)</option>
             <option value="8" selected>8&quot; — serves ~12–20 (4 layers)</option>
@@ -346,10 +350,10 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 
         <!-- Tiers -->
         <div>
-          <div class="field-inline">
-            <label for="tiers"><span>Tiers</span></label>
-            <button type="button" class="info-btn" id="tiersInfoBtn" aria-controls="tiersHelp" aria-expanded="false" title="Layers vs tiers info">i</button>
-          </div>
+          <label for="tiers" class="field-inline">
+            <span>Tiers</span>
+            <button type="button" class="info-btn" id="tiersInfoBtn" aria-controls="tiersHelp" aria-expanded="false" title="Layers vs tiers">i</button>
+          </label>
           <select id="tiers" name="Tiers" required aria-describedby="tiersHelp">
             <option value="1" selected>1</option>
             <option value="2">2</option>
@@ -536,4 +540,300 @@ We also do our best to accommodate most dietary needs and allergies.</p>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 4.2 2 2 0 0 1 4.11 2h2a2 2 0 0 1 2 1.72c.12.9.37 1.77.72 2.58a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.5-1.27a2 2 0 0 1 2.11-.45 11.36 11.36 0 0 0 2.58.72A2 2 0 0 1 22 16.92z" stroke-width="1.4"/>
         </svg>
-        <span class="label">Call
+        <span class="label">Call</span>
+      </a>
+
+      <a class="iconbtn" href="https://wa.me/447761297615" target="_blank" rel="noopener" aria-label="Open WhatsApp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke-width="1.4"/>
+          <path d="M7.5 17.5l1-3.3a6.8 6.8 0 1 1 2.8 2.7L7.5 17.5Z" stroke-width="1.4" />
+          <path d="M9.6 9.8c.2-.4.3-.5.7-.4.3.1.7.3 1 .5.2.1.4.3.4.6 0 .3-.2.5-.4.7l-.2.2c.5.9 1.3 1.6 2.2 2.2l.2-.2c.2-.2.4-.4.7-.4.3 0 .5.2 .6 .4 .2 .3 .4 .7 .5 1 .1 .4 0 .6 -.4 .8 -.6 .3 -1.3 .3 -2 0 -1.1 -.4 -2.1 -1.1 -3 -2 s-1.6 -1.9 -2 -3 c-.3 -.7 -.3 -1.4 0 -2 .2 -.4 .4 -.5 .8 -.4z" stroke-width="1.4" />
+        </svg>
+        <span class="label">WhatsApp</span>
+      </a>
+    </div>
+
+    <form name="general-contact" method="POST" action="/thank-you" data-netlify="true" netlify-honeypot="bot-field" autocomplete="on">
+      <input type="hidden" name="form-name" value="general-contact">
+      <p class="sr-only"><label>Don’t fill this out if you’re human: <input name="bot-field" autocomplete="off"></label></p>
+      <div class="grid">
+        <div><label for="name">Name</label><input id="name" name="Name" required autocomplete="name"></div>
+        <div><label for="phone">Phone</label><input id="phone" name="Phone" inputmode="tel" autocomplete="tel" placeholder="+44 7…"></div>
+        <div style="grid-column:1/-1"><label for="message">Message</label><textarea id="message" name="Message" rows="4" required></textarea></div>
+      </div>
+      <div style="margin-top:12px"><button class="btn primary" type="submit">Send</button></div>
+      <p class="note">We typically reply within 1–2 working days.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footgrid">
+    <div>
+      <div class="script" style="font-size:28px;color:var(--accent)">Betti’s Sweets</div>
+      <p class="legal">© <span id="year"></span> Betti’s Sweets • <a href="https://www.bettissweets.co.uk/">www.bettissweets.co.uk</a><br>Salford • Manchester, UK • Collection only</p>
+    </div>
+    <div>
+      <h3>Follow</h3>
+      <p class="cta-buttons">
+        <a class="iconbtn" href="instagram://user?username=betti_sweets" onclick="fallbackIG(event)" aria-label="Instagram (open app)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" stroke-width="1.4"/><circle cx="12" cy="12" r="3.2" stroke-width="1.4"/><circle cx="17.5" cy="6.5" r="1" /></svg>
+          <span>Instagram</span>
+        </a>
+        <a class="iconbtn" href="https://www.facebook.com/share/15rjNJViaL/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke-width="1.4"/></svg>
+          <span>Facebook</span>
+        </a>
+        <a class="iconbtn" href="https://www.tiktok.com/@bettis.sweets" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 3c.3 1.8 1.4 3.2 3.4 3.7v3.1c-1.3.1-2.6-.3-3.8-1V14a5 5 0 1 1-4-4.9V13" stroke-width="1.4"/></svg>
+          <span>TikTok</span>
+        </a>
+      </p>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <p class="legal">
+        hello@bettissweets.co.uk (general via form)<br>
+        cakes@bettissweets.co.uk (orders via estimator)<br>
+        +44 7761 297615
+      </p>
+    </div>
+  </div>
+  <!-- UB: L+24 (UB+8) — hidden version tag -->
+</footer>
+
+<!-- Floating Instagram button (icon forced visible via CSS width/height) -->
+<a class="fab-ig" href="instagram://user?username=betti_sweets" onclick="fallbackIG(event)" aria-label="Open Instagram profile">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+    <rect x="3" y="3" width="18" height="18" rx="5" ry="5" stroke-width="1.4"/>
+    <circle cx="12" cy="12" r="3.2" stroke-width="1.4"/>
+    <circle cx="17.5" cy="6.5" r="1" />
+  </svg>
+  <span class="label">Instagram</span>
+</a>
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Betti’s Sweets",
+  "image": "https://www.bettissweets.co.uk/og-hero.jpg",
+  "url": "https://www.bettissweets.co.uk/",
+  "telephone": "+44 7761 297615",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Salford",
+    "addressRegion": "Greater Manchester",
+    "addressCountry": "GB"
+  },
+  "servesCuisine": "Bakery",
+  "areaServed": "Manchester",
+  "sameAs": [
+    "https://www.instagram.com/betti_sweets/",
+    "https://www.facebook.com/share/15rjNJViaL/?mibextid=wwXIfr",
+    "https://www.tiktok.com/@bettis.sweets"
+  ]
+}
+</script>
+
+<script>
+/* Footer year */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Close mobile menu on nav tap */
+document.querySelectorAll('nav a').forEach(a=>{
+  a.addEventListener('click', ()=>{
+    const menu = document.getElementById('primary-menu');
+    const btn = document.querySelector('.burger');
+    menu.classList.remove('open');
+    btn && btn.setAttribute('aria-expanded','false');
+  });
+});
+
+/* Instagram deep-link → web fallback */
+function fallbackIG(e){
+  const web = 'https://www.instagram.com/betti_sweets/?utm_source=qr';
+  setTimeout(()=>{ window.open(web,'_blank','noopener'); }, 800);
+}
+
+/* —— Estimator + payments —— */
+
+/* Pricing tables (sizes up to 12") */
+const sizeBase = { "6": 65, "8": 85, "10": 115, "12": 145 };   // base single-tier
+const tierAdd  = { "6": 55, "8": 70, "10": 90,  "12": 110 };   // per extra tier
+const extraCost= { flowers: 18, gold: 15, topper: 20, textured: 12 };
+const rushFee = 15;
+
+/* Elements */
+const els = {
+  size:    document.getElementById('size'),
+  tiers:   document.getElementById('tiers'),
+  extras:  document.getElementById('extras'),
+  rush:    document.getElementById('rush'),
+  total:   document.getElementById('total'),
+  deposit: document.getElementById('deposit'),
+  balance: document.getElementById('balance'),
+  totalField: document.getElementById('totalField'),
+  depositField: document.getElementById('depositField'),
+  balanceField: document.getElementById('balanceField'),
+  btnDeposit: document.getElementById('btnDeposit'),
+  btnBalance: document.getElementById('btnBalance'),
+  form: document.getElementById('estForm'),
+  inspoUpload: document.getElementById('inspoUpload'),
+  inspoPreview: document.getElementById('inspoPreview'),
+  date: document.getElementById('date'),
+  sizeInfoBtn: document.getElementById('sizeInfoBtn'),
+  sizeHelp: document.getElementById('sizeHelp'),
+  tiersInfoBtn: document.getElementById('tiersInfoBtn'),
+  tiersHelp: document.getElementById('tiersHelp')
+};
+
+function gbp(n){ return new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(n); }
+
+/* Working-days calculator (Mon–Fri) */
+function workingDaysBetween(start, end){
+  const a = new Date(start); a.setHours(0,0,0,0);
+  const b = new Date(end);   b.setHours(0,0,0,0);
+  if (b <= a) return 0;
+  let days = 0, d = new Date(a);
+  while (d < b){
+    d.setDate(d.getDate()+1);
+    const dow = d.getDay();
+    if (dow !== 0 && dow !== 6) days++;
+  }
+  return days;
+}
+
+/* Auto-lock Rush if < 3 working days away (and undo auto-check when it isn't) */
+const RUSH_THRESHOLD_DAYS = 3;
+function updateRushLock(){
+  const val = els.date?.value;
+  if (!val){
+    els.rush.disabled = false;
+    return;
+  }
+  const selected = new Date(val + 'T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const wd = workingDaysBetween(today, selected);
+  const mustRush = wd < RUSH_THRESHOLD_DAYS;
+
+  if (mustRush){
+    els.rush.checked = true;
+    els.rush.disabled = true;
+    els.rush.dataset.autoset = "1";
+    els.rush.title = 'Rush fee applies for dates under 3 full working days';
+  } else {
+    els.rush.disabled = false;
+    els.rush.title = '';
+    if (els.rush.dataset.autoset){
+      els.rush.checked = false;
+      delete els.rush.dataset.autoset;
+    }
+  }
+}
+
+/* If the user toggles Rush manually, clear autoset flag so we respect their choice */
+els.rush.addEventListener('change', ()=>{ delete els.rush.dataset.autoset; });
+
+/* Info buttons: click + long-press toggles (Size & Tiers) */
+function setupInfoToggle(btn, panel){
+  if(!btn || !panel) return;
+  const toggle = (force) => {
+    const willOpen = typeof force === 'boolean' ? force : !panel.classList.contains('open');
+    panel.classList.toggle('open', willOpen);
+    btn.setAttribute('aria-expanded', String(willOpen));
+  };
+  btn.addEventListener('click', ()=> toggle());
+  let pressTimer;
+  btn.addEventListener('touchstart', ()=>{ pressTimer = setTimeout(()=>toggle(true), 500); }, {passive:true});
+  ['touchend','touchcancel'].forEach(evt=> btn.addEventListener(evt, ()=> clearTimeout(pressTimer)));
+}
+setupInfoToggle(els.sizeInfoBtn, els.sizeHelp);
+setupInfoToggle(els.tiersInfoBtn, els.tiersHelp);
+
+/* Calculator */
+function calc(){
+  const s=els.size.value;
+  const t=+els.tiers.value || 1;
+  let total=sizeBase[s] + (t-1)*tierAdd[s];
+
+  [...els.extras.selectedOptions].forEach(o=> total += (extraCost[o.value] || 0));
+  if(els.rush.checked) total += rushFee;
+
+  const deposit = Math.round((total*0.5)*100)/100;
+  const balance = Math.max(total - deposit, 0);
+
+  els.total.textContent=gbp(total);
+  els.deposit.textContent=gbp(deposit);
+  els.balance.textContent=gbp(balance);
+
+  els.totalField.value=total.toFixed(2);
+  els.depositField.value=deposit.toFixed(2);
+  els.balanceField.value=balance.toFixed(2);
+
+  const summary = `Cake estimate: ${gbp(total)} (Deposit ${gbp(deposit)}, Balance ${gbp(balance)}) — Size ${s}" / ${t} tier(s).`;
+  const wa = `https://wa.me/447761297615?text=${encodeURIComponent('Hello! '+summary+' Please send me a secure payment link.')}`;
+  const mail = `mailto:cakes@bettissweets.co.uk?subject=${encodeURIComponent('Deposit link request')}&body=${encodeURIComponent(summary+'\n\nNotes: ')}`;
+  els.btnDeposit.href = wa;
+  els.btnBalance.href = mail;
+}
+
+/* Prevent past dates + set min=today */
+if (els.date) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const iso = today.toISOString().slice(0,10);
+  els.date.min = iso;
+  els.date.addEventListener('change', ()=>{ updateRushLock(); calc(); });
+}
+
+/* Persist preferred Size (localStorage + cookie fallback) */
+const SIZE_KEY = 'betti_pref_size';
+function saveSizePref(val){
+  try{ localStorage.setItem(SIZE_KEY, val); }catch(_){}
+  try{
+    const days=180;
+    const d=new Date(); d.setTime(d.getTime()+days*24*60*60*1000);
+    document.cookie = SIZE_KEY+"="+encodeURIComponent(val)+"; expires="+d.toUTCString()+"; path=/; SameSite=Lax";
+  }catch(_){}
+}
+function readSizePref(){
+  try{ const val = localStorage.getItem(SIZE_KEY); if (val) return val; }catch(_){}
+  try{
+    const m = document.cookie.match(new RegExp('(?:^|; )'+SIZE_KEY+'=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : null;
+  }catch(_){}
+  return null;
+}
+els.size.addEventListener('change', ()=>{
+  saveSizePref(els.size.value);
+  calc();
+});
+(function restoreSizePref(){
+  const saved = readSizePref();
+  if (!saved) return;
+  const opt = [...els.size.options].find(o=>o.value===saved);
+  if (opt){ els.size.value = saved; }
+})();
+
+/* Inspo upload preview */
+els.inspoUpload?.addEventListener('change', ()=>{
+  els.inspoPreview.innerHTML = '';
+  const file = els.inspoUpload.files?.[0];
+  if(file){
+    const url = URL.createObjectURL(file);
+    const img = new Image(); img.src = url; img.alt = 'Uploaded inspiration';
+    img.style.maxHeight='100px'; img.style.borderRadius='8px'; img.style.border='1px solid #eadfce';
+    els.inspoPreview.appendChild(img);
+  }
+});
+
+/* Init */
+['change','input'].forEach(evt=>{
+  document.getElementById('estimator').addEventListener(evt, calc, true);
+});
+updateRushLock();
+calc();
+</script>
+</body>
+</html>
