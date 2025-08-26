@@ -239,6 +239,7 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 .tier-ff h4{margin:.2rem 0 .2rem;font:600 1rem "Playfair Display",serif;color:#2b2222}
 .tier-ff .box{border:1px solid #f0e6da;border-radius:12px;padding:12px;background:#fff}
 </style>
+<script src="js/workingDaysBetween.js" defer></script>
 </head>
 <body>
 
@@ -254,8 +255,7 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
       <div class="wordmark" aria-hidden="true">Betti’s Sweets</div>
     </div>
 
-    <button class="burger" aria-label="Open menu" aria-controls="primary-menu" aria-expanded="false"
-      onclick="(function(btn){const m=document.getElementById('primary-menu');m.classList.toggle('open');btn.setAttribute('aria-expanded', m.classList.contains('open'));})(this)">
+    <button class="burger" id="burger" aria-label="Open menu" aria-controls="primary-menu" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
 
@@ -586,7 +586,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
     <div>
       <h3>Follow</h3>
       <p class="cta-buttons">
-        <a class="iconbtn" href="instagram://user?username=betti_sweets" onclick="fallbackIG(event)" aria-label="Instagram (open app)">
+        <a class="iconbtn" href="instagram://user?username=betti_sweets" aria-label="Instagram (open app)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" stroke-width="1.4"/><circle cx="12" cy="12" r="3.2" stroke-width="1.4"/><circle cx="17.5" cy="6.5" r="1" /></svg>
           <span>Instagram</span>
         </a>
@@ -612,7 +612,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 </footer>
 
 <!-- Floating Instagram button -->
-<a class="fab-ig" href="instagram://user?username=betti_sweets" onclick="fallbackIG(event)" aria-label="Open Instagram profile">
+<a class="fab-ig" href="instagram://user?username=betti_sweets" aria-label="Open Instagram profile">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
     <rect x="3" y="3" width="18" height="18" rx="5" ry="5" stroke-width="1.4"/>
     <circle cx="12" cy="12" r="3.2" stroke-width="1.4"/>
@@ -647,6 +647,17 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 </script>
 
 <script>
+/* Burger menu toggle */
+document.addEventListener('DOMContentLoaded', function(){
+  const burger = document.getElementById('burger');
+  const menu = document.getElementById('primary-menu');
+  function toggleMenu(){
+    menu.classList.toggle('open');
+    burger.setAttribute('aria-expanded', menu.classList.contains('open'));
+  }
+  burger.addEventListener('click', toggleMenu);
+});
+
 /* Footer year */
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -654,17 +665,11 @@ document.getElementById('year').textContent = new Date().getFullYear();
 document.querySelectorAll('nav a').forEach(a=>{
   a.addEventListener('click', ()=>{
     const menu = document.getElementById('primary-menu');
-    const btn = document.querySelector('.burger');
+    const btn = document.getElementById('burger');
     menu.classList.remove('open');
     btn && btn.setAttribute('aria-expanded','false');
   });
 });
-
-/* Instagram deep-link → web fallback */
-function fallbackIG(e){
-  const web = 'https://www.instagram.com/betti_sweets/?utm_source=qr';
-  setTimeout(()=>{ window.open(web,'_blank','noopener'); }, 800);
-}
 
 /* —— Estimator logic —— */
 
@@ -725,19 +730,6 @@ function gbp(n){ return new Intl.NumberFormat('en-GB',{style:'currency',currency
   });
 })();
 
-/* Working-days calculator (Mon–Fri) */
-function workingDaysBetween(start, end){
-  const a = new Date(start); a.setHours(0,0,0,0);
-  const b = new Date(end);   b.setHours(0,0,0,0);
-  if (b <= a) return 0;
-  let days = 0, d = new Date(a);
-  while (d < b){
-    d.setDate(d.getDate()+1);
-    const dow = d.getDay();
-    if (dow !== 0 && dow !== 6) days++;
-  }
-  return days;
-}
 
 /* Rush warning (no checkbox, just info) */
 const RUSH_THRESHOLD_DAYS = 3;
@@ -1066,8 +1058,6 @@ calc();
     // If mobile, try app first; otherwise go straight to web.
     if (isMobile) {
       // Try to open the app…
-      var opened = false;
-      // Create a hidden iframe trick for older mobile browsers
       var iframe = document.createElement('iframe');
       iframe.style.display = 'none';
       iframe.src = appURL;
@@ -1075,13 +1065,10 @@ calc();
 
       // After a short delay, fall back to web (app not installed)
       setTimeout(function(){
-        if (!opened) window.open(webURL, '_blank', 'noopener');
+        window.open(webURL, '_blank', 'noopener');
         // cleanup
         iframe.parentNode && iframe.parentNode.removeChild(iframe);
       }, 800);
-
-      // Best-effort flag (most browsers won’t let us detect success reliably)
-      opened = true;
     } else {
       // Desktop → just open the web profile
       window.open(webURL, '_blank', 'noopener');
@@ -1101,7 +1088,6 @@ calc();
     // Desktop: rewrite href to web
     if (!isMobile) {
       a.setAttribute('href', webURL);
-      a.removeAttribute('onclick'); // kill any inline handler
     } else {
       // Mobile: keep deeplink in href
       a.setAttribute('href', appURL);
@@ -1111,6 +1097,16 @@ calc();
     a.addEventListener('click', openIG, {passive:false});
   });
 })();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('DOMContentLoaded', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function(err){
+      console.warn('Service worker registration failed', err);
+    });
+  });
+}
 </script>
 
 <!-- Version: Betti’s Sweets — UB+12 logo-tune DEBUG2 (L+28.2b) — 2025-08-25 -->

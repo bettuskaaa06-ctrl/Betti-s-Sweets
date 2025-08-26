@@ -14,7 +14,12 @@ function workingDaysBetween(startDate, endDate) {
   return count;
 }
 
+// Expose globally in browser
+if (typeof window !== 'undefined') {
+  window.workingDaysBetween = workingDaysBetween;
+}
+
 // Export for tests
-if (typeof module !== "undefined") {
+if (typeof module !== 'undefined') {
   module.exports = { workingDaysBetween };
 }
