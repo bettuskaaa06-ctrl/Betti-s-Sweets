@@ -1,7 +1,15 @@
 const CACHE_NAME = 'betti-v1';
 const OFFLINE_URLS = [
-  '/', 
-  '/IMAGES/IMG_4972.webp'
+  '/',
+  '/index.html',
+  '/thank-you.html',
+  '/offline.html',
+  '/manifest.webmanifest',
+  '/logo.svg',
+  '/js/workingDaysBetween.js',
+  '/IMAGES/IMG_4972.jpg',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png'
 ];
 
 // Install: pre-cache core assets
@@ -30,14 +38,24 @@ self.addEventListener('activate', (event) => {
 
 // Fetch: network-first with cache fallback
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
     fetch(event.request)
       .then((networkResp) => {
-        // Save a copy in cache
-        const copy = networkResp.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        if (networkResp.ok) {
+          const copy = networkResp.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        }
         return networkResp;
       })
-      .catch(() => caches.match(event.request))
+      .catch(async () => {
+        const cache = await caches.open(CACHE_NAME);
+        const cached = await cache.match(event.request);
+        if (cached) return cached;
+        if (event.request.mode === 'navigate') {
+          return cache.match('/offline.html');
+        }
+      })
   );
 });
