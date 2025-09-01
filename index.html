@@ -36,9 +36,10 @@
   --bg:var(--ivory); --accent:var(--rose);
   --maxw:1200px; --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.06);
 
-  /* Header sizing (unchanged) */
+  /* Header sizing */
+  --dev-banner-h:40px;
   --header-h:112px;
-  --anchor-offset:112px;
+  --anchor-offset:calc(var(--header-h) + var(--dev-banner-h));
 
   /* Logo tuning */
   --logo-zoom:1.8;     
@@ -47,7 +48,8 @@
 }
 @media (max-width:820px){
   :root{
-    --header-h:88px; --anchor-offset:92px;
+    --dev-banner-h:40px;
+    --header-h:88px; --anchor-offset:calc(var(--header-h) + var(--dev-banner-h));
     --logo-zoom:1.8;
     --logo-shift-x:50%;
     --logo-shift-y:15%;
@@ -62,6 +64,18 @@ img{max-width:100%;display:block}
 button{font:inherit;cursor:pointer}
 .sr-only{position:absolute!important;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}
 
+.dev-banner{
+  text-align:center;
+  padding:8px 16px;
+  background:var(--blush);
+  border-bottom:1px solid #f1e7db;
+  font-size:.95rem;
+  font-weight:600;
+  position:sticky;
+  top:0;
+  z-index:60;
+}
+
 .script{font-family:"Great Vibes",cursive;letter-spacing:.3px}
 h1,h2,h3{margin:.2rem 0 1rem;color:#2b2222}
 h1{font:600 2rem "Playfair Display",serif}
@@ -72,7 +86,7 @@ p{margin:.6rem 0}
 
 /* Header */
 header{
-  position:sticky;top:0;z-index:50;
+  position:sticky;top:var(--dev-banner-h);z-index:50;
   background:rgba(255,248,240,.85);
   backdrop-filter:saturate(150%) blur(8px);
   border-bottom:1px solid #f1e7db
@@ -241,6 +255,10 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 </style>
 </head>
 <body>
+<div class="dev-banner">
+  This website is still under development.<br>
+  Contact us to place an order or ask questions.
+</div>
 
 <!-- Hidden LCP hint for hero background -->
 <img src="IMAGES/IMG_4972.jpg" alt="" width="1200" height="800" decoding="async" fetchpriority="high" aria-hidden="true" inert style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
