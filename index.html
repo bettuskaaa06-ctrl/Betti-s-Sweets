@@ -136,11 +136,24 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 .note{color:var(--muted);font-size:.9rem}
 
 /* Frosted glass */
+@keyframes glassGlare{
+  from{transform:translateX(-50%) rotate(45deg)}
+  to{transform:translateX(50%) rotate(45deg)}
+}
 .glass{
+  position:relative;
+  overflow:hidden;
   background:rgba(255,248,240,.58);
   -webkit-backdrop-filter: blur(10px) saturate(120%);
   backdrop-filter: blur(10px) saturate(120%);
   border:1px solid rgba(233,223,210,.75);border-radius:16px;box-shadow:0 12px 28px rgba(0,0,0,.12);padding:18px
+}
+.glass::before{
+  content:"";
+  position:absolute;top:0;left:0;width:200%;height:100%;
+  background:linear-gradient(115deg,rgba(255,255,255,0) 0,rgba(255,255,255,.6) 50%,rgba(255,255,255,0) 100%);
+  pointer-events:none;
+  animation:glassGlare 8s linear infinite
 }
 
 /* Mobile hero */
