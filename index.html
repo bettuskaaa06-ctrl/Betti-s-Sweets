@@ -178,6 +178,15 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
 .warn{display:none;margin-top:8px;font-size:.95rem;background:#ffe9ef;border:1px solid #f5c9d1;color:#7a3a46;border-radius:10px;padding:10px 12px}
 .warn small{display:block;color:#8d4a53}
 
+/* Site-wide warning banner */
+.site-warning{
+  background:#ffe9ef;
+  border-bottom:1px solid #f5c9d1;
+  color:#7a3a46;
+  text-align:center;
+  padding:10px 12px
+}
+
 /* Base-includes helper */
 .base-includes{margin-top:10px;font-size:.95rem}
 .base-includes summary{cursor:pointer;list-style:none;color:#6b5e5e;text-decoration:underline;text-underline-offset:3px}
@@ -244,6 +253,10 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 
 <!-- Hidden LCP hint for hero background -->
 <img src="IMAGES/IMG_4972.jpg" alt="" width="1200" height="800" decoding="async" fetchpriority="high" aria-hidden="true" inert style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
+
+<div class="site-warning" role="alert">
+  We'll be closed from July 1–5. Orders will resume on July 6.
+</div>
 
 <header>
   <div class="wrap nav">
