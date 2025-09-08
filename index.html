@@ -137,11 +137,17 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 
 /* Frosted glass */
 .glass{
-  background:rgba(255,248,240,.58);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
-  backdrop-filter: blur(10px) saturate(120%);
-  border:1px solid rgba(233,223,210,.75);border-radius:16px;box-shadow:0 12px 28px rgba(0,0,0,.12);padding:18px
+  background:rgba(255,255,255,.3);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(233,223,210,.75);border-radius:16px;box-shadow:0 12px 28px rgba(0,0,0,.12);padding:18px;overflow:hidden
 }
+
+/* Entrance animations */
+@keyframes fade-up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.fade-up{opacity:0;transform:translateY(20px)}
+.fade-up.in-view{animation:fade-up .6s ease forwards}
+@media (prefers-reduced-motion:reduce){.fade-up,.fade-up.in-view{opacity:1;transform:none;animation:none}}
 
 /* Mobile hero */
 @media (max-width:820px){
@@ -152,7 +158,6 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 
 /* Sections */
 section{padding:56px 0}
-.card{background:#fff;border:1px solid #f2e8db;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
 
 /* Forms */
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
@@ -228,7 +233,6 @@ input,select,textarea,button{font-size:16px}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.fab-ig:hover{transform:none}}
 
 /* Safari/iPad date input overhang */
-.card{overflow:hidden}
 .grid > *{min-width:0}
 input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:padding-box;padding-right:38px}
 
@@ -273,7 +277,7 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 <!-- Main -->
 <main id="home" class="hero" role="main">
   <div class="wrap">
-    <div class="glass">
+    <div class="glass fade-up">
       <span class="tag">Salford • Manchester, UK</span>
       <h1 class="big">Custom made artisan cakes</h1>
       <div class="script scriptline">Freshly baked for you.</div>
@@ -287,7 +291,7 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 </main>
 
 <section id="about">
-  <div class="wrap card">
+  <div class="wrap glass fade-up">
     <h2>About Us</h2>
     <p>With over a decade of experience in creating custom cakes, we felt it was time to begin our own journey — and so, Betti’s Sweets was born. I’m Betti, the baker behind the brand, and together with my team we run a small cake studio in Salford, Manchester.
 
@@ -299,7 +303,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 
 <!-- ESTIMATOR -->
 <section id="estimator">
-  <div class="wrap card">
+  <div class="wrap glass fade-up">
     <h2>Design Your Cake — Price Estimator</h2>
 
     <form id="estForm" name="cake-estimator" method="POST" action="/thank-you" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" autocomplete="on">
@@ -523,7 +527,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 </section>
 
 <section id="faq">
-  <div class="wrap card">
+  <div class="wrap glass fade-up">
     <h2>FAQ & Policies</h2>
     <details open><summary><strong>Difference between sponge layers and cake tiers</strong></summary><p>Sponge layers are the individual cake sections stacked with filling inside a single cake. Tiers are separate cakes stacked on top of each other to create a taller, multilevel cake.</p></details>
     <details><summary><strong>Lead time</strong></summary><p>Typical lead time is 5–10 days. Rush orders may be possible (fee applies if under 3 full working days).</p></details>
@@ -535,7 +539,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 </section>
 
 <section id="allergens">
-  <div class="wrap card">
+  <div class="wrap glass fade-up">
     <h2>Allergens & Dietary Information</h2>
     <p>Because we have children with allergies in our own family, we know how important this is and always do our very best to cater for special requirements. Every request is handled with care — but as a small studio, we can't guarantee that our cakes are completely free from traces of allergens.</p>
     <p>If you or a loved one have specific dietary needs, please let us know when ordering and we'll do everything we can to make your cake safe and enjoyable.</p>
@@ -543,7 +547,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 </section>
 
 <section id="contact">
-  <div class="wrap card">
+  <div class="wrap glass fade-up">
     <h2>Get in touch</h2>
     <div class="cta-buttons" style="margin-bottom:14px">
       <a class="iconbtn" href="tel:+447761297615" aria-label="Call Betti’s Sweets">
@@ -644,6 +648,24 @@ We also do our best to accommodate most dietary needs and allergies.</p>
     "https://www.tiktok.com/@bettis.sweets"
   ]
 }
+</script>
+
+<script>
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('.fade-up').forEach(el=>el.classList.add('in-view'));
+    return;
+  }
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  });
+  document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
+})();
 </script>
 
 <script>
