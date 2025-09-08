@@ -137,8 +137,10 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 
 /* Frosted glass */
 @keyframes glassGlare{
-  from{transform:translateX(-50%) rotate(45deg)}
-  to{transform:translateX(50%) rotate(45deg)}
+  0%{transform:translateX(-150%) rotate(45deg);opacity:0}
+  40%{opacity:.6}
+  60%{opacity:.6}
+  100%{transform:translateX(150%) rotate(45deg);opacity:0}
 }
 .glass{
   position:relative;
@@ -148,12 +150,20 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
   backdrop-filter: blur(10px) saturate(120%);
   border:1px solid rgba(233,223,210,.75);border-radius:16px;box-shadow:0 12px 28px rgba(0,0,0,.12);padding:18px
 }
-.glass::before{
+.glass::before,
+.glass::after{
   content:"";
   position:absolute;top:0;left:0;width:200%;height:100%;
-  background:linear-gradient(115deg,rgba(255,255,255,0) 0,rgba(255,255,255,.6) 50%,rgba(255,255,255,0) 100%);
   pointer-events:none;
   animation:glassGlare 8s linear infinite
+}
+.glass::before{
+  background:linear-gradient(115deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.6) 50%,rgba(255,255,255,0) 60%);
+}
+.glass::after{
+  background:radial-gradient(circle at center,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 60%);
+  filter:blur(12px);
+  animation-delay:4s;
 }
 
 /* Mobile hero */
