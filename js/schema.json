@@ -1,0 +1,21 @@
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Betti’s Sweets",
+  "image": "https://www.bettissweets.co.uk/og-hero.jpg",
+  "url": "https://www.bettissweets.co.uk/",
+  "telephone": "+44 7761 297615",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Salford",
+    "addressRegion": "Greater Manchester",
+    "addressCountry": "GB"
+  },
+  "servesCuisine": "Bakery",
+  "areaServed": "Manchester",
+  "sameAs": [
+    "https://www.instagram.com/betti_sweets/",
+    "https://www.facebook.com/share/15rjNJViaL/?mibextid=wwXIfr",
+    "https://www.tiktok.com/@bettis.sweets"
+  ]
+}
