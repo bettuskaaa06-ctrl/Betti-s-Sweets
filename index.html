@@ -72,10 +72,21 @@ p{margin:.6rem 0}
 
 /* Header */
 header{
-  position:sticky;top:0;z-index:50;
+  position:relative;top:0;z-index:50;overflow:hidden;
   background:rgba(255,248,240,.85);
   backdrop-filter:saturate(150%) blur(8px);
   border-bottom:1px solid #f1e7db
+}
+
+header::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(120deg,rgba(255,255,255,.25)0,rgba(255,255,255,.1)45%,rgba(255,255,255,.25)90%);
+  animation:glassGlare 12s linear infinite;opacity:.2;
+}
+
+@keyframes glassGlare{
+  from{transform:translateX(-100%)}
+  to{transform:translateX(100%)}
 }
 header .wrap.nav{
   display:flex;align-items:center;justify-content:unset;
