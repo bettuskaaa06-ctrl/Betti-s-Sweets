@@ -70,6 +70,28 @@ h3{font:600 1.2rem "Playfair Display",serif}
 p{margin:.6rem 0}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
 
+/* Info banner */
+#info-banner{
+  background:linear-gradient(90deg,var(--blush),var(--peach));
+  color:var(--text);
+  text-align:center;
+  padding:8px 12px;
+  font-size:.95rem;
+}
+#info-banner .banner-btn{
+  display:inline-block;
+  margin-left:10px;
+  padding:6px 12px;
+  border:1px solid #eadfce;
+  border-radius:999px;
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+#info-banner .banner-btn:hover{
+  background:linear-gradient(90deg,var(--blush),var(--peach));
+  border-color:#f0cdb9;
+}
+
 /* Header */
 header{
   position:sticky;top:0;z-index:50;
@@ -244,6 +266,11 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
 
 <!-- Hidden LCP hint for hero background -->
 <img src="IMAGES/IMG_4972.jpg" alt="" width="1200" height="800" decoding="async" fetchpriority="high" aria-hidden="true" inert style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
+
+  <div id="info-banner">
+    <span>Got a question?</span>
+    <a href="#contact" class="banner-btn">Contact us</a>
+  </div>
 
 <header>
   <div class="wrap nav">
