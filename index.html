@@ -135,8 +135,9 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 .btn.primary{background:linear-gradient(90deg,var(--blush),var(--peach));border-color:#f0cdb9}
 .note{color:var(--muted);font-size:.9rem}
 
-/* Glare base */
-.btn, .iconbtn, .fab-ig{position:relative;overflow:hidden}
+/* Glare base + hover lift */
+.btn, .iconbtn, .fab-ig, nav a{position:relative;overflow:hidden;transition:transform .2s}
+.btn:hover, .iconbtn:hover, .fab-ig:hover, nav a:hover{transform:translateY(-1px)}
 
 /* Frosted glass */
 .glass{
@@ -226,7 +227,6 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
 }
 .fab-ig svg{width:20px;height:20px;display:inline-block;flex:0 0 auto}
 .fab-ig .label{font-weight:700}
-.fab-ig:hover{transform:translateY(-1px)}
 
 /* Footer */
 footer{border-top:1px solid #f1e7db;background:#fff;padding:24px 0 50px}
@@ -245,7 +245,7 @@ input,select,textarea,button{font-size:16px}
   nav ul{max-height:70vh;overflow:auto;padding:16px}
 }
 :focus-visible{outline:2px solid rgba(183,110,121,.6);outline-offset:3px;border-radius:8px}
-@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.fab-ig:hover{transform:none}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.fab-ig:hover,.btn:hover,.iconbtn:hover,nav a:hover{transform:none}}
 
 /* Safari/iPad date input overhang */
 .card{overflow:hidden}
@@ -280,13 +280,13 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
     </button>
 
     <nav aria-label="Primary">
-      <ul id="primary-menu">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#estimator">Design Your Cake</a></li>
-        <li><a href="#faq">FAQ & Policies</a></li>
-        <li><a href="#contact">Get a Quote</a></li>
-      </ul>
-    </nav>
+        <ul id="primary-menu">
+          <li><a class="btn-glare" href="#home">Home</a></li>
+          <li><a class="btn-glare" href="#estimator">Design Your Cake</a></li>
+          <li><a class="btn-glare" href="#faq">FAQ & Policies</a></li>
+          <li><a class="btn-glare" href="#contact">Get a Quote</a></li>
+        </ul>
+      </nav>
   </div>
 </header>
 
