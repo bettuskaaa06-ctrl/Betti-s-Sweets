@@ -135,6 +135,10 @@ nav a:hover{background:#fff;border:1px solid #f0e6da}
 .btn.primary{background:linear-gradient(90deg,var(--blush),var(--peach));border-color:#f0cdb9}
 .note{color:var(--muted);font-size:.9rem}
 
+/* Glare base + hover lift */
+.btn, .iconbtn, .fab-ig, nav a{position:relative;overflow:hidden;transition:transform .2s}
+.btn:hover, .iconbtn:hover, .fab-ig:hover, nav a:hover{transform:translateY(-1px)}
+
 /* Frosted glass */
 .glass{
   background:rgba(255,248,240,.58);
@@ -193,6 +197,23 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
 .iconbtn span + svg{margin-left:8px}
 .iconbtn span{display:inline-block;white-space:nowrap}
 
+/* Glare effect */
+.btn-glare::after{
+  content:"";
+  position:absolute;top:0;left:0;height:100%;width:120%;
+  background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0) 70%);
+  transform:translateX(-150%) skewX(-25deg);
+  animation:glassGlare 4s linear infinite;
+  animation-play-state:paused;
+  pointer-events:none
+}
+.btn-glare:hover::after,
+.btn-glare:focus::after{animation-play-state:running}
+@keyframes glassGlare{
+  from{transform:translateX(-150%) skewX(-25deg)}
+  to{transform:translateX(150%) skewX(-25deg)}
+}
+
 /* Action buttons uniform on mobile */
 @media (max-width:820px){
   .paybuttons .iconbtn{width:100%;justify-content:flex-start}
@@ -206,7 +227,6 @@ select,input[type="number"],input[type="text"],input[type="date"],input[type="fi
 }
 .fab-ig svg{width:20px;height:20px;display:inline-block;flex:0 0 auto}
 .fab-ig .label{font-weight:700}
-.fab-ig:hover{transform:translateY(-1px)}
 
 /* Footer */
 footer{border-top:1px solid #f1e7db;background:#fff;padding:24px 0 50px}
@@ -225,7 +245,7 @@ input,select,textarea,button{font-size:16px}
   nav ul{max-height:70vh;overflow:auto;padding:16px}
 }
 :focus-visible{outline:2px solid rgba(183,110,121,.6);outline-offset:3px;border-radius:8px}
-@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.fab-ig:hover{transform:none}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.fab-ig:hover,.btn:hover,.iconbtn:hover,nav a:hover{transform:none}}
 
 /* Safari/iPad date input overhang */
 .card{overflow:hidden}
@@ -260,13 +280,13 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
     </button>
 
     <nav aria-label="Primary">
-      <ul id="primary-menu">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#estimator">Design Your Cake</a></li>
-        <li><a href="#faq">FAQ & Policies</a></li>
-        <li><a href="#contact">Get a Quote</a></li>
-      </ul>
-    </nav>
+        <ul id="primary-menu">
+          <li><a class="btn-glare" href="#home">Home</a></li>
+          <li><a class="btn-glare" href="#estimator">Design Your Cake</a></li>
+          <li><a class="btn-glare" href="#faq">FAQ & Policies</a></li>
+          <li><a class="btn-glare" href="#contact">Get a Quote</a></li>
+        </ul>
+      </nav>
   </div>
 </header>
 
@@ -279,7 +299,7 @@ input[type="date"]{-webkit-appearance:none;appearance:none;background-clip:paddi
       <div class="script scriptline">Freshly baked for you.</div>
       <p class="note">Celebrate every occasion with a handmade cake—just a few clicks away.</p>
       <div class="cta">
-        <a class="btn primary" href="#estimator">Design your cake</a>
+        <a class="btn primary btn-glare" href="#estimator">Design your cake</a>
       </div>
     </div>
     <div aria-hidden="true"></div>
@@ -500,15 +520,15 @@ We also do our best to accommodate most dietary needs and allergies.</p>
       </div>
       
       <div class="paybuttons" style="margin-top:14px">
-        <a class="iconbtn" id="btnDeposit" href="#" target="_blank" rel="noopener" title="Request a secure deposit link">
+        <a class="iconbtn btn-glare" id="btnDeposit" href="#" target="_blank" rel="noopener" title="Request a secure deposit link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.4"/></svg>
           <span>Request deposit link</span>
         </a>
-        <a class="iconbtn" id="btnBalance" href="#" target="_blank" rel="noopener" title="Request a secure balance link">
+        <a class="iconbtn btn-glare" id="btnBalance" href="#" target="_blank" rel="noopener" title="Request a secure balance link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8" stroke-width="1.4"/><path d="M12 8v4l3 2" stroke-width="1.4"/></svg>
           <span>Request balance link</span>
         </a>
-        <button class="iconbtn" type="submit" aria-label="Submit estimate" title="Submit your estimate to Betti’s Sweets">
+        <button class="iconbtn btn-glare" type="submit" aria-label="Submit estimate" title="Submit your estimate to Betti’s Sweets">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
             <path d="M22 2 11 13" stroke-width="1.4"/>
             <path d="m22 2-7 20-4-9-9-4Z" stroke-width="1.4"/>
@@ -546,14 +566,14 @@ We also do our best to accommodate most dietary needs and allergies.</p>
   <div class="wrap card">
     <h2>Get in touch</h2>
     <div class="cta-buttons" style="margin-bottom:14px">
-      <a class="iconbtn" href="tel:+447761297615" aria-label="Call Betti’s Sweets">
+      <a class="iconbtn btn-glare" href="tel:+447761297615" aria-label="Call Betti’s Sweets">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 4.2 2 2 0 0 1 4.11 2h2a2 2 0 0 1 2 1.72c.12.9.37 1.77.72 2.58a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.5-1.27a2 2 0 0 1 2.11-.45 11.36 11.36 0 0 0 2.58.72A2 2 0 0 1 22 16.92z" stroke-width="1.4"/>
         </svg>
         <span class="label">Call</span>
       </a>
 
-      <a class="iconbtn" href="https://wa.me/447761297615" target="_blank" rel="noopener" aria-label="Open WhatsApp">
+      <a class="iconbtn btn-glare" href="https://wa.me/447761297615" target="_blank" rel="noopener" aria-label="Open WhatsApp">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <circle cx="12" cy="12" r="9" stroke-width="1.4"/>
           <path d="M7.5 17.5l1-3.3a6.8 6.8 0 1 1 2.8 2.7L7.5 17.5Z" stroke-width="1.4" />
@@ -571,7 +591,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
         <div><label for="phone">Phone</label><input id="phone" name="Phone" inputmode="tel" autocomplete="tel" placeholder="+44 7…"></div>
         <div style="grid-column:1/-1"><label for="message">Message</label><textarea id="message" name="Message" rows="4" required></textarea></div>
       </div>
-      <div style="margin-top:12px"><button class="btn primary" type="submit">Send</button></div>
+      <div style="margin-top:12px"><button class="btn primary btn-glare" type="submit">Send</button></div>
       <p class="note">We typically reply within 1–2 working days.</p>
     </form>
   </div>
@@ -586,15 +606,15 @@ We also do our best to accommodate most dietary needs and allergies.</p>
     <div>
       <h3>Follow</h3>
       <p class="cta-buttons">
-        <a class="iconbtn" href="instagram://user?username=betti_sweets" onclick="fallbackIG(event)" aria-label="Instagram (open app)">
+        <a class="iconbtn btn-glare" href="instagram://user?username=betti_sweets" onclick="fallbackIG(event)" aria-label="Instagram (open app)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" stroke-width="1.4"/><circle cx="12" cy="12" r="3.2" stroke-width="1.4"/><circle cx="17.5" cy="6.5" r="1" /></svg>
           <span>Instagram</span>
         </a>
-        <a class="iconbtn" href="https://www.facebook.com/share/15rjNJViaL/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook">
+        <a class="iconbtn btn-glare" href="https://www.facebook.com/share/15rjNJViaL/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke-width="1.4"/></svg>
           <span>Facebook</span>
         </a>
-        <a class="iconbtn" href="https://www.tiktok.com/@bettis.sweets" target="_blank" rel="noopener" aria-label="TikTok">
+        <a class="iconbtn btn-glare" href="https://www.tiktok.com/@bettis.sweets" target="_blank" rel="noopener" aria-label="TikTok">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 3c.3 1.8 1.4 3.2 3.4 3.7v3.1c-1.3 .1-2.6-.3-3.8-1V14a5 5 0 1 1-4-4.9V13" stroke-width="1.4"/></svg>
           <span>TikTok</span>
         </a>
@@ -612,7 +632,7 @@ We also do our best to accommodate most dietary needs and allergies.</p>
 </footer>
 
 <!-- Floating Instagram button -->
-<a class="fab-ig" href="instagram://user?username=betti_sweets" onclick="fallbackIG(event)" aria-label="Open Instagram profile">
+<a class="fab-ig btn-glare" href="instagram://user?username=betti_sweets" onclick="fallbackIG(event)" aria-label="Open Instagram profile">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
     <rect x="3" y="3" width="18" height="18" rx="5" ry="5" stroke-width="1.4"/>
     <circle cx="12" cy="12" r="3.2" stroke-width="1.4"/>
