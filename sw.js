@@ -30,14 +30,21 @@ self.addEventListener('activate', (event) => {
 
 // Fetch: network-first with cache fallback
 self.addEventListener('fetch', (event) => {
+  const { request } = event;
+
+  // Only handle GET requests to our own origin
+  if (request.method !== 'GET') return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
   event.respondWith(
-    fetch(event.request)
+    fetch(request)
       .then((networkResp) => {
         // Save a copy in cache
         const copy = networkResp.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
         return networkResp;
       })
-      .catch(() => caches.match(event.request))
+      .catch(() => caches.match(request))
   );
 });
