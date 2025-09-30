@@ -53,7 +53,7 @@ const Hero = () => {
         <div className="max-w-[1200px] mx-auto px-5 grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-[30px] items-center py-10 lg:py-[40px_20px_30px]">
           <div 
             ref={glassRef}
-            className="glass p-[18px] mx-auto lg:mx-0 w-[calc(100vw-40px)] max-w-[720px] lg:w-auto lg:max-w-none"
+            className="glass p-[18px] mx-auto lg:mx-0 w-[calc(100vw-40px)] max-w-[720px] lg:w-auto lg:max-w-none overflow-hidden"
           >
             <span className="inline-block bg-gradient-to-r from-[var(--blush)] to-[var(--peach)] px-3 py-1.5 rounded-full font-semibold border border-[#f3d5c4] text-sm">
               Salford • Manchester, UK

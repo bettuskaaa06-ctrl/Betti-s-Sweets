@@ -39,11 +39,11 @@ const Header = () => {
       className="sticky z-50 header-glare bg-[rgba(255,248,240,0.85)] backdrop-blur-glass border-b border-[#f1e7db]"
       style={{ top: `${headerTop}px` }}
     >
-      <div className="max-w-[1200px] mx-auto px-5 flex items-center justify-between h-28 lg:h-[112px]">
+      <div className="max-w-[1200px] mx-auto px-5 flex items-center justify-between h-16 lg:h-18">
         {/* Brand */}
         <div className="flex items-center gap-2.5 mr-auto">
           <div 
-            className="h-[40px] lg:h-[50px] aspect-[120/36] overflow-hidden rounded-lg"
+            className="h-[70px] lg:h-[80px] aspect-[120/36] overflow-visible"
             aria-hidden="true"
           >
             <img 
@@ -54,7 +54,7 @@ const Header = () => {
               className="h-full w-auto object-contain object-center transform-gpu"
               style={{
                 transformOrigin: 'center center',
-                transform: 'scale(0.8)'
+                transform: 'scale(1.4)'
               }}
               onError={(e) => {
                 e.target.onerror = null;
