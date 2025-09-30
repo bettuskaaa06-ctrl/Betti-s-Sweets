@@ -18,12 +18,55 @@ const Gallery = () => {
       occasion: 'Mother\'s Day',
       description: 'Beautiful pink buttercream rosette cake with gold accents, pearls, and delicate decorative elements. Perfect for celebrating special mothers.',
       tags: ['mothers-day', 'pink', 'buttercream', 'gold', 'pearls', 'celebration']
+    },
+    {
+      id: 2,
+      src: '/wedding-cake-elegant.jpg',
+      alt: 'Luxury Wedding Cake with Sugar Flowers',
+      title: 'Luxury Wedding Cake with Sugar Flowers',
+      category: 'wedding',
+      occasion: 'Wedding',
+      description: 'Tall, elegant multi-tier wedding cake featuring intricate sugar flowers, delicate piping, and luxurious white fondant finish.',
+      tags: ['wedding', 'white', 'sugar-flowers', 'multi-tier', 'elegant', 'luxury']
+    },
+    {
+      id: 3,
+      src: '/birthday-cake-colorful.jpg',
+      alt: 'Colorful Birthday Celebration Cake',
+      title: 'Colorful Birthday Celebration Cake',
+      category: 'birthday',
+      occasion: 'Birthday',
+      description: 'Vibrant rainbow sprinkle cake with colorful buttercream layers, perfect for making birthday celebrations extra special.',
+      tags: ['birthday', 'colorful', 'sprinkles', 'rainbow', 'buttercream', 'celebration']
+    },
+    {
+      id: 4,
+      src: '/anniversary-cake-romantic.jpg',
+      alt: 'Romantic Anniversary Cake',
+      title: 'Romantic Anniversary Cake',
+      category: 'anniversary',
+      occasion: 'Anniversary',
+      description: 'Elegant two-tier anniversary cake with romantic floral decorations, gold accents, and personalized design elements.',
+      tags: ['anniversary', 'romantic', 'floral', 'gold', 'elegant', 'two-tier']
+    },
+    {
+      id: 5,
+      src: '/wedding-cake-white.jpg',
+      alt: 'Classic White Wedding Cake',
+      title: 'Classic White Wedding Cake',
+      category: 'wedding',
+      occasion: 'Wedding',
+      description: 'Timeless white wedding cake with cascading sugar roses, pearl details, and classic elegant design perfect for traditional ceremonies.',
+      tags: ['wedding', 'white', 'roses', 'pearls', 'classic', 'traditional']
     }
   ];
 
   const categories = [
     { value: 'all', label: 'All Cakes' },
-    { value: 'celebration', label: 'Celebration' }
+    { value: 'wedding', label: 'Wedding Cakes' },
+    { value: 'birthday', label: 'Birthday Cakes' },
+    { value: 'anniversary', label: 'Anniversary Cakes' },
+    { value: 'celebration', label: 'Special Occasions' }
   ];
 
   const filteredCakes = cakePortfolio.filter(cake => {

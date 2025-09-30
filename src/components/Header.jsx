@@ -43,7 +43,7 @@ const Header = () => {
         {/* Brand */}
         <div className="flex items-center gap-2.5 mr-auto">
           <div 
-            className="h-[calc(112px-22px)] lg:h-[calc(112px-22px)] aspect-[120/36] overflow-hidden rounded-lg"
+            className="h-[90px] lg:h-[90px] w-auto overflow-hidden rounded-lg"
             aria-hidden="true"
           >
             <img 
@@ -51,10 +51,9 @@ const Header = () => {
               alt="Betti's Sweets logo" 
               width="256" 
               height="77"
-              className="h-full w-auto object-contain object-right-center transform-gpu"
+              className="h-full w-auto object-contain transform-gpu"
               style={{
-                transformOrigin: 'center center',
-                transform: 'translate(50%, 15%) scale(1.8)'
+                imageRendering: '-webkit-optimize-contrast'
               }}
               onError={(e) => {
                 e.target.onerror = null;

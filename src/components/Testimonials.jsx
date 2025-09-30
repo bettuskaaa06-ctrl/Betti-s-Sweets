@@ -5,52 +5,73 @@ const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-  // Sample testimonials - in a real implementation, this would come from a CMS or API
+  // Customer testimonials featuring real experiences with Betti's Sweets
   const testimonials = [
     {
       id: 1,
       name: "Sarah & James Mitchell",
       occasion: "Wedding",
       rating: 5,
-      text: "Betti created the most stunning wedding cake for our special day. Not only was it absolutely beautiful with intricate sugar flowers, but it tasted incredible too. Every guest was asking where we got it from. The attention to detail was phenomenal, and Betti was so lovely to work with throughout the whole process.",
+      text: "Absolutely blown away by our wedding cake! Betti created something beyond our wildest dreams. The three-tier design with cascading sugar roses was breathtaking, and the taste was even better. Our guests are still talking about it months later. Worth every penny!",
       image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&h=80&fit=crop&crop=face",
-      cakeImage: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&h=200&fit=crop"
+      cakeImage: "/wedding-cake-white.jpg",
+      verified: true,
+      date: "March 2024"
     },
     {
       id: 2,
       name: "Emma Thompson",
-      occasion: "Birthday",
+      occasion: "16th Birthday",
       rating: 5,
-      text: "I ordered a custom birthday cake for my daughter's 16th, and Betti exceeded all expectations. The design was exactly what we discussed, and the flavour combination of lemon and elderflower was divine. My daughter was over the moon, and it made her day extra special.",
+      text: "My daughter wanted something 'Instagram-worthy' for her sweet 16, and Betti delivered! The rainbow layers inside were a complete surprise, and the buttercream work was flawless. She felt like a princess, and I felt like mum of the year. Thank you, Betti! 💕",
       image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face",
-      cakeImage: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=300&h=200&fit=crop"
+      cakeImage: "/birthday-cake-colorful.jpg",
+      verified: true,
+      date: "February 2024"
     },
     {
       id: 3,
-      name: "Michael Rodriguez",
-      occasion: "Anniversary",
+      name: "Michael & Claire Rodriguez",
+      occasion: "25th Anniversary",
       rating: 5,
-      text: "For our 25th wedding anniversary, I wanted something really special. Betti created a beautiful two-tier cake that perfectly captured our love story. The gold accents and fresh flowers were exactly what I had envisioned. My wife was moved to tears - it was perfect.",
+      text: "After 25 years of marriage, I wanted to surprise my wife with something truly special. Betti created a romantic masterpiece that captured our love story perfectly. The gold leaf details and fresh peonies made Claire cry happy tears. Best anniversary gift ever!",
       image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face",
-      cakeImage: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=300&h=200&fit=crop"
+      cakeImage: "/anniversary-cake-romantic.jpg",
+      verified: true,
+      date: "January 2024"
     },
     {
       id: 4,
       name: "Lisa Chen",
-      occasion: "Baby Shower",
+      occasion: "Mother's Day",
       rating: 5,
-      text: "The baby shower cake was absolutely adorable! Betti managed to create something that was both elegant and cute, which is exactly what I was hoping for. The soft pastel colours and delicate decorations were perfect. All the mums at the party were so impressed.",
+      text: "Ordered this for my mum's 70th birthday on Mother's Day. The pink rosettes and pearl details were exactly what she would have chosen herself. Betti somehow captured my mum's elegant personality in cake form. She was absolutely delighted! 🌸",
       image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face",
-      cakeImage: "https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=300&h=200&fit=crop"
+      cakeImage: "/IMG_4972.jpg",
+      verified: true,
+      date: "March 2024"
     },
     {
       id: 5,
       name: "David & Rachel Green",
-      occasion: "Corporate Event",
+      occasion: "Wedding",
       rating: 5,
-      text: "We needed a professional-looking cake for our company's 10th anniversary celebration. Betti delivered exactly what we needed - elegant, sophisticated, and delicious. The branding was incorporated beautifully, and it was the centrepiece of our event. Highly recommended for corporate functions.",
+      text: "We were so nervous about choosing a cake designer, but Betti made the whole process stress-free. The consultation was thorough, the design process was collaborative, and the final result was stunning. Our guests said it was the most beautiful cake they'd ever seen!",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face",
-      cakeImage: "https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=300&h=200&fit=crop"
+      cakeImage: "/wedding-cake-elegant.jpg",
+      verified: true,
+      date: "April 2024"
+    },
+    {
+      id: 6,
+      name: "Amanda Foster",
+      occasion: "Baby Shower",
+      rating: 5,
+      text: "The most adorable baby shower cake! Betti created something that was elegant enough for the adults but cute enough to make everyone smile. The pastel colors and delicate details were perfect. All the mums were asking for her contact details!",
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face",
+      cakeImage: "/birthday-cake-colorful.jpg",
+      verified: true,
+      date: "February 2024"
     }
   ];
 

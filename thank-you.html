@@ -3,19 +3,299 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Thank you — Betti’s Sweets</title>
+  <title>Thank You — Betti's Sweets</title>
   <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;padding:40px;background:#FFF8F0;color:#3A2E2E}
-    .card{max-width:780px;margin:0 auto;background:#fff;border:1px solid #f2e8db;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:24px}
-    a{color:#B76E79}
+    :root {
+      --blush: #FADADD;
+      --peach: #F6D0B1;
+      --ivory: #FFF8F0;
+      --champagne: #D9B26D;
+      --rose: #B76E79;
+      --sage: #BFC9B3;
+      --text-dark: #3A2E2E;
+      --text-muted: #6B5E5E;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, var(--ivory) 0%, #fff 50%, var(--ivory) 100%);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .glass-card {
+      background: rgba(255, 248, 240, 0.85);
+      backdrop-filter: blur(20px) saturate(120%) contrast(1.1) brightness(1.1);
+      border: 1px solid rgba(233, 223, 210, 0.85);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      padding: 60px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background: radial-gradient(
+        circle at 50% 20%,
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0) 70%
+      );
+      mix-blend-mode: overlay;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 30px;
+      background: linear-gradient(135deg, var(--blush), var(--peach));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(183, 110, 121, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    .success-icon::after {
+      content: "✓";
+      color: white;
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 10px 30px rgba(183, 110, 121, 0.3);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(183, 110, 121, 0.4);
+      }
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .script-text {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.5rem;
+      color: var(--rose);
+      margin-bottom: 30px;
+      letter-spacing: 0.5px;
+    }
+
+    .message {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .details {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(241, 231, 219, 0.8);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      text-align: left;
+    }
+
+    .details h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--text-dark);
+      margin-bottom: 15px;
+    }
+
+    .details ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .details li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(241, 231, 219, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .details li:last-child {
+      border-bottom: none;
+    }
+
+    .details .label {
+      font-weight: 500;
+      color: var(--text-dark);
+    }
+
+    .details .value {
+      color: var(--text-muted);
+    }
+
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--blush), var(--peach));
+      border: 1px solid #f0cdb9;
+      color: var(--text-dark);
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-home:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+      text-decoration: none;
+      color: var(--text-dark);
+    }
+
+    .social-links {
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(241, 231, 219, 0.6);
+    }
+
+    .social-links p {
+      color: var(--text-muted);
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--rose);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .social-link:hover {
+      color: var(--text-dark);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 640px) {
+      .glass-card {
+        padding: 40px 30px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .script-text {
+        font-size: 1.3rem;
+      }
+      
+      .message {
+        font-size: 1rem;
+      }
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Thank you!</h1>
-    <p>Your message has been sent. We’ll be in touch soon.</p>
-    <p><a href="/">← Back to home</a></p>
+  <div class="container">
+    <div class="glass-card floating">
+      <div class="success-icon"></div>
+      
+      <h1>Thank You!</h1>
+      <div class="script-text">Your message has been received</div>
+      
+      <p class="message">
+        We're delighted to hear from you! Your inquiry has been successfully submitted and we'll be in touch within 1-2 working days to discuss your custom cake requirements.
+      </p>
+
+      <div class="details">
+        <h3>What happens next?</h3>
+        <ul>
+          <li>
+            <span class="label">Response Time</span>
+            <span class="value">1-2 working days</span>
+          </li>
+          <li>
+            <span class="label">Consultation</span>
+            <span class="value">Free design discussion</span>
+          </li>
+          <li>
+            <span class="label">Quote</span>
+            <span class="value">Detailed pricing provided</span>
+          </li>
+          <li>
+            <span class="label">Booking</span>
+            <span class="value">50% deposit to secure</span>
+          </li>
+        </ul>
+      </div>
+
+      <a href="/" class="btn-home">
+        <span>←</span>
+        <span>Back to Home</span>
+      </a>
+
+      <div class="social-links">
+        <p>Follow our latest creations on social media:</p>
+        <a href="https://instagram.com/bettissweets" class="social-link" target="_blank" rel="noopener">
+          <span>📸</span>
+          <span>@bettissweets</span>
+        </a>
+      </div>
+    </div>
   </div>
 </body>
 </html>
