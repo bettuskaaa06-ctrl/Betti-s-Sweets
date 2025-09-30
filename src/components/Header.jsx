@@ -47,13 +47,13 @@ const Header = () => {
             aria-hidden="true"
           >
             <img 
-              src="logo-complete.jpg" 
+              src="logo-complete-hd.png" 
               alt="Betti's Sweets - Custom Made Artisan Cakes" 
-              width="400" 
-              height="200"
+              width="800" 
+              height="400"
               className="h-full w-auto object-contain transform-gpu"
               style={{
-                imageRendering: '-webkit-optimize-contrast'
+                imageRendering: 'crisp-edges'
               }}
               onError={(e) => {
                 e.target.onerror = null;
