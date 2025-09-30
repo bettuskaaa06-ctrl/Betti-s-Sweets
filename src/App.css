@@ -1,0 +1,272 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+}
+
+:root {
+  /* Betti's Sweets Pastel Palette */
+  --blush: #FADADD;
+  --peach: #F6D0B1;
+  --ivory: #FFF8F0;
+  --champagne: #D9B26D;
+  --rose: #B76E79;
+  --sage: #BFC9B3;
+  --text-dark: #3A2E2E;
+  --text-muted: #6B5E5E;
+  
+  /* Tailwind overrides for Betti's theme */
+  --radius: 0.875rem;
+  --background: var(--ivory);
+  --foreground: var(--text-dark);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--text-dark);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--text-dark);
+  --primary: var(--rose);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: var(--blush);
+  --secondary-foreground: var(--text-dark);
+  --muted: var(--peach);
+  --muted-foreground: var(--text-muted);
+  --accent: var(--rose);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: #f2e8db;
+  --input: #e9dfd2;
+  --ring: var(--rose);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    color: #2b2222;
+  }
+  
+  .script {
+    font-family: 'Great Vibes', cursive;
+    letter-spacing: 0.3px;
+  }
+}
+
+@layer components {
+  /* Glass morphism effect */
+  .glass {
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 248, 240, 0.58);
+    backdrop-filter: blur(10px) saturate(120%) contrast(1.1) brightness(1.1);
+    border: 1px solid rgba(233, 223, 210, 0.85);
+    border-radius: 1rem;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    --shine-x: 0.5;
+    --shine-y: 0.5;
+  }
+  
+  .glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      circle at calc(var(--shine-x) * 100%) calc(var(--shine-y) * 100%),
+      rgba(255, 255, 255, 0.6),
+      rgba(255, 255, 255, 0) 60%
+    );
+    mix-blend-mode: overlay;
+    transition: background 0.2s;
+  }
+  
+  .glass::after {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    border-radius: inherit;
+    pointer-events: none;
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      rgba(255, 255, 255, 0.25) 0deg,
+      rgba(255, 255, 255, 0) 60deg,
+      rgba(255, 255, 255, 0.25) 120deg,
+      rgba(255, 255, 255, 0) 180deg
+    );
+    animation: lens 20s linear infinite;
+    mix-blend-mode: soft-light;
+  }
+  
+  @keyframes lens {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+  
+  /* Buttons */
+  .btn-gradient {
+    background: linear-gradient(90deg, var(--blush), var(--peach));
+    border: 1px solid #f0cdb9;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-gradient:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+  }
+  
+  /* Header glare animation */
+  .header-glare {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .header-glare::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(255, 255, 255, 0.1) 45%,
+      rgba(255, 255, 255, 0.25) 90%
+    );
+    animation: glassGlare 12s linear infinite;
+    opacity: 0.2;
+  }
+  
+  @keyframes glassGlare {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+  
+  /* Floating elements */
+  .floating {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    .glass::after,
+    .header-glare::before,
+    .floating {
+      animation: none;
+    }
+    
+    .btn-gradient:hover {
+      transform: none;
+    }
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .backdrop-blur-glass {
+    backdrop-filter: blur(10px) saturate(120%) contrast(1.1) brightness(1.1);
+  }
+}
+
+
+@layer components {
+  /* Banner */
+  .temp-banner {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    padding: 8px 16px;
+    text-align: center;
+    background: rgba(255, 248, 240, 0.85);
+    backdrop-filter: saturate(150%) blur(8px);
+    border-bottom: 2px solid var(--accent);
+    animation: banner-slide 0.4s ease-out;
+  }
+  
+  .temp-banner .banner-btn {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+  
+  .temp-banner .banner-btn:hover,
+  .temp-banner .banner-btn:focus-visible {
+    opacity: 0.85;
+  }
+  
+  @keyframes banner-slide {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+}
+
