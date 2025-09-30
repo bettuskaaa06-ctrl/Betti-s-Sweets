@@ -43,7 +43,7 @@ const Header = () => {
         {/* Brand */}
         <div className="flex items-center gap-2.5 mr-auto">
           <div 
-            className="h-[60px] lg:h-[70px] aspect-[120/36] overflow-hidden rounded-lg"
+            className="h-[40px] lg:h-[50px] aspect-[120/36] overflow-hidden rounded-lg"
             aria-hidden="true"
           >
             <img 
@@ -54,7 +54,7 @@ const Header = () => {
               className="h-full w-auto object-contain object-center transform-gpu"
               style={{
                 transformOrigin: 'center center',
-                transform: 'scale(1.0)'
+                transform: 'scale(0.8)'
               }}
               onError={(e) => {
                 e.target.onerror = null;
