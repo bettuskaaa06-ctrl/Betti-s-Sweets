@@ -47,17 +47,17 @@ const Header = () => {
             aria-hidden="true"
           >
             <img 
-              src="logo-complete-hd.png" 
+              src="logo.svg" 
               alt="Betti's Sweets - Custom Made Artisan Cakes" 
               width="800" 
               height="400"
               className="h-full w-auto object-contain transform-gpu"
               style={{
-                imageRendering: 'crisp-edges'
+                imageRendering: 'auto'
               }}
               onError={(e) => {
                 e.target.onerror = null;
-                e.target.src = 'logo.svg';
+                e.target.src = 'logo-complete-hd.png';
               }}
             />
           </div>
