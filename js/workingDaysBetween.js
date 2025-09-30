@@ -14,7 +14,5 @@ function workingDaysBetween(startDate, endDate) {
   return count;
 }
 
-// Export for tests
-if (typeof module !== "undefined") {
-  module.exports = { workingDaysBetween };
-}
+// Export for ES modules
+export { workingDaysBetween };

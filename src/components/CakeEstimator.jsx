@@ -83,7 +83,7 @@ const CakeEstimator = () => {
     const balance = total - deposit;
 
     setTotals({ total, deposit, balance });
-  }, [formData.stack, formData.extras]);
+  }, [formData.stack, formData.extras, extraCost, sizeBase]);
 
   // Update rush warning
   const updateRushWarning = useCallback(() => {
@@ -131,7 +131,7 @@ const CakeEstimator = () => {
     if (!formData.date || formData.date < minDate) {
       setFormData(prev => ({ ...prev, date: minDate }));
     }
-  }, []);
+  }, [formData.date]);
 
   // Event handlers
   const handleInputChange = (field, value) => {
@@ -141,7 +141,7 @@ const CakeEstimator = () => {
       // Save preference
       try {
         localStorage.setItem(SIZE_KEY, value);
-      } catch (e) {
+      } catch (_e) {
         // Fallback to cookie
         const days = 180;
         const d = new Date();
