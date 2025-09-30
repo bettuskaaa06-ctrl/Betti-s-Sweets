@@ -104,14 +104,16 @@ header .wrap.nav{
 
 /* Full-logo rendering */
 .logo-clip img {
-  height:100%;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  height: calc(100% * var(--logo-zoom, 1));
+  height: calc(100% * var(--logo-zoom, 1));
   width:auto;
   object-fit:contain;
   object-position:right center; 
   transform-origin:center center;
-  transform:
-    translate(var(--logo-shift-x), var(--logo-shift-y))
-    scale(var(--logo-zoom));
+  transform: translate(var(--logo-shift-x), var(--logo-shift-y))
+    ;
 }
 
 .brand .wordmark{display:none}
@@ -304,6 +306,18 @@ header{
   );
   pointer-events:none; transition: opacity .2s ease;
 }
+</style>
+
+<style>
+/* Hero glass animation ported verbatim */
+.glass::after{
+  content:"";position:absolute;inset:-50%;border-radius:inherit;pointer-events:none;
+  background:conic-gradient(from 0deg at 50% 50%,rgba(255,255,255,.25) 0deg,rgba(255,255,255,0) 60deg,rgba(255,255,255,.25) 120deg,rgba(255,255,255,0) 180deg);
+  animation:lens 20s linear infinite;
+  mix-blend-mode:soft-light;
+}
+@keyframes lens{to{transform:rotate(1turn)}
+.glass::before{mix-blend-mode:overlay;}
 </style>
 </head>
 <body>
