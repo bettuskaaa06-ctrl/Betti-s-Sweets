@@ -39,11 +39,11 @@ const Header = () => {
       className="sticky z-50 header-glare bg-[rgba(255,248,240,0.85)] backdrop-blur-glass border-b border-[#f1e7db]"
       style={{ top: `${headerTop}px` }}
     >
-      <div className="max-w-[1200px] mx-auto px-5 flex items-center justify-between h-32 lg:h-[140px]">
+      <div className="max-w-[1200px] mx-auto px-5 flex items-center justify-between h-48 lg:h-[220px]">
         {/* Brand */}
         <div className="flex items-center gap-2.5 mr-auto">
           <div 
-            className="h-[120px] lg:h-[135px] w-auto overflow-hidden rounded-lg"
+            className="h-[180px] lg:h-[200px] w-auto overflow-hidden rounded-lg"
             aria-hidden="true"
           >
             <img 
