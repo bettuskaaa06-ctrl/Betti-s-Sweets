@@ -43,7 +43,7 @@ const Header = () => {
         {/* Brand */}
         <div className="flex items-center gap-2.5 mr-auto">
           <div 
-            className="h-[180px] lg:h-[200px] w-auto overflow-hidden rounded-lg"
+            className="h-[170px] lg:h-[190px] w-auto overflow-hidden rounded-lg"
             aria-hidden="true"
           >
             <img 
